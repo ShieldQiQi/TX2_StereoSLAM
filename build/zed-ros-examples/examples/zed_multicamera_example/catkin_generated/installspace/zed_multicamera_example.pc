@@ -4,5 +4,5 @@ Name: zed_multicamera_example
 Description: Description of zed_multicamera_example
 Version: 3.0.0
 Cflags: 
-Libs: -L/home/qi/catkin_qi/install/lib 
+Libs: -L${prefix}/lib 
 Requires: 

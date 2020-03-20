@@ -4,5 +4,5 @@ Name: zed_obj_det_sub_tutorial
 Description: Description of zed_obj_det_sub_tutorial
 Version: 3.0.0
 Cflags: 
-Libs: -L/home/qi/catkin_qi/install/lib 
+Libs: -L${prefix}/lib 
 Requires: 

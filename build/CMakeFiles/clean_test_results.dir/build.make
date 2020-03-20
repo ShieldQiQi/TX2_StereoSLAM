@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/qi/catkin_qi/build
 include CMakeFiles/clean_test_results.dir/progress.make
 
 CMakeFiles/clean_test_results:
-	/usr/bin/python2 /home/qi/software/FourAxisManipulator/src/catkin/cmake/test/remove_test_results.py /home/qi/catkin_qi/build/test_results
+	/usr/bin/python2 /opt/ros/melodic/share/catkin/cmake/test/remove_test_results.py /home/qi/catkin_qi/build/test_results
 
 clean_test_results: CMakeFiles/clean_test_results
 clean_test_results: CMakeFiles/clean_test_results.dir/build.make

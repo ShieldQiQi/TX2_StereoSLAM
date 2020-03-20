@@ -167,7 +167,7 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=catkin_qi
+CMAKE_PROJECT_NAME:STATIC=Project
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -434,6 +434,12 @@ PYTHON_EXECUTABLE:FILEPATH=/usr/bin/python2
 //Specify specific Python version to use ('major.minor' or 'major')
 PYTHON_VERSION:STRING=2
 
+//Value Computed by CMake
+Project_BINARY_DIR:STATIC=/home/qi/catkin_qi/build
+
+//Value Computed by CMake
+Project_SOURCE_DIR:STATIC=/home/qi/catkin_qi/src
+
 //Path to a library.
 RT_LIBRARY:FILEPATH=/usr/lib/aarch64-linux-gnu/librt.so
 
@@ -488,7 +494,7 @@ bond_DIR:PATH=/opt/ros/melodic/share/bond/cmake
 bondcpp_DIR:PATH=/opt/ros/melodic/share/bondcpp/cmake
 
 //The directory containing a CMake configuration file for catkin.
-catkin_DIR:PATH=/home/qi/software/FourAxisManipulator/devel/share/catkin/cmake
+catkin_DIR:PATH=/opt/ros/melodic/share/catkin/cmake
 
 //Value Computed by CMake
 catkin_qi_BINARY_DIR:STATIC=/home/qi/catkin_qi/build

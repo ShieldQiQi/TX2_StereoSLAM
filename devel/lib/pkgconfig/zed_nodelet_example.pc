@@ -4,5 +4,5 @@ Name: zed_nodelet_example
 Description: Description of zed_nodelet_example
 Version: 3.0.0
 Cflags: 
-Libs: -L/home/qi/catkin_qi/devel/lib 
+Libs: -L${prefix}/lib 
 Requires: 
