@@ -4,8 +4,7 @@
 [![Status](https://img.shields.io/badge/Staus-Processing-blue.svg)](<>)
 <br><br>
 develop a SLAM algorithm based on `ORB_SLAM2` along with `Jetson TX2`、`ZED2`、`ROS` and a mobile platform
-
-<br><br>
+<br>
 ## Install
 
 Open a terminal, clone the repository, update the dependencies and build the packages:
