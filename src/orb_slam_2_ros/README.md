@@ -27,7 +27,6 @@ For a closed-source version of ORB-SLAM2 for commercial purposes, please contact
 If you use ORB-SLAM2 (Monocular) in an academic work, please cite:
 
     @article{murTRO2015,
-      title={{ORB-SLAM}: a Versatile and Accurate Monocular {SLAM} System},
       author={Mur-Artal, Ra\'ul, Montiel, J. M. M. and Tard\'os, Juan D.},
       journal={IEEE Transactions on Robotics},
       volume={31},
