@@ -1,4 +1,5 @@
 # TX2_StereoSLAM
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.txt)
 [![Build Status][1]][2] [![codecov.io][3]][4] [![GoDoc][5]][6] [![codebeat][7]][8] [![Downloads][9]][10]
 
 [1]: https://dev.azure.com/v2ray/core/_apis/build/status/v2ray.core "Build Status badge"
