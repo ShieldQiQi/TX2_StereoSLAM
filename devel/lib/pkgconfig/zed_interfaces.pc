@@ -1,0 +1,8 @@
+prefix=/home/qi/catkin_qi/devel
+
+Name: zed_interfaces
+Description: Description of zed_interfaces
+Version: 3.1.0
+Cflags: -I/home/qi/catkin_qi/devel/include -I/home/qi/catkin_qi/src/zed-ros-wrapper/zed_interfaces/include
+Libs: -L/home/qi/catkin_qi/devel/lib 
+Requires: message_generation std_msgs geometry_msgs

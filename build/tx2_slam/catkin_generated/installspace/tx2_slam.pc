@@ -1,0 +1,8 @@
+prefix=/home/qi/catkin_qi/install
+
+Name: tx2_slam
+Description: Description of tx2_slam
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/qi/catkin_qi/install/lib 
+Requires: 

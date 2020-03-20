@@ -1,0 +1,2 @@
+set(zed_interfaces_MESSAGE_FILES "msg/object_stamped.msg;msg/objects.msg")
+set(zed_interfaces_SERVICE_FILES "srv/set_pose.srv;srv/reset_odometry.srv;srv/reset_tracking.srv;srv/start_svo_recording.srv;srv/stop_svo_recording.srv;srv/start_remote_stream.srv;srv/stop_remote_stream.srv;srv/set_led_status.srv;srv/toggle_led.srv;srv/start_3d_mapping.srv;srv/stop_3d_mapping.srv;srv/start_object_detection.srv;srv/stop_object_detection.srv")
