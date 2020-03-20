@@ -4,3 +4,19 @@
 [![Status](https://img.shields.io/badge/Staus-Processing-blue.svg)](<>)
 <br><br>
 develop a SLAM algorithm based on `ORB_SLAM2` along with `Jetson TX2`、`ZED2`、`ROS` and a mobile platform
+
+<br><br>
+## Install
+
+Open a terminal, clone the repository, update the dependencies and build the packages:
+
+    $ cd ~/catkin_ws/src
+    $ git clone https://github.com/stereolabs/zed-ros-wrapper.git
+    $ cd ../
+    $ rosdep install --from-paths src --ignore-src -r -y
+    $ catkin_make -DCMAKE_BUILD_TYPE=Release
+    $ source ./devel/setup.bash
+
+## About
+
+contact me by qi.shield95@foxmail.com
