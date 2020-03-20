@@ -39,7 +39,6 @@ If you use ORB-SLAM2 (Monocular) in an academic work, please cite:
 if you use ORB-SLAM2 (Stereo or RGB-D) in an academic work, please cite:
 
     @article{murORB2,
-      title={{ORB-SLAM2}: an Open-Source {SLAM} System for Monocular, Stereo and {RGB-D} Cameras},
       author={Mur-Artal, Ra\'ul and Tard\'os, Juan D.},
       journal={IEEE Transactions on Robotics},
       volume={33},
