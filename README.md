@@ -9,8 +9,7 @@ develop a SLAM algorithm based on `ORB_SLAM2` along with `Jetson TX2`„ÄÅ`ZED2`„Ä
 
 Open a terminal, clone the repository, update the dependencies and build the packages:
 
-    $ cd ~/catkin_ws/src
-    $ git clone https://github.com/stereolabs/zed-ros-wrapper.git
+    $ git clone https://github.com/ShieldQiQi/TX2_StereoSLAM.git
     $ cd ../
     $ rosdep install --from-paths src --ignore-src -r -y
     $ catkin_make -DCMAKE_BUILD_TYPE=Release
@@ -18,4 +17,4 @@ Open a terminal, clone the repository, update the dependencies and build the pac
 
 ## About
 
-contact me by qi.shield95@foxmail.com
+any question, contact me by qi.shield95@foxmail.com
