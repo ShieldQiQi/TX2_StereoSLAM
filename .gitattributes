@@ -1,4 +1,4 @@
 *.txt linguist-language=C++
 *.cmake linguist-lanuage=C++
 Makefile linguist-lanuage=C++
-*.make linguist-language=Java 
+*.make linguist-language=C++
