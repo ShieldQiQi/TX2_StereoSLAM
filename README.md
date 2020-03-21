@@ -17,4 +17,7 @@ Open a terminal, clone the repository, update the dependencies and build the pac
 
 ## About
 
-any question, contact me by qi.shield95@foxmail.com
+any question, contact me by<br>
+`email`:qi.shield95@foxmail.com<br>
+you can get my blog about this project on<br>
+`zhihu`:https://zhuanlan.zhihu.com/QIQI-HITwh
