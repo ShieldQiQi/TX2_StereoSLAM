@@ -3154,6 +3154,10 @@ void ZEDWrapperNodelet::device_poll_thread_func() {
 
                         if (id >= 0) {
                             mZedParams.input.setFromCameraID(id);
+                            //set the Zed2 ouput
+                            mZedParams.camera_resolution = sl::RESOLUTION::HD720;
+                            mZedParams.camera_fps = 30;
+
                             mConnStatus = mZed.open(mZedParams); // Try to initialize the ZED
                             NODELET_INFO_STREAM(toString(mConnStatus));
                         } else {

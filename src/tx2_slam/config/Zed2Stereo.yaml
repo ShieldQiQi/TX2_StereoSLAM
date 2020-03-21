@@ -2,10 +2,12 @@
 
 # Camera calibration and distortion parameters (OpenCV)
 
-Camera.fx: 454.2463073730469
-Camera.fy: 454.2463073730469
-Camera.cx: 231.73892211914062
-Camera.cy: 179.4013214111328
+Camera.fx: 527.2025
+Camera.fy: 527.245
+Camera.cx: 618.31
+Camera.cy: 367.1445
+
+# get the rectified image from zed-ros-wrapper, so set all zero
 
 Camera.k1: 0.0
 Camera.k2: 0.0
@@ -13,30 +15,32 @@ Camera.p1: 0.0
 Camera.p2: 0.0
 Camera.k3: 0.0
 
-Camera.width: 480
-Camera.height: 360
+# more to see https://www.stereolabs.com/docs/video/camera-controls/
 
-# Camera frames per second
+Camera.width: 2560
+Camera.height: 720
 Camera.fps: 30.0
 
-# stereo baseline (distance between cameras in m?) times fx
-Camera.bf: 30.464328718 # 40
+# stereo baseline(m) times fx
+Camera.bf: 63.1965
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 1
 
 # Close/Far threshold. Baseline times.
-ThDepth: 30 # what is this?
+# set it according to the actual effect
 
-# seen elsewhere... what is this?
+ThDepth: 35
+
+# the depth in program equal to the real depth times the DepthMapFactor
 #DepthMapFactor: 1000.0
 
 #--------------------------------------------------------------------------------------------
 # Stereo Rectification. Only if you need to pre-rectify the images.
 # Camera.fx, .fy, etc must be the same as in LEFT.P
 #--------------------------------------------------------------------------------------------
-LEFT.height: 360
-LEFT.width: 480
+LEFT.height: 720
+LEFT.width: 2560
 LEFT.D: !!opencv-matrix
    rows: 1
    cols: 5
@@ -46,7 +50,7 @@ LEFT.K: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [454.2463073730469, 0.0, 231.73892211914062, 0.0, 454.2463073730469, 179.4013214111328, 0.0, 0.0, 1.0]
+   data: [527.2025, 0.0, 618.31, 0.0, 527.245, 367.1445, 0.0, 0.0, 1.0]
 LEFT.R:  !!opencv-matrix
    rows: 3
    cols: 3
@@ -56,10 +60,10 @@ LEFT.P:  !!opencv-matrix
    rows: 3
    cols: 4
    dt: d
-   data: [454.2463073730469, 0.0, 231.73892211914062, 0.0, 0.0, 454.2463073730469, 179.4013214111328, 0.0, 0.0, 0.0, 1.0, 0.0]
+   data: [527.2025, 0.0, 618.31, 0.0, 0.0, 527.245, 367.1445, 0.0, 0.0, 0.0, 1.0, 0.0]
 
-RIGHT.height: 360
-RIGHT.width: 480
+RIGHT.height: 720
+RIGHT.width: 2560
 RIGHT.D: !!opencv-matrix
    rows: 1
    cols: 5
@@ -69,7 +73,7 @@ RIGHT.K: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [454.2463073730469, 0.0, 231.73892211914062, 0.0, 454.2463073730469, 179.4013214111328, 0.0, 0.0, 1.0]
+   data: [527.2025, 0.0, 618.31, 0.0, 527.245, 367.1445, 0.0, 0.0, 1.0]
 RIGHT.R:  !!opencv-matrix
    rows: 3
    cols: 3
@@ -79,7 +83,7 @@ RIGHT.P:  !!opencv-matrix
    rows: 3
    cols: 4
    dt: d
-   data: [454.2463073730469, 0.0, 231.73892211914062, 0.0, 0.0, 454.2463073730469, 179.4013214111328, 0.0, 0.0, 0.0, 1.0, 0.0]
+   data: [527.2025, 0.0, 618.31, 0.0, 0.0, 527.245, 367.1445, 0.0, 0.0, 0.0, 1.0, 0.0]
 
 #--------------------------------------------------------------------------------------------
 # ORB Parameters

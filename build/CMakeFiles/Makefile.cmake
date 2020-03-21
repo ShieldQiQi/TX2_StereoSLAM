@@ -333,7 +333,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CTestConfiguration.ini"
-  "catkin_generated/stamps/Project/package.xml.stamp"
+  "catkin_generated/stamps/catkin_qi/package.xml.stamp"
   "atomic_configure/_setup_util.py"
   "atomic_configure/env.sh"
   "atomic_configure/setup.bash"
@@ -344,7 +344,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "atomic_configure/local_setup.zsh"
   "atomic_configure/.rosinstall"
   "catkin_generated/installspace/_setup_util.py"
-  "catkin_generated/stamps/Project/_setup_util.py.stamp"
+  "catkin_generated/stamps/catkin_qi/_setup_util.py.stamp"
   "catkin_generated/installspace/env.sh"
   "catkin_generated/installspace/setup.bash"
   "catkin_generated/installspace/local_setup.bash"
@@ -355,9 +355,9 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "catkin_generated/installspace/.rosinstall"
   "catkin_generated/generate_cached_setup.py"
   "catkin_generated/env_cached.sh"
-  "catkin_generated/stamps/Project/interrogate_setup_dot_py.py.stamp"
+  "catkin_generated/stamps/catkin_qi/interrogate_setup_dot_py.py.stamp"
   "catkin_generated/order_packages.py"
-  "catkin_generated/stamps/Project/order_packages.cmake.em.stamp"
+  "catkin_generated/stamps/catkin_qi/order_packages.cmake.em.stamp"
   "catkin_generated/metapackages/zed_examples/CMakeLists.txt"
   "catkin_generated/metapackages/zed_ros/CMakeLists.txt"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
@@ -384,9 +384,10 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/tests.dir/DependInfo.cmake"
   "CMakeFiles/download_extra_data.dir/DependInfo.cmake"
   "CMakeFiles/run_tests.dir/DependInfo.cmake"
+  "CMakeFiles/tests.dir/DependInfo.cmake"
+  "CMakeFiles/ROS_Packages.dir/DependInfo.cmake"
   "CMakeFiles/clean_test_results.dir/DependInfo.cmake"
   "CMakeFiles/doxygen.dir/DependInfo.cmake"
   "gtest/googlemock/CMakeFiles/gmock_main.dir/DependInfo.cmake"
