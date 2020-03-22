@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 
 <launch>
+
+    <!-- launch the zed_ros_wrapper node-->
+    <include file="$(find zed_wrapper)/launch/zed2.launch">
+    </include>
+
     <node name="orb_slam2_stereo" pkg="orb_slam2_ros"
       type="orb_slam2_ros_stereo" output="screen">
 
@@ -35,11 +40,11 @@
 
     <!-- ROS URDF description of the ZED -->
     <group if="true">
-        <param name="zed_description"
+        <param name="zed2_description"
                command="$(find xacro)/xacro '$(find tx2_slam)/urdf/zed_descr.urdf.xacro'
-                        camera_name:=zed2
+                        camera_name:=tx2zed2
                         camera_model:=zed2
-                        base_frame:=base_link
+                        base_frame:=zed2_base_link
                         cam_pos_x:=$(arg cam_pos_x)
                         cam_pos_y:=$(arg cam_pos_y)
                         cam_pos_z:=$(arg cam_pos_z)
@@ -47,8 +52,8 @@
                         cam_pitch:=$(arg cam_pitch)
                         cam_yaw:=$(arg cam_yaw)"
         />
-        <node name="zed_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" required="true">
-            <remap from="robot_description" to="zed_description" />
+        <node name="zed2_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" required="true">
+            <remap from="robot_description" to="zed2_description" />
         </node>
     </group>
 
