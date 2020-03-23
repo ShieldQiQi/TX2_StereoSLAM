@@ -60,4 +60,6 @@
     <!-- Launch rivz display -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tx2_slam)/config/rviz_config.rviz" output="screen" />
 
+    <node name="MapBuild" pkg="tx2_slam" type="MapBuild" output="screen"/>
+
 </launch>

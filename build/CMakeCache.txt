@@ -617,6 +617,9 @@ nav_msgs_DIR:PATH=/opt/ros/melodic/share/nav_msgs/cmake
 //The directory containing a CMake configuration file for nodelet.
 nodelet_DIR:PATH=/opt/ros/melodic/share/nodelet/cmake
 
+//The directory containing a CMake configuration file for nodelet_topic_tools.
+nodelet_topic_tools_DIR:PATH=/opt/ros/melodic/share/nodelet_topic_tools/cmake
+
 //Value Computed by CMake
 orb_slam2_ros_BINARY_DIR:STATIC=/home/qi/catkin_qi/build/orb_slam_2_ros
 
@@ -626,8 +629,23 @@ orb_slam2_ros_LIB_DEPENDS:STATIC=general;opencv_calib3d;general;opencv_core;gene
 //Value Computed by CMake
 orb_slam2_ros_SOURCE_DIR:STATIC=/home/qi/catkin_qi/src/orb_slam_2_ros
 
+//The directory containing a CMake configuration file for pcl_conversions.
+pcl_conversions_DIR:PATH=/opt/ros/melodic/share/pcl_conversions/cmake
+
+//The directory containing a CMake configuration file for pcl_msgs.
+pcl_msgs_DIR:PATH=/opt/ros/melodic/share/pcl_msgs/cmake
+
+//The directory containing a CMake configuration file for pcl_ros.
+pcl_ros_DIR:PATH=/opt/ros/melodic/share/pcl_ros/cmake
+
 //The directory containing a CMake configuration file for pluginlib.
 pluginlib_DIR:PATH=/opt/ros/melodic/share/pluginlib/cmake
+
+//The directory containing a CMake configuration file for rosbag.
+rosbag_DIR:PATH=/opt/ros/melodic/share/rosbag/cmake
+
+//The directory containing a CMake configuration file for rosbag_storage.
+rosbag_storage_DIR:PATH=/opt/ros/melodic/share/rosbag_storage/cmake
 
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/melodic/share/rosconsole/cmake
@@ -653,6 +671,9 @@ roslib_DIR:PATH=/opt/ros/melodic/share/roslib/cmake
 //The directory containing a CMake configuration file for roslint.
 roslint_DIR:PATH=/opt/ros/melodic/share/roslint/cmake
 
+//The directory containing a CMake configuration file for roslz4.
+roslz4_DIR:PATH=/opt/ros/melodic/share/roslz4/cmake
+
 //The directory containing a CMake configuration file for rospack.
 rospack_DIR:PATH=/opt/ros/melodic/share/rospack/cmake
 
@@ -671,11 +692,17 @@ smclib_DIR:PATH=/opt/ros/melodic/share/smclib/cmake
 //The directory containing a CMake configuration file for std_msgs.
 std_msgs_DIR:PATH=/opt/ros/melodic/share/std_msgs/cmake
 
+//The directory containing a CMake configuration file for std_srvs.
+std_srvs_DIR:PATH=/opt/ros/melodic/share/std_srvs/cmake
+
 //The directory containing a CMake configuration file for stereo_msgs.
 stereo_msgs_DIR:PATH=/opt/ros/melodic/share/stereo_msgs/cmake
 
 //The directory containing a CMake configuration file for tf2.
 tf2_DIR:PATH=/opt/ros/melodic/share/tf2/cmake
+
+//The directory containing a CMake configuration file for tf2_eigen.
+tf2_eigen_DIR:PATH=/opt/ros/melodic/share/tf2_eigen/cmake
 
 //The directory containing a CMake configuration file for tf2_geometry_msgs.
 tf2_geometry_msgs_DIR:PATH=/opt/ros/melodic/share/tf2_geometry_msgs/cmake
@@ -691,6 +718,9 @@ tf2_ros_DIR:PATH=/opt/ros/melodic/share/tf2_ros/cmake
 
 //The directory containing a CMake configuration file for tf.
 tf_DIR:PATH=/opt/ros/melodic/share/tf/cmake
+
+//The directory containing a CMake configuration file for topic_tools.
+topic_tools_DIR:PATH=/opt/ros/melodic/share/topic_tools/cmake
 
 //Value Computed by CMake
 tx2_slam_BINARY_DIR:STATIC=/home/qi/catkin_qi/build/tx2_slam
