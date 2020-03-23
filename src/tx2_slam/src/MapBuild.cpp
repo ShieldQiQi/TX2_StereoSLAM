@@ -1,26 +1,30 @@
 #include "../include/MapBuild.h"
-#include <ros/ros.h>
-#include <sensor_msgs/PointCloud2.h>
-#include <pcl_conversions/pcl_conversions.h>
-#include <pcl_ros/point_cloud.h>
+#include "../include/SaveMap.h"
+#include <cstdlib>
 
-void cloudCallback(const sensor_msgs::PointCloud2::ConstPtr& msg)
+using namespace std;
+
+int main (int argc, char** argv)
 {
-//  ROS_INFO("the point_step:%d\nthe row_step:%d\nthe height:%d",
-//           msg->point_step,msg->row_step,msg->height);
-}
+  ros::init (argc, argv, "MapBuild", ros::init_options::AnonymousName);
 
-int main(int argc, char **argv)
-{
-  ros::init(argc, argv, "MapBuild");
-  ros::NodeHandle nh;
-  ros::Subscriber sub = nh.subscribe
-      ("/zed2/zed_node/point_cloud/cloud_registered", 1000, cloudCallback);
+//  ros::NodeHandle n;
+//  ros::ServiceClient client = n.serviceClient<orb_slam2_ros::SaveMap>("/orb_slam2_stereo/save_map");
 
-//  ros::Publisher pcl_pub = nh.advertise
-//      <sensor_msgs::PointCloud2>("/tx2_slam/mapCloud",1);
-//  sensor_msgs::PointCloud2 output;
-//  pcl_pub.publish(output);
+//  orb_slam2_ros::SaveMap srv;
+//  srv.request.name = "/home/qi/catkin_qi/src/tx2_slam/map/bin/zed2_slam_Map.bin";
+//  if (client.call(srv))
+//  {
+//    ROS_INFO("Ready to create Map");
+//  }
+//  else
+//  {
+//    ROS_ERROR("Failed to call service SaveMap");
+//    return 1;
+//  }
 
-  ros::spin();
+  PointCloudToPCD b;
+  ros::spin ();
+
+  return (0);
 }

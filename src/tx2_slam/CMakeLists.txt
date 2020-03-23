@@ -35,4 +35,8 @@ include_directories(
 link_directories(/usr/lib)
 
 add_executable(MapBuild src/MapBuild.cpp)
-target_link_libraries(MapBuild ${catkin_LIBRARIES} /usr/lib/libopencv_highgui.so.3.2.0)
+target_link_libraries(MapBuild ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} /usr/lib/libopencv_highgui.so.3.2.0)
+
+
+add_executable(MapLoad src/MapLoad.cpp)
+target_link_libraries(MapLoad ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES})

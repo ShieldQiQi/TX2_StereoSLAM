@@ -66,7 +66,6 @@ public:
 
     // This avoid that two points are created simultaneously in separate threads (id conflict)
     std::mutex mMutexPointCreation;
-
 protected:
     std::set<MapPoint*> mspMapPoints;
     std::set<KeyFrame*> mspKeyFrames;
@@ -79,7 +78,6 @@ protected:
     int mnBigChangeIdx;
 
     std::mutex mMutexMap;
-
 // map serialization addition
 private:
     // serialize is recommended to be private
