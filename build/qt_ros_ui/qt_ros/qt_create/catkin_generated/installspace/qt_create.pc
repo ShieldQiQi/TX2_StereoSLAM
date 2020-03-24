@@ -1,0 +1,8 @@
+prefix=/home/qi/catkin_qi/install
+
+Name: qt_create
+Description: Description of qt_create
+Version: 0.2.10
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

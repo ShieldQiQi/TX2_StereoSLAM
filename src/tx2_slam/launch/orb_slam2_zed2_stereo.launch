@@ -19,7 +19,7 @@
 
        <!-- static parameters -->
        <param name="load_map" type="bool" value="false" />
-       <param name="map_file" type="string" value="map.bin" />
+       <param name="map_file" type="string" value="/home/qi/catkin_qi/src/tx2_slam/map/bin/zed2_slam_Map.bin" />
        <param name="settings_file" type="string" value="$(find tx2_slam)/config/Zed2Stereo.yaml" />
        <param name="voc_file" type="string" value="$(find tx2_slam)/Vocabulary/ORBvoc.txt" />
 

@@ -5,6 +5,11 @@
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("gtest")
+subdirs("qt_ros_ui/qt_ros/qt_build")
+subdirs("qt_ros_ui/qt_ros/qt_create")
+subdirs("qt_ros_ui/qt_ros/qt_ros")
+subdirs("qt_ros_ui/qt_ros/qt_tutorials")
+subdirs("rover")
 subdirs("orb_slam_2_ros")
 subdirs("tx2_slam")
 subdirs("zed-ros-examples/examples/zed_ar_track_alvar_example")

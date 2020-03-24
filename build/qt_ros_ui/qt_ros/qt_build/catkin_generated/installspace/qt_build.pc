@@ -1,0 +1,8 @@
+prefix=/home/qi/catkin_qi/install
+
+Name: qt_build
+Description: Description of qt_build
+Version: 0.2.10
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
