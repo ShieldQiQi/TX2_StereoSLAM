@@ -1,0 +1,62 @@
+/**
+\mainpage
+\htmlinclude manifest.html
+
+@section Overview
+
+This package provides a cmake module which will simplify the cmake for 
+developing qt-ros packages.
+
+
+@section Usage
+
+@section Rosbuild
+
+In your package's manifest.xml:
+
+@code
+<depend package="qt_build"/>
+@endcode
+
+Then in your package's CMakeLists.txt:
+
+@code
+# Setup
+include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+rosbuild_init()
+rosbuild_include(qt_build qt-ros)
+
+# Call any of qt-ros' api, e.g.
+rosbuild_prepare_qt4(QtCore QtGui QtNetwork)
+@endcode
+
+@section Rosbuild2
+
+Todo
+
+@section cmakeApi CMake Api
+
+There is currently only one module, qt-ros.cmake and it only has
+on cmake function that is public:  
+
+- rosbuild_prepare_qt4( LIST_OF_COMPONENTS )
+
+where the list of components is a space separated list drawn from the 
+available qt components that you may have installed. For ros packages, 
+you'll typically be interested in one of the following components
+
+QtCore, QtGui, QtMain, QtNetwork, QtOpengl, QtSql, QtSvg, 
+QtDbus, QtScript, QtWebkit, QtXml, QtXmlPatterns, QtPhonon 
+
+This function is mostly a wrapper around the FindQt4 module with some help
+to define locations of various resources (such as qt-built ui headers). It 
+also includes some magic to help it work with the mingw cross compiler
+until the FindQt4 module is updated.
+
+@section Notes
+
+The arguments to the rosbuild_link_qt4 macro is rather simplified. It could
+be written to take exactly the same arguments as the include_package(Qt4 ...) call
+would make - that will be added if there is a need for it.
+
+*/
