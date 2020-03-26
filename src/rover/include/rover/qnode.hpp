@@ -62,6 +62,7 @@ public:
 Q_SIGNALS:
 	void loggingUpdated();
     void rosShutdown();
+    void slamStateChanged(char flag);
 
 private:
 	int init_argc;

@@ -45,14 +45,16 @@ public Q_SLOTS:
 	/******************************************
 	** Auto-connections (connectSlotsByName())
 	*******************************************/
-	void on_actionAbout_triggered();
-	void on_button_connect_clicked(bool check );
-	void on_checkbox_use_environment_stateChanged(int state);
+//	void on_actionAbout_triggered();
+    void on_actionAbout_this_program_triggered();
+//	void on_button_connect_clicked(bool check );
+//	void on_checkbox_use_environment_stateChanged(int state);
 
     /******************************************
     ** Manual connections
     *******************************************/
     void updateLoggingView(); // no idea why this can't connect automatically
+    void changeStateIndicator(char flag);
 
 private:
 	Ui::MainWindowDesign ui;

@@ -71,7 +71,8 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 
 void QNode::run() {
 	ros::Rate loop_rate(1);
-	int count = 0;
+    int count = 0;\
+    char flag = 0;
 	while ( ros::ok() ) {
 
 		std_msgs::String msg;
@@ -82,7 +83,13 @@ void QNode::run() {
         log(Info,std::string("I sent: ")+msg.data);
 		ros::spinOnce();
 		loop_rate.sleep();
-		++count;
+		++count;       
+
+        if(flag != 40){
+          Q_EMIT slamStateChanged(flag);
+          flag+=10;
+        }else
+          flag = 0;
 	}
 	std::cout << "Ros shutdown, proceeding to close the gui." << std::endl;
 	Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)

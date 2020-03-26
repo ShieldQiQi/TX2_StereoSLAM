@@ -6,22 +6,429 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>944</width>
-    <height>704</height>
+    <width>909</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>QRosApp</string>
+   <string>SLAM Robot Controller</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources/images.qrc">
+   <iconset resource="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc">
     <normaloff>:/images/icon.png</normaloff>:/images/icon.png</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <property name="locale">
    <locale language="English" country="Australia"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout">
+    <item>
+     <widget class="QGroupBox" name="groupBox_1">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="title">
+       <string>Control Panel                          </string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+      <widget class="QFrame" name="frame_2">
+       <property name="geometry">
+        <rect>
+         <x>2</x>
+         <y>61</y>
+         <width>241</width>
+         <height>404</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius:20px; 
+border:1px solid;
+border-color: rgb(46, 52, 54);</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>Load map</string>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_1">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>240</y>
+          <width>221</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.455399 rgba(255, 255, 255, 0), stop:1 rgba(198, 183, 0, 255));
+border-radius:10px; 
+border:1px solid;
+border-color: rgb(85, 87, 83);</string>
+        </property>
+        <property name="text">
+         <string>Save map</string>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>290</y>
+          <width>221</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.338028 rgba(27, 43, 255, 0), stop:1 rgba(255, 5, 100, 255));
+border-radius:10px; 
+border:1px solid;
+border-color: rgb(85, 87, 83);</string>
+        </property>
+        <property name="text">
+         <string>Start</string>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>340</y>
+          <width>221</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));
+border-radius:10px; 
+border:1px solid;
+border-color: rgb(85, 87, 83);</string>
+        </property>
+        <property name="text">
+         <string>Stop</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>CheckBox</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_3">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>20</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>Load map</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_4">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>50</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>CheckBox</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_5">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>Load map</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>110</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>CheckBox</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_7">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>80</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>Load map</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_8">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>110</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>CheckBox</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_9">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>Load map</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_10">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>170</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>CheckBox</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_11">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>140</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>Load map</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_12">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>170</y>
+          <width>100</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:7px; </string>
+        </property>
+        <property name="text">
+         <string>CheckBox</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="frame">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>5</y>
+          <width>241</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:20px; 
+border:1px solid;
+border-color: rgb(85, 87, 83);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+       <widget class="QFrame" name="frame_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>220</y>
+          <width>241</width>
+          <height>184</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:20px; 
+border:1px solid;
+border-color: rgb(85, 87, 83);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+       <zorder>frame</zorder>
+       <zorder>frame_3</zorder>
+       <zorder>checkBox</zorder>
+       <zorder>commandLinkButton_1</zorder>
+       <zorder>commandLinkButton_2</zorder>
+       <zorder>commandLinkButton_3</zorder>
+       <zorder>checkBox_2</zorder>
+       <zorder>checkBox_3</zorder>
+       <zorder>checkBox_4</zorder>
+       <zorder>checkBox_5</zorder>
+       <zorder>checkBox_6</zorder>
+       <zorder>checkBox_7</zorder>
+       <zorder>checkBox_8</zorder>
+       <zorder>checkBox_9</zorder>
+       <zorder>checkBox_10</zorder>
+       <zorder>checkBox_11</zorder>
+       <zorder>checkBox_12</zorder>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>250</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">image: url(:/images/logo_2.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>0</y>
+         <width>81</width>
+         <height>18</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">image: url(:/images/sleep.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </widget>
+    </item>
     <item>
      <widget class="QTabWidget" name="tab_manager">
       <property name="minimumSize">
@@ -30,36 +437,112 @@
         <height>0</height>
        </size>
       </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="locale">
        <locale language="English" country="Australia"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_status">
        <attribute name="title">
         <string>Ros Communications</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QGroupBox" name="groupBox_12">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="title">
-           <string>Logging</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
-            <widget class="QListView" name="view_logging"/>
-           </item>
-          </layout>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>9</x>
+          <y>9</y>
+          <width>610</width>
+          <height>425</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="title">
+         <string>  This terminal show the topic and msgs</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="QListView" name="view_logging_2">
+           <property name="cursor" stdset="0">
+            <cursorShape>IBeamCursor</cursorShape>
+           </property>
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius:12px; 
+background-color: rgba(44, 0, 30, 255);
+</string>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::ContiguousSelection</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="slam_status">
+       <attribute name="title">
+        <string>SLAM Status</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="geometry">
+         <rect>
+          <x>9</x>
+          <y>9</y>
+          <width>610</width>
+          <height>425</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>  This terminal show the feature points and status during mapping</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QListView" name="view_logging_3">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius:12px; 
+background-color: rgba(44, 0, 30, 255);</string>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::ContiguousSelection</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Car Dynamic Parameters</string>
+       </attribute>
       </widget>
      </widget>
     </item>
@@ -70,223 +553,43 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>944</width>
-     <height>21</height>
+     <width>909</width>
+     <height>23</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_File">
+   <widget class="QMenu" name="menu_Setting">
     <property name="title">
      <string>&amp;App</string>
     </property>
     <addaction name="action_Preferences"/>
     <addaction name="separator"/>
-    <addaction name="actionAbout"/>
-    <addaction name="actionAbout_Qt"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
-   <addaction name="menu_File"/>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSave_file"/>
+    <addaction name="actionLoad_file"/>
+   </widget>
+   <widget class="QMenu" name="menu_about">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAbout_this_program"/>
+    <addaction name="actionAbout_Qt"/>
+    <addaction name="actionAbout_program_maintainer"/>
+   </widget>
+   <addaction name="menu_Setting"/>
+   <addaction name="menu_file"/>
+   <addaction name="menu_about"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QDockWidget" name="dock_status">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>325</width>
-     <height>368</height>
-    </size>
-   </property>
-   <property name="allowedAreas">
-    <set>Qt::RightDockWidgetArea</set>
-   </property>
-   <property name="windowTitle">
-    <string>Command Panel</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QFrame" name="frame">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QGroupBox" name="groupBox">
-          <property name="title">
-           <string>Ros Master</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <property name="text">
-              <string>Ros Master Url</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QLineEdit" name="line_edit_master">
-             <property name="text">
-              <string>http://192.168.1.2:11311/</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <property name="text">
-              <string>Ros IP</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0" colspan="2">
-            <widget class="QLineEdit" name="line_edit_host">
-             <property name="text">
-              <string>192.168.1.67</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_3">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <property name="text">
-              <string>Ros Hostname</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0" colspan="2">
-            <widget class="QLineEdit" name="line_edit_topic">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>unused</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0" colspan="2">
-            <widget class="QCheckBox" name="checkbox_use_environment">
-             <property name="layoutDirection">
-              <enum>Qt::RightToLeft</enum>
-             </property>
-             <property name="text">
-              <string>Use environment variables</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0" colspan="2">
-            <widget class="QCheckBox" name="checkbox_remember_settings">
-             <property name="layoutDirection">
-              <enum>Qt::RightToLeft</enum>
-             </property>
-             <property name="text">
-              <string>Remember settings on startup</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>170</width>
-               <height>21</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="8" column="1">
-            <widget class="QPushButton" name="button_connect">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Set the target to the current joint trajectory state.</string>
-             </property>
-             <property name="statusTip">
-              <string>Clear all waypoints and set the target to the current joint trajectory state.</string>
-             </property>
-             <property name="text">
-              <string>Connect</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>233</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="quit_button">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Quit</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
   <action name="action_Quit">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>
@@ -298,23 +601,64 @@
    </property>
   </action>
   <action name="action_Preferences">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>&amp;Preferences</string>
    </property>
   </action>
-  <action name="actionAbout">
+  <action name="actionSave_file">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>&amp;About</string>
+    <string>Load file</string>
+   </property>
+  </action>
+  <action name="actionLoad_file">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save file</string>
+   </property>
+  </action>
+  <action name="actionAbout_this_program">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>About this program</string>
    </property>
   </action>
   <action name="actionAbout_Qt">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>About &amp;Qt</string>
+    <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionAbout_program_maintainer">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>About program maintainer</string>
    </property>
   </action>
  </widget>
  <resources>
-  <include location="../resources/images.qrc"/>
+  <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
+  <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
+  <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
+  <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
+  <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
+  <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
+  <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
+  <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
+  <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -329,22 +673,6 @@
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>quit_button</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindowDesign</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>859</x>
-     <y>552</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>469</x>
      <y>299</y>
     </hint>
    </hints>

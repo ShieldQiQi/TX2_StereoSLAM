@@ -58,6 +58,13 @@ include rover/CMakeFiles/rover.dir/progress.make
 include rover/CMakeFiles/rover.dir/flags.make
 
 rover/qrc_images.cxx: /home/qi/catkin_qi/src/rover/resources/images/icon.png
+rover/qrc_images.cxx: /home/qi/catkin_qi/src/rover/resources/images/logo.png
+rover/qrc_images.cxx: /home/qi/catkin_qi/src/rover/resources/images/logo_2.png
+rover/qrc_images.cxx: /home/qi/catkin_qi/src/rover/resources/images/bkImage.jpg
+rover/qrc_images.cxx: /home/qi/catkin_qi/src/rover/resources/images/run.png
+rover/qrc_images.cxx: /home/qi/catkin_qi/src/rover/resources/images/sleep.png
+rover/qrc_images.cxx: /home/qi/catkin_qi/src/rover/resources/images/stop.png
+rover/qrc_images.cxx: /home/qi/catkin_qi/src/rover/resources/images/stoping.png
 rover/qrc_images.cxx: rover/resources/images.qrc.depends
 rover/qrc_images.cxx: /home/qi/catkin_qi/src/rover/resources/images.qrc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating qrc_images.cxx"

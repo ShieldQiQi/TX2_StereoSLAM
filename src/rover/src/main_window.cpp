@@ -37,18 +37,24 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 	setWindowIcon(QIcon(":/images/icon.png"));
 	ui.tab_manager->setCurrentIndex(0); // ensure the first tab is showing - qt-designer should have this already hardwired, but often loses it (settings?).
     QObject::connect(&qnode, SIGNAL(rosShutdown()), this, SLOT(close()));
+    QObject::connect(&qnode, SIGNAL(slamStateChanged(char)), this, SLOT(changeStateIndicator(char)));
 
 	/*********************
 	** Logging
 	**********************/
-	ui.view_logging->setModel(qnode.loggingModel());
+    ui.view_logging_2->setModel(qnode.loggingModel());
     QObject::connect(&qnode, SIGNAL(loggingUpdated()), this, SLOT(updateLoggingView()));
 
     /*********************
     ** Auto Start
     **********************/
-    if ( ui.checkbox_remember_settings->isChecked() ) {
-        on_button_connect_clicked(true);
+//    if ( ui.checkbox_remember_settings->isChecked() ) {
+//    on_button_connect_clicked(true);
+//    }
+
+    // Init the Ros node
+    if ( !qnode.init() ) {
+        showNoMasterMessage();
     }
 }
 
@@ -65,43 +71,62 @@ void MainWindow::showNoMasterMessage() {
     close();
 }
 
+void MainWindow::changeStateIndicator(char flag)
+{
+    std::cout << flag;
+    switch(flag)
+    {
+    case 0:
+      ui.label_2->setStyleSheet("image: url(:/images/sleep.png);");
+      break;
+    case 10:
+      ui.label_2->setStyleSheet("image: url(:/images/run.png);");
+      break;
+    case 20:
+      ui.label_2->setStyleSheet("image: url(:/images/stoping.png);");
+      break;
+    case 30:
+      ui.label_2->setStyleSheet("image: url(:/images/stop.png);");
+      break;
+    }
+}
 /*
  * These triggers whenever the button is clicked, regardless of whether it
  * is already checked or not.
  */
 
-void MainWindow::on_button_connect_clicked(bool check ) {
-	if ( ui.checkbox_use_environment->isChecked() ) {
-		if ( !qnode.init() ) {
-			showNoMasterMessage();
-		} else {
-			ui.button_connect->setEnabled(false);
-		}
-	} else {
-		if ( ! qnode.init(ui.line_edit_master->text().toStdString(),
-				   ui.line_edit_host->text().toStdString()) ) {
-			showNoMasterMessage();
-		} else {
-			ui.button_connect->setEnabled(false);
-			ui.line_edit_master->setReadOnly(true);
-			ui.line_edit_host->setReadOnly(true);
-			ui.line_edit_topic->setReadOnly(true);
-		}
-	}
-}
+//void MainWindow::on_button_connect_clicked(bool check ) {
+//	if ( ui.checkbox_use_environment->isChecked() ) {
+//  if ( !qnode.init() ) {
+//      showNoMasterMessage();
+//  } else {
+//      ui.button_connect->setEnabled(false);
+//  }
+//	} else {
+//		if ( ! qnode.init(ui.line_edit_master->text().toStdString(),
+//				   ui.line_edit_host->text().toStdString()) ) {
+//			showNoMasterMessage();
+//		} else {
+//			ui.button_connect->setEnabled(false);
+//			ui.line_edit_master->setReadOnly(true);
+//			ui.line_edit_host->setReadOnly(true);
+//			ui.line_edit_topic->setReadOnly(true);
+//		}
+//	}
+//}
 
 
-void MainWindow::on_checkbox_use_environment_stateChanged(int state) {
-	bool enabled;
-	if ( state == 0 ) {
-		enabled = true;
-	} else {
-		enabled = false;
-	}
-	ui.line_edit_master->setEnabled(enabled);
-	ui.line_edit_host->setEnabled(enabled);
-	//ui.line_edit_topic->setEnabled(enabled);
-}
+//void MainWindow::on_checkbox_use_environment_stateChanged(int state) {
+//	bool enabled;
+//	if ( state == 0 ) {
+//		enabled = true;
+//	} else {
+//		enabled = false;
+//	}
+//	ui.line_edit_master->setEnabled(enabled);
+//	ui.line_edit_host->setEnabled(enabled);
+//	ui.line_edit_topic->setEnabled(enabled);
+//}
 
 /*****************************************************************************
 ** Implemenation [Slots][manually connected]
@@ -113,51 +138,58 @@ void MainWindow::on_checkbox_use_environment_stateChanged(int state) {
  * the user can always see the latest log message.
  */
 void MainWindow::updateLoggingView() {
-        ui.view_logging->scrollToBottom();
+        ui.view_logging_2->scrollToBottom();
 }
 
 /*****************************************************************************
 ** Implementation [Menu]
 *****************************************************************************/
 
-void MainWindow::on_actionAbout_triggered() {
-    QMessageBox::about(this, tr("About ..."),tr("<h2>PACKAGE_NAME Test Program 0.10</h2><p>Copyright Yujin Robot</p><p>This package needs an about description.</p>"));
-}
+//void MainWindow::on_actionAbout_triggered() {
+//    QMessageBox::about(this, tr("About ..."),
+//                       tr("<h2>SLAM Robot Controller v1.0"
+//                          "</h2><p>Copyright Hitwh_Qi</p><p>report bugs on <p>https://github.com/ShieldQiQi/TX2_StereoSLAM</p></p>"));
+//}
 
+void MainWindow::on_actionAbout_this_program_triggered() {
+    QMessageBox::about(this, tr("About ..."),
+                       tr("<h2>SLAM Robot Controller v1.0"
+                          "</h2><p>Copyright Hitwh_Qi</p><p>report bugs on <p>https://github.com/ShieldQiQi/TX2_StereoSLAM</p></p>"));
+}
 /*****************************************************************************
 ** Implementation [Configuration]
 *****************************************************************************/
 
 void MainWindow::ReadSettings() {
-    QSettings settings("Qt-Ros Package", "rover");
-    restoreGeometry(settings.value("geometry").toByteArray());
-    restoreState(settings.value("windowState").toByteArray());
-    QString master_url = settings.value("master_url",QString("http://192.168.1.2:11311/")).toString();
-    QString host_url = settings.value("host_url", QString("192.168.1.3")).toString();
-    //QString topic_name = settings.value("topic_name", QString("/chatter")).toString();
-    ui.line_edit_master->setText(master_url);
-    ui.line_edit_host->setText(host_url);
-    //ui.line_edit_topic->setText(topic_name);
-    bool remember = settings.value("remember_settings", false).toBool();
-    ui.checkbox_remember_settings->setChecked(remember);
-    bool checked = settings.value("use_environment_variables", false).toBool();
-    ui.checkbox_use_environment->setChecked(checked);
-    if ( checked ) {
-    	ui.line_edit_master->setEnabled(false);
-    	ui.line_edit_host->setEnabled(false);
-    	//ui.line_edit_topic->setEnabled(false);
-    }
+//    QSettings settings("Qt-Ros Package", "rover");
+//    restoreGeometry(settings.value("geometry").toByteArray());
+//    restoreState(settings.value("windowState").toByteArray());
+//    QString master_url = settings.value("master_url",QString("http://192.168.1.2:11311/")).toString();
+//    QString host_url = settings.value("host_url", QString("192.168.1.3")).toString();
+//    //QString topic_name = settings.value("topic_name", QString("/chatter")).toString();
+//    ui.line_edit_master->setText(master_url);
+//    ui.line_edit_host->setText(host_url);
+//    //ui.line_edit_topic->setText(topic_name);
+//    bool remember = settings.value("remember_settings", false).toBool();
+//    ui.checkbox_remember_settings->setChecked(remember);
+//    bool checked = settings.value("use_environment_variables", false).toBool();
+//    ui.checkbox_use_environment->setChecked(checked);
+//    if ( checked ) {
+//    	ui.line_edit_master->setEnabled(false);
+//    	ui.line_edit_host->setEnabled(false);
+//    	//ui.line_edit_topic->setEnabled(false);
+//    }
 }
 
 void MainWindow::WriteSettings() {
-    QSettings settings("Qt-Ros Package", "rover");
-    settings.setValue("master_url",ui.line_edit_master->text());
-    settings.setValue("host_url",ui.line_edit_host->text());
-    //settings.setValue("topic_name",ui.line_edit_topic->text());
-    settings.setValue("use_environment_variables",QVariant(ui.checkbox_use_environment->isChecked()));
-    settings.setValue("geometry", saveGeometry());
-    settings.setValue("windowState", saveState());
-    settings.setValue("remember_settings",QVariant(ui.checkbox_remember_settings->isChecked()));
+//    QSettings settings("Qt-Ros Package", "rover");
+//    settings.setValue("master_url",ui.line_edit_master->text());
+//    settings.setValue("host_url",ui.line_edit_host->text());
+//    //settings.setValue("topic_name",ui.line_edit_topic->text());
+//    settings.setValue("use_environment_variables",QVariant(ui.checkbox_use_environment->isChecked()));
+//    settings.setValue("geometry", saveGeometry());
+//    settings.setValue("windowState", saveState());
+//    settings.setValue("remember_settings",QVariant(ui.checkbox_remember_settings->isChecked()));
 
 }
 

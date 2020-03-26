@@ -2264,13 +2264,13 @@ qcheckbox.h
 qcleanlooksstyle.h
 /usr/include/qt4/QtGui/qcleanlooksstyle.h
 
+/usr/include/qt4/QtGui/QCommandLinkButton
+qcommandlinkbutton.h
+/usr/include/qt4/QtGui/qcommandlinkbutton.h
+
 /usr/include/qt4/QtGui/QCommonStyle
 qcommonstyle.h
 /usr/include/qt4/QtGui/qcommonstyle.h
-
-/usr/include/qt4/QtGui/QDockWidget
-qdockwidget.h
-/usr/include/qt4/QtGui/qdockwidget.h
 
 /usr/include/qt4/QtGui/QFileDialog
 qfiledialog.h
@@ -2308,10 +2308,6 @@ qlabel.h
 qlayout.h
 /usr/include/qt4/QtGui/qlayout.h
 
-/usr/include/qt4/QtGui/QLineEdit
-qlineedit.h
-/usr/include/qt4/QtGui/qlineedit.h
-
 /usr/include/qt4/QtGui/QListView
 qlistview.h
 /usr/include/qt4/QtGui/qlistview.h
@@ -2348,14 +2344,6 @@ qplatformwindow_qpa.h
 qprinter.h
 /usr/include/qt4/QtGui/qprinter.h
 
-/usr/include/qt4/QtGui/QPushButton
-qpushbutton.h
-/usr/include/qt4/QtGui/qpushbutton.h
-
-/usr/include/qt4/QtGui/QSpacerItem
-qlayoutitem.h
-/usr/include/qt4/QtGui/qlayoutitem.h
-
 /usr/include/qt4/QtGui/QStatusBar
 qstatusbar.h
 /usr/include/qt4/QtGui/qstatusbar.h
@@ -2371,10 +2359,6 @@ qtabwidget.h
 /usr/include/qt4/QtGui/QTransform
 qtransform.h
 /usr/include/qt4/QtGui/qtransform.h
-
-/usr/include/qt4/QtGui/QVBoxLayout
-qboxlayout.h
-/usr/include/qt4/QtGui/qboxlayout.h
 
 /usr/include/qt4/QtGui/QVector3D
 qvector3d.h
@@ -4645,7 +4629,7 @@ QtGui/QButtonGroup
 -
 QtGui/QCheckBox
 -
-QtGui/QDockWidget
+QtGui/QCommandLinkButton
 -
 QtGui/QFrame
 -
@@ -4659,8 +4643,6 @@ QtGui/QHeaderView
 -
 QtGui/QLabel
 -
-QtGui/QLineEdit
--
 QtGui/QListView
 -
 QtGui/QMainWindow
@@ -4669,15 +4651,9 @@ QtGui/QMenu
 -
 QtGui/QMenuBar
 -
-QtGui/QPushButton
--
-QtGui/QSpacerItem
--
 QtGui/QStatusBar
 -
 QtGui/QTabWidget
--
-QtGui/QVBoxLayout
 -
 QtGui/QWidget
 -

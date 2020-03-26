@@ -22,23 +22,25 @@ static const uint qt_meta_data_rover__QNode[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       13,   30,   30,   30, 0x05,
       31,   30,   30,   30, 0x05,
+      45,   68,   30,   30, 0x05,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_rover__QNode[] = {
     "rover::QNode\0loggingUpdated()\0\0"
-    "rosShutdown()\0"
+    "rosShutdown()\0slamStateChanged(char)\0"
+    "flag\0"
 };
 
 void rover::QNode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -49,10 +51,10 @@ void rover::QNode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         switch (_id) {
         case 0: _t->loggingUpdated(); break;
         case 1: _t->rosShutdown(); break;
+        case 2: _t->slamStateChanged((*reinterpret_cast< char(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData rover::QNode::staticMetaObjectExtraData = {
@@ -87,9 +89,9 @@ int rover::QNode::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }
@@ -104,5 +106,12 @@ void rover::QNode::loggingUpdated()
 void rover::QNode::rosShutdown()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, 0);
+}
+
+// SIGNAL 2
+void rover::QNode::slamStateChanged(char _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_END_MOC_NAMESPACE
