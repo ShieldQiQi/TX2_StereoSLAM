@@ -21,7 +21,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <robot name="stereolabs_camera" xmlns:xacro="http://ros.org/wiki/xacro">
 
 <!-- Includes -->
-    <xacro:include filename="$(find zed_wrapper)/urdf/include/materials.urdf.xacro" />
+    <xacro:include filename="$(find tx2_slam)/urdf/include/materials.urdf.xacro" />
 
     <!-- Arguments -->
 
@@ -62,9 +62,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     <link name="$(arg camera_name)_camera_center">
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="1.57 0 0"/>
             <geometry>
-                <mesh filename="package://tx2_slam/urdf/models/${model}.stl" />
+                <mesh filename="package://tx2_slam/urdf/models/robot_asm.stl" />
             </geometry>
             <material name="${model}_mat" />
         </visual>

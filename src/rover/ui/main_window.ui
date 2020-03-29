@@ -447,7 +447,7 @@ border-color: rgb(85, 87, 83);</string>
        <locale language="English" country="Australia"/>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_status">
        <attribute name="title">
@@ -484,7 +484,7 @@ border-color: rgb(85, 87, 83);</string>
             <bool>true</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true">border-radius:12px; 
+            <string notr="true">border:1px solid;
 background-color: rgba(44, 0, 30, 255);
 </string>
            </property>
@@ -524,12 +524,16 @@ background-color: rgba(44, 0, 30, 255);
            <property name="enabled">
             <bool>true</bool>
            </property>
+           <property name="cursor" stdset="0">
+            <cursorShape>IBeamCursor</cursorShape>
+           </property>
            <property name="autoFillBackground">
             <bool>true</bool>
            </property>
            <property name="styleSheet">
-            <string notr="true">border-radius:12px; 
-background-color: rgba(44, 0, 30, 255);</string>
+            <string notr="true">border:1px solid;
+background-color: rgba(44, 0, 30, 255);
+</string>
            </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::ContiguousSelection</enum>
@@ -539,9 +543,27 @@ background-color: rgba(44, 0, 30, 255);</string>
         </layout>
        </widget>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="slam_map">
        <attribute name="title">
-        <string>Car Dynamic Parameters</string>
+        <string>Dynamic 2D map</string>
+       </attribute>
+       <widget class="QCustomPlot" name="customPlot" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>601</width>
+          <height>401</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Dynamic Values</string>
        </attribute>
       </widget>
      </widget>
@@ -649,6 +671,14 @@ background-color: rgba(44, 0, 30, 255);</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>
   <include location="../../qt_ros_ui/qt_ros/qt_tutorials/resources/images.qrc"/>

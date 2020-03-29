@@ -116,6 +116,7 @@ eef1dffe52ab5531d7c8e6df19c1b4f4 qt_ros_ui/qt_ros/qt_tutorials/qadd_server/moc_q
 2d8338d24372135c0038ade2347f2832 qt_ros_ui/qt_ros/qt_tutorials/qlistener/moc_listener.cxx
 d0d26526e490bc8e080346dca2e95e58 qt_ros_ui/qt_ros/qt_tutorials/qtalker/moc_talker.cxx
 da2486e06aa17d3a4d37f1f19e58dd2a rover/include/rover/moc_main_window.cxx
+4bd00f100fbe2a34f2b380f9998d86e6 rover/include/rover/moc_qcustomplot.cxx
 a85c410cea45b6d2fb88e11722715b67 rover/include/rover/moc_qnode.cxx
 9c6abce7de390fcc06fae306a80c018e rover/qrc_images.cxx
 5247922c66cff4b5c8c03b74c7deabd6 rover/ui_main_window.h

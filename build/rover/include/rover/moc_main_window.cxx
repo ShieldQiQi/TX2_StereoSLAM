@@ -22,7 +22,7 @@ static const uint qt_meta_data_rover__MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,8 +31,11 @@ static const uint qt_meta_data_rover__MainWindow[] = {
 
  // slots: signature, parameters, type, tag, flags
       18,   58,   58,   58, 0x0a,
-      59,   58,   58,   58, 0x0a,
-      79,  106,   58,   58, 0x0a,
+      59,   86,   58,   58, 0x0a,
+      92,   58,   58,   58, 0x0a,
+     112,  139,   58,   58, 0x0a,
+     144,   58,   58,   58, 0x0a,
+     156,   58,   58,   58, 0x0a,
 
        0        // eod
 };
@@ -40,8 +43,9 @@ static const uint qt_meta_data_rover__MainWindow[] = {
 static const char qt_meta_stringdata_rover__MainWindow[] = {
     "rover::MainWindow\0"
     "on_actionAbout_this_program_triggered()\0"
-    "\0updateLoggingView()\0changeStateIndicator(char)\0"
-    "flag\0"
+    "\0mouseDcEvent(QMouseEvent*)\0event\0"
+    "updateLoggingView()\0changeStateIndicator(char)\0"
+    "flag\0updateMap()\0updateCloud()\0"
 };
 
 void rover::MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -51,8 +55,11 @@ void rover::MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
         case 0: _t->on_actionAbout_this_program_triggered(); break;
-        case 1: _t->updateLoggingView(); break;
-        case 2: _t->changeStateIndicator((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 1: _t->mouseDcEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 2: _t->updateLoggingView(); break;
+        case 3: _t->changeStateIndicator((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 4: _t->updateMap(); break;
+        case 5: _t->updateCloud(); break;
         default: ;
         }
     }
@@ -90,9 +97,9 @@ int rover::MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 6;
     }
     return _id;
 }

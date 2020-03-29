@@ -1,6 +1,9 @@
 -I/opt/ros/melodic/include
 -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp
 -I/usr/include
+-I/home/qi/catkin_qi/src/rover/include/rover
+-I/usr/include/pcl-1.8
+-I/usr/include
 -I/usr/include/qt4
 -I/usr/include/qt4/QtGui
 -I/usr/include/qt4/QtCore

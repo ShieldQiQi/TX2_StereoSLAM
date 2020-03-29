@@ -12,7 +12,7 @@
 #include <QtGui>
 #include <QMessageBox>
 #include <iostream>
-#include "../include/rover/main_window.hpp"
+#include "main_window.hpp"
 
 /*****************************************************************************
 ** Namespaces
@@ -38,6 +38,9 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 	ui.tab_manager->setCurrentIndex(0); // ensure the first tab is showing - qt-designer should have this already hardwired, but often loses it (settings?).
     QObject::connect(&qnode, SIGNAL(rosShutdown()), this, SLOT(close()));
     QObject::connect(&qnode, SIGNAL(slamStateChanged(char)), this, SLOT(changeStateIndicator(char)));
+    QObject::connect(&qnode, SIGNAL(slamMapUpdated()), this, SLOT(updateMap()));
+    QObject::connect(&qnode, SIGNAL(cloudUpdated()), this, SLOT(updateCloud()));
+    QObject::connect(ui.customPlot,SIGNAL(mouseDoubleClick(QMouseEvent *)),this,SLOT(mouseDcEvent(QMouseEvent *)));
 
 	/*********************
 	** Logging
@@ -56,6 +59,21 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
     if ( !qnode.init() ) {
         showNoMasterMessage();
     }
+
+    // create graph and assign data to it:
+    ui.customPlot->setInteraction(QCP::iRangeDrag, true);
+    ui.customPlot->setInteraction(QCP::iRangeZoom, true);
+    ui.customPlot->setInteraction(QCP::iSelectPlottables, true);
+//    ui.customPlot->legend->setVisible(true);
+//    ui.customPlot->legend->setBrush(QColor(255,255,255,0));
+
+    ui.customPlot->addGraph();
+    ui.customPlot->addGraph();
+    ui.customPlot->addGraph();
+    ui.customPlot->addGraph();
+
+    ui.customPlot->xAxis->setLabel("x");
+    ui.customPlot->yAxis->setLabel("y");
 }
 
 MainWindow::~MainWindow() {}
@@ -69,6 +87,74 @@ void MainWindow::showNoMasterMessage() {
 	msgBox.setText("Couldn't find the ros master.");
 	msgBox.exec();
     close();
+}
+
+void MainWindow::updateMap()
+{
+    QVector<double> x(qnode.cloudFused_xyz.width), y(qnode.cloudFused_xyz.width); // initialize with entries 0..100
+    for (int i=0; i<qnode.cloudFused_xyz.width; i++)
+    {
+      x[i] = qnode.cloudFused_xyz.at(i).x; // x goes from -1 to 1
+      y[i] = qnode.cloudFused_xyz.at(i).y; // let's plot a quadratic function
+    }
+    ui.customPlot->graph(0)->setData(x, y);
+    ui.customPlot->graph(0)->setPen(QPen(Qt::yellow));
+    ui.customPlot->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui.customPlot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 2));
+
+    QVector<double> x_pose(1), y_pose(1);
+    x_pose[0] = qnode.carTF.pose.position.x;
+    y_pose[0] = qnode.carTF.pose.position.y;
+    ui.customPlot->graph(1)->setData(x_pose,y_pose);
+    ui.customPlot->graph(1)->setPen(QPen(Qt::red));
+    ui.customPlot->graph(1)->setLineStyle(QCPGraph::lsNone);
+    ui.customPlot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCrossCircle, 10));
+
+    // set axes ranges, so we see all data:
+//    ui.customPlot->xAxis->setRange(-1, 1);
+//    ui.customPlot->yAxis->setRange(0, 1);
+    ui.customPlot->replot();
+}
+
+void MainWindow::updateCloud()
+{
+    QVector<double> x(qnode.cloud_xyz.width), y(qnode.cloud_xyz.width); // initialize with entries 0..100
+    for (int i=0; i<qnode.cloud_xyz.width; i++)
+    {
+      x[i] = qnode.cloud_xyz.at(i).x; // x goes from -1 to 1
+      y[i] = qnode.cloud_xyz.at(i).y; // let's plot a quadratic function
+    }
+    ui.customPlot->graph(3)->setData(x, y);
+    ui.customPlot->graph(3)->setPen(QPen(Qt::green));
+    ui.customPlot->graph(3)->setLineStyle(QCPGraph::lsNone);
+    ui.customPlot->graph(3)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 2));
+
+    ui.customPlot->replot();
+}
+
+void MainWindow::mouseDcEvent(QMouseEvent *event)
+{
+  if(QMessageBox::Yes == QMessageBox::question(this,"confirm it","are you sure to make this point a target?",QMessageBox::Yes | QMessageBox:: No))
+  {
+    double x = event->pos().x();
+    double y = event->pos().y();
+    double x_ = ui.customPlot->xAxis->pixelToCoord(x);
+    double y_ = ui.customPlot->yAxis->pixelToCoord(y);
+    QVector<double> x_pose(1), y_pose(1);
+    x_pose[0] = x_;
+    y_pose[0] = y_;
+    ui.customPlot->graph(2)->setData(x_pose,y_pose);
+    ui.customPlot->graph(2)->setPen(QPen(Qt::blue));
+    ui.customPlot->graph(2)->setLineStyle(QCPGraph::lsNone);
+    ui.customPlot->graph(2)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCrossCircle, 10));
+
+    ui.customPlot->replot();
+  }
+
+
+//  QString *str = new QString;
+//  *str = QString("X: Y:");
+//  QToolTip::showText(cursor().pos(),*str);
 }
 
 void MainWindow::changeStateIndicator(char flag)

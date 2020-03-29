@@ -15,6 +15,7 @@
 #include <QtGui/QMainWindow>
 #include "ui_main_window.h"
 #include "qnode.hpp"
+#include "qcustomplot.h"
 
 /*****************************************************************************
 ** Namespace
@@ -49,12 +50,15 @@ public Q_SLOTS:
     void on_actionAbout_this_program_triggered();
 //	void on_button_connect_clicked(bool check );
 //	void on_checkbox_use_environment_stateChanged(int state);
+    void mouseDcEvent(QMouseEvent *event);
 
     /******************************************
     ** Manual connections
     *******************************************/
     void updateLoggingView(); // no idea why this can't connect automatically
     void changeStateIndicator(char flag);
+    void updateMap();
+    void updateCloud();
 
 private:
 	Ui::MainWindowDesign ui;

@@ -84,9 +84,14 @@ rover/include/rover/moc_qnode.cxx: rover/include/rover/moc_qnode.cxx_parameters
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating include/rover/moc_qnode.cxx"
 	cd /home/qi/catkin_qi/build/rover/include/rover && /usr/lib/aarch64-linux-gnu/qt4/bin/moc @/home/qi/catkin_qi/build/rover/include/rover/moc_qnode.cxx_parameters
 
+rover/include/rover/moc_qcustomplot.cxx: /home/qi/catkin_qi/src/rover/include/rover/qcustomplot.h
+rover/include/rover/moc_qcustomplot.cxx: rover/include/rover/moc_qcustomplot.cxx_parameters
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating include/rover/moc_qcustomplot.cxx"
+	cd /home/qi/catkin_qi/build/rover/include/rover && /usr/lib/aarch64-linux-gnu/qt4/bin/moc @/home/qi/catkin_qi/build/rover/include/rover/moc_qcustomplot.cxx_parameters
+
 rover/CMakeFiles/rover.dir/src/main.cpp.o: rover/CMakeFiles/rover.dir/flags.make
 rover/CMakeFiles/rover.dir/src/main.cpp.o: /home/qi/catkin_qi/src/rover/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object rover/CMakeFiles/rover.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object rover/CMakeFiles/rover.dir/src/main.cpp.o"
 	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rover.dir/src/main.cpp.o -c /home/qi/catkin_qi/src/rover/src/main.cpp
 
 rover/CMakeFiles/rover.dir/src/main.cpp.i: cmake_force
@@ -110,7 +115,7 @@ rover/CMakeFiles/rover.dir/src/main.cpp.o.provides.build: rover/CMakeFiles/rover
 
 rover/CMakeFiles/rover.dir/src/main_window.cpp.o: rover/CMakeFiles/rover.dir/flags.make
 rover/CMakeFiles/rover.dir/src/main_window.cpp.o: /home/qi/catkin_qi/src/rover/src/main_window.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object rover/CMakeFiles/rover.dir/src/main_window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object rover/CMakeFiles/rover.dir/src/main_window.cpp.o"
 	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rover.dir/src/main_window.cpp.o -c /home/qi/catkin_qi/src/rover/src/main_window.cpp
 
 rover/CMakeFiles/rover.dir/src/main_window.cpp.i: cmake_force
@@ -132,9 +137,33 @@ rover/CMakeFiles/rover.dir/src/main_window.cpp.o.provides: rover/CMakeFiles/rove
 rover/CMakeFiles/rover.dir/src/main_window.cpp.o.provides.build: rover/CMakeFiles/rover.dir/src/main_window.cpp.o
 
 
+rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o: rover/CMakeFiles/rover.dir/flags.make
+rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o: /home/qi/catkin_qi/src/rover/src/qcustomplot.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o"
+	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rover.dir/src/qcustomplot.cpp.o -c /home/qi/catkin_qi/src/rover/src/qcustomplot.cpp
+
+rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rover.dir/src/qcustomplot.cpp.i"
+	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/qi/catkin_qi/src/rover/src/qcustomplot.cpp > CMakeFiles/rover.dir/src/qcustomplot.cpp.i
+
+rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rover.dir/src/qcustomplot.cpp.s"
+	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/qi/catkin_qi/src/rover/src/qcustomplot.cpp -o CMakeFiles/rover.dir/src/qcustomplot.cpp.s
+
+rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o.requires:
+
+.PHONY : rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o.requires
+
+rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o.provides: rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o.requires
+	$(MAKE) -f rover/CMakeFiles/rover.dir/build.make rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o.provides.build
+.PHONY : rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o.provides
+
+rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o.provides.build: rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o
+
+
 rover/CMakeFiles/rover.dir/src/qnode.cpp.o: rover/CMakeFiles/rover.dir/flags.make
 rover/CMakeFiles/rover.dir/src/qnode.cpp.o: /home/qi/catkin_qi/src/rover/src/qnode.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object rover/CMakeFiles/rover.dir/src/qnode.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object rover/CMakeFiles/rover.dir/src/qnode.cpp.o"
 	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rover.dir/src/qnode.cpp.o -c /home/qi/catkin_qi/src/rover/src/qnode.cpp
 
 rover/CMakeFiles/rover.dir/src/qnode.cpp.i: cmake_force
@@ -158,7 +187,7 @@ rover/CMakeFiles/rover.dir/src/qnode.cpp.o.provides.build: rover/CMakeFiles/rove
 
 rover/CMakeFiles/rover.dir/qrc_images.cxx.o: rover/CMakeFiles/rover.dir/flags.make
 rover/CMakeFiles/rover.dir/qrc_images.cxx.o: rover/qrc_images.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object rover/CMakeFiles/rover.dir/qrc_images.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object rover/CMakeFiles/rover.dir/qrc_images.cxx.o"
 	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rover.dir/qrc_images.cxx.o -c /home/qi/catkin_qi/build/rover/qrc_images.cxx
 
 rover/CMakeFiles/rover.dir/qrc_images.cxx.i: cmake_force
@@ -182,7 +211,7 @@ rover/CMakeFiles/rover.dir/qrc_images.cxx.o.provides.build: rover/CMakeFiles/rov
 
 rover/CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.o: rover/CMakeFiles/rover.dir/flags.make
 rover/CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.o: rover/include/rover/moc_main_window.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object rover/CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object rover/CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.o"
 	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.o -c /home/qi/catkin_qi/build/rover/include/rover/moc_main_window.cxx
 
 rover/CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.i: cmake_force
@@ -206,7 +235,7 @@ rover/CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.o.provides.build: r
 
 rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o: rover/CMakeFiles/rover.dir/flags.make
 rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o: rover/include/rover/moc_qnode.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o"
 	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o -c /home/qi/catkin_qi/build/rover/include/rover/moc_qnode.cxx
 
 rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.i: cmake_force
@@ -228,27 +257,251 @@ rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o.provides: rover/CMakeFi
 rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o.provides.build: rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o
 
 
+rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o: rover/CMakeFiles/rover.dir/flags.make
+rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o: rover/include/rover/moc_qcustomplot.cxx
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o"
+	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o -c /home/qi/catkin_qi/build/rover/include/rover/moc_qcustomplot.cxx
+
+rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.i"
+	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/qi/catkin_qi/build/rover/include/rover/moc_qcustomplot.cxx > CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.i
+
+rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.s"
+	cd /home/qi/catkin_qi/build/rover && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/qi/catkin_qi/build/rover/include/rover/moc_qcustomplot.cxx -o CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.s
+
+rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o.requires:
+
+.PHONY : rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o.requires
+
+rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o.provides: rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o.requires
+	$(MAKE) -f rover/CMakeFiles/rover.dir/build.make rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o.provides.build
+.PHONY : rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o.provides
+
+rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o.provides.build: rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o
+
+
 # Object files for target rover
 rover_OBJECTS = \
 "CMakeFiles/rover.dir/src/main.cpp.o" \
 "CMakeFiles/rover.dir/src/main_window.cpp.o" \
+"CMakeFiles/rover.dir/src/qcustomplot.cpp.o" \
 "CMakeFiles/rover.dir/src/qnode.cpp.o" \
 "CMakeFiles/rover.dir/qrc_images.cxx.o" \
 "CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.o" \
-"CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o"
+"CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o" \
+"CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o"
 
 # External object files for target rover
 rover_EXTERNAL_OBJECTS =
 
 /home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/src/main.cpp.o
 /home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/src/main_window.cpp.o
+/home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o
 /home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/src/qnode.cpp.o
 /home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/qrc_images.cxx.o
 /home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.o
 /home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o
+/home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o
 /home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/build.make
 /home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libQtGui.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libQtCore.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libpcl_ros_filter.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libpcl_ros_tf.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_kdtree.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_search.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_features.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_sample_consensus.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_filters.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_ml.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_segmentation.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_surface.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libqhull.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libflann_cpp_s.a
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libdynamic_reconfigure_config_init_mutex.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libnodeletlib.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libbondcpp.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_common.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_octree.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpcl_io.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libboost_iostreams.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libboost_serialization.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/libOpenNI.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/libOpenNI2.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkChartsCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkCommonColor-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkCommonDataModel-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkCommonMath-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkCommonCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtksys-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkCommonMisc-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkCommonSystem-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkCommonTransforms-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkInfovisCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersExtraction-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkCommonExecutionModel-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeneral-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkCommonComputationalGeometry-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersStatistics-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingFourier-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkalglib-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingContext2D-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeometry-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersSources-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingFreeType-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libfreetype.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libz.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkftgl-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkDICOMParser-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkDomainsChemistry-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOXML-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOGeometry-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOXMLParser-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libexpat.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersAMR-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkParallelCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOLegacy-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersFlowPaths-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersGeneric-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersHybrid-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingSources-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersHyperTree-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersImaging-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingGeneral-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersModeling-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersParallel-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersParallelFlowPaths-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkParallelMPI-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersParallelGeometry-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersParallelImaging-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersParallelMPI-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersParallelStatistics-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersProgrammable-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersPython-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkWrappingPython27Core-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/libvtkWrappingTools-6.3.a
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersReebGraph-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersSMP-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersSelection-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersTexture-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkFiltersVerdict-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkverdict-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkGUISupportQt-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkInteractionStyle-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingOpenGL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingHybrid-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOImage-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkmetaio-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libjpeg.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpng.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libtiff.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkGUISupportQtOpenGL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkGUISupportQtSQL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOSQL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libsqlite3.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkGUISupportQtWebkit-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkViewsQt-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkViewsInfovis-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkInfovisLayout-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkInfovisBoostGraphAlgorithms-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingLabel-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkViewsCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkInteractionWidgets-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingAnnotation-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingColor-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingVolume-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkGeovisCore-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libproj.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOAMR-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/hdf5/openmpi/libhdf5.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libsz.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libm.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/openmpi/lib/libmpi.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOEnSight-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOExodus-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkexoIIc-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libnetcdf_c++.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libnetcdf.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOExport-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingGL2PS-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingContextOpenGL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libgl2ps.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOFFMPEG-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOMovie-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libtheoraenc.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libtheoradec.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libogg.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOGDAL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOGeoJSON-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOImport-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOInfovis-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libxml2.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOLSDyna-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOMINC-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOMPIImage-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOMPIParallel-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOParallel-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIONetCDF-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libjsoncpp.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOMySQL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOODBC-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOPLY-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOParallelExodus-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOParallelLSDyna-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOParallelNetCDF-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOParallelXML-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOPostgreSQL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOVPIC-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkVPIC-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOVideo-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkIOXdmf2-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkxdmf2-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingMath-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingMorphological-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingStatistics-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkImagingStencil-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkInteractionImage-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkLocalExample-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkParallelMPI4Py-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkPythonInterpreter-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingExternal-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingFreeTypeFontConfig-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingImage-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingLIC-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingLOD-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingMatplotlib-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingParallel-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingParallelLIC-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingQt-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingVolumeAMR-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkRenderingVolumeOpenGL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkTestingGenericBridge-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkTestingIOSQL-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkTestingRendering-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkViewsContext2D-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkViewsGeovis-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libvtkWrappingJava-6.3.so.6.3.0
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/librosbag.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/librosbag_storage.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libclass_loader.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/libPocoFoundation.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libdl.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libroslib.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/librospack.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpython2.7.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libboost_program_options.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libtinyxml2.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libroslz4.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/liblz4.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libtopic_tools.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libtf.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libtf2_ros.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libactionlib.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libmessage_filters.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libroscpp.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libboost_filesystem.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libboost_signals.so
@@ -257,8 +510,9 @@ rover_EXTERNAL_OBJECTS =
 /home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/librosconsole_backend_interface.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/liblog4cxx.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libboost_regex.so
-/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libroscpp_serialization.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libxmlrpcpp.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libtf2.so
+/home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libroscpp_serialization.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/librostime.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /opt/ros/melodic/lib/libcpp_common.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libboost_system.so
@@ -269,7 +523,7 @@ rover_EXTERNAL_OBJECTS =
 /home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libpthread.so
 /home/qi/catkin_qi/devel/lib/rover/rover: /usr/lib/aarch64-linux-gnu/libconsole_bridge.so.0.4
 /home/qi/catkin_qi/devel/lib/rover/rover: rover/CMakeFiles/rover.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable /home/qi/catkin_qi/devel/lib/rover/rover"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable /home/qi/catkin_qi/devel/lib/rover/rover"
 	cd /home/qi/catkin_qi/build/rover && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rover.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -279,10 +533,12 @@ rover/CMakeFiles/rover.dir/build: /home/qi/catkin_qi/devel/lib/rover/rover
 
 rover/CMakeFiles/rover.dir/requires: rover/CMakeFiles/rover.dir/src/main.cpp.o.requires
 rover/CMakeFiles/rover.dir/requires: rover/CMakeFiles/rover.dir/src/main_window.cpp.o.requires
+rover/CMakeFiles/rover.dir/requires: rover/CMakeFiles/rover.dir/src/qcustomplot.cpp.o.requires
 rover/CMakeFiles/rover.dir/requires: rover/CMakeFiles/rover.dir/src/qnode.cpp.o.requires
 rover/CMakeFiles/rover.dir/requires: rover/CMakeFiles/rover.dir/qrc_images.cxx.o.requires
 rover/CMakeFiles/rover.dir/requires: rover/CMakeFiles/rover.dir/include/rover/moc_main_window.cxx.o.requires
 rover/CMakeFiles/rover.dir/requires: rover/CMakeFiles/rover.dir/include/rover/moc_qnode.cxx.o.requires
+rover/CMakeFiles/rover.dir/requires: rover/CMakeFiles/rover.dir/include/rover/moc_qcustomplot.cxx.o.requires
 
 .PHONY : rover/CMakeFiles/rover.dir/requires
 
@@ -294,6 +550,7 @@ rover/CMakeFiles/rover.dir/depend: rover/qrc_images.cxx
 rover/CMakeFiles/rover.dir/depend: rover/ui_main_window.h
 rover/CMakeFiles/rover.dir/depend: rover/include/rover/moc_main_window.cxx
 rover/CMakeFiles/rover.dir/depend: rover/include/rover/moc_qnode.cxx
+rover/CMakeFiles/rover.dir/depend: rover/include/rover/moc_qcustomplot.cxx
 	cd /home/qi/catkin_qi/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/qi/catkin_qi/src /home/qi/catkin_qi/src/rover /home/qi/catkin_qi/build /home/qi/catkin_qi/build/rover /home/qi/catkin_qi/build/rover/CMakeFiles/rover.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : rover/CMakeFiles/rover.dir/depend
 

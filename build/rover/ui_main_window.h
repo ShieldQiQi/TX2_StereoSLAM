@@ -29,6 +29,7 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
 #include <QtGui/QWidget>
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -74,7 +75,9 @@ public:
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_5;
     QListView *view_logging_3;
-    QWidget *tab_3;
+    QWidget *slam_map;
+    QCustomPlot *customPlot;
+    QWidget *tab;
     QMenuBar *menubar;
     QMenu *menu_Setting;
     QMenu *menu_file;
@@ -275,7 +278,7 @@ public:
         view_logging_2->setObjectName(QString::fromUtf8("view_logging_2"));
         view_logging_2->viewport()->setProperty("cursor", QVariant(QCursor(Qt::IBeamCursor)));
         view_logging_2->setAutoFillBackground(true);
-        view_logging_2->setStyleSheet(QString::fromUtf8("border-radius:12px; \n"
+        view_logging_2->setStyleSheet(QString::fromUtf8("border:1px solid;\n"
 "background-color: rgba(44, 0, 30, 255);\n"
 ""));
         view_logging_2->setSelectionMode(QAbstractItemView::ContiguousSelection);
@@ -295,17 +298,26 @@ public:
         view_logging_3 = new QListView(groupBox_3);
         view_logging_3->setObjectName(QString::fromUtf8("view_logging_3"));
         view_logging_3->setEnabled(true);
+        view_logging_3->viewport()->setProperty("cursor", QVariant(QCursor(Qt::IBeamCursor)));
         view_logging_3->setAutoFillBackground(true);
-        view_logging_3->setStyleSheet(QString::fromUtf8("border-radius:12px; \n"
-"background-color: rgba(44, 0, 30, 255);"));
+        view_logging_3->setStyleSheet(QString::fromUtf8("border:1px solid;\n"
+"background-color: rgba(44, 0, 30, 255);\n"
+""));
         view_logging_3->setSelectionMode(QAbstractItemView::ContiguousSelection);
 
         gridLayout_5->addWidget(view_logging_3, 0, 0, 1, 1);
 
         tab_manager->addTab(slam_status, QString());
-        tab_3 = new QWidget();
-        tab_3->setObjectName(QString::fromUtf8("tab_3"));
-        tab_manager->addTab(tab_3, QString());
+        slam_map = new QWidget();
+        slam_map->setObjectName(QString::fromUtf8("slam_map"));
+        customPlot = new QCustomPlot(slam_map);
+        customPlot->setObjectName(QString::fromUtf8("customPlot"));
+        customPlot->setGeometry(QRect(10, 10, 601, 401));
+        customPlot->setStyleSheet(QString::fromUtf8(""));
+        tab_manager->addTab(slam_map, QString());
+        tab = new QWidget();
+        tab->setObjectName(QString::fromUtf8("tab"));
+        tab_manager->addTab(tab, QString());
 
         hboxLayout->addWidget(tab_manager);
 
@@ -340,7 +352,7 @@ public:
         retranslateUi(MainWindowDesign);
         QObject::connect(action_Quit, SIGNAL(triggered()), MainWindowDesign, SLOT(close()));
 
-        tab_manager->setCurrentIndex(1);
+        tab_manager->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindowDesign);
@@ -379,7 +391,8 @@ public:
         tab_manager->setTabText(tab_manager->indexOf(tab_status), QApplication::translate("MainWindowDesign", "Ros Communications", 0, QApplication::UnicodeUTF8));
         groupBox_3->setTitle(QApplication::translate("MainWindowDesign", "  This terminal show the feature points and status during mapping", 0, QApplication::UnicodeUTF8));
         tab_manager->setTabText(tab_manager->indexOf(slam_status), QApplication::translate("MainWindowDesign", "SLAM Status", 0, QApplication::UnicodeUTF8));
-        tab_manager->setTabText(tab_manager->indexOf(tab_3), QApplication::translate("MainWindowDesign", "Car Dynamic Parameters", 0, QApplication::UnicodeUTF8));
+        tab_manager->setTabText(tab_manager->indexOf(slam_map), QApplication::translate("MainWindowDesign", "Dynamic 2D map", 0, QApplication::UnicodeUTF8));
+        tab_manager->setTabText(tab_manager->indexOf(tab), QApplication::translate("MainWindowDesign", "Dynamic Values", 0, QApplication::UnicodeUTF8));
         menu_Setting->setTitle(QApplication::translate("MainWindowDesign", "&App", 0, QApplication::UnicodeUTF8));
         menu_file->setTitle(QApplication::translate("MainWindowDesign", "File", 0, QApplication::UnicodeUTF8));
         menu_about->setTitle(QApplication::translate("MainWindowDesign", "About", 0, QApplication::UnicodeUTF8));

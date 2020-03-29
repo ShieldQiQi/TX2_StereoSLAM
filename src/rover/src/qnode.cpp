@@ -15,7 +15,7 @@
 #include <string>
 #include <std_msgs/String.h>
 #include <sstream>
-#include "../include/rover/qnode.hpp"
+#include "qnode.hpp"
 
 /*****************************************************************************
 ** Namespaces
@@ -40,6 +40,35 @@ QNode::~QNode() {
 	wait();
 }
 
+void QNode::readTF(geometry_msgs::PoseStamped msg)
+{
+  carTF = msg;
+}
+
+void QNode::readPointFusedCloud(const pcl::PCLPointCloud2::ConstPtr& cloud)
+{
+  if ((cloud->width * cloud->height) == 0)
+    return;
+  pcl::fromPCLPointCloud2 (*cloud, cloudFused_xyz);
+
+  if(count++==3){
+    Q_EMIT slamMapUpdated();
+    count = 0;
+  }
+}
+
+void QNode::readPointCloud(const pcl::PCLPointCloud2::ConstPtr& cloud)
+{
+  if ((cloud->width * cloud->height) == 0)
+    return;
+  pcl::fromPCLPointCloud2 (*cloud, cloud_xyz);
+
+//  if(count++==3){
+  Q_EMIT cloudUpdated();
+//    count = 0;
+//  }
+}
+
 bool QNode::init() {
 	ros::init(init_argc,init_argv,"rover");
 	if ( ! ros::master::check() ) {
@@ -49,6 +78,13 @@ bool QNode::init() {
 	ros::NodeHandle n;
 	// Add your ros communications here.
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
+    pointFusedCloud_sub = n.subscribe("/zed2/zed_node/mapping/fused_cloud",1000,
+                                 &QNode::readPointFusedCloud, this);
+    pointCloud_sub = n.subscribe("/zed2/zed_node/point_cloud/cloud_registered",1000,
+                                 &QNode::readPointCloud, this);
+    carTF_sub = n.subscribe("/orb_slam2_stereo/pose",1000,
+                            &QNode::readTF, this);
+
 	start();
 	return true;
 }
@@ -80,16 +116,16 @@ void QNode::run() {
 		ss << "hello world " << count;
 		msg.data = ss.str();
         chatter_publisher.publish(msg);
-        log(Info,std::string("I sent: ")+msg.data);
+//        log(Info,std::string("I sent: ")+msg.data);
 		ros::spinOnce();
 		loop_rate.sleep();
 		++count;       
 
-        if(flag != 40){
-          Q_EMIT slamStateChanged(flag);
-          flag+=10;
-        }else
+        Q_EMIT slamStateChanged(flag);
+        flag+=10;
+        if(flag == 40){
           flag = 0;
+        }
 	}
 	std::cout << "Ros shutdown, proceeding to close the gui." << std::endl;
 	Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)

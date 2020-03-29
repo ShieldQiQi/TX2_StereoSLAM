@@ -22,17 +22,19 @@ static const uint qt_meta_data_rover__QNode[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       3,       // signalCount
+       5,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       13,   30,   30,   30, 0x05,
       31,   30,   30,   30, 0x05,
       45,   68,   30,   30, 0x05,
+      73,   30,   30,   30, 0x05,
+      90,   30,   30,   30, 0x05,
 
        0        // eod
 };
@@ -40,7 +42,7 @@ static const uint qt_meta_data_rover__QNode[] = {
 static const char qt_meta_stringdata_rover__QNode[] = {
     "rover::QNode\0loggingUpdated()\0\0"
     "rosShutdown()\0slamStateChanged(char)\0"
-    "flag\0"
+    "flag\0slamMapUpdated()\0cloudUpdated()\0"
 };
 
 void rover::QNode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,6 +54,8 @@ void rover::QNode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 0: _t->loggingUpdated(); break;
         case 1: _t->rosShutdown(); break;
         case 2: _t->slamStateChanged((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 3: _t->slamMapUpdated(); break;
+        case 4: _t->cloudUpdated(); break;
         default: ;
         }
     }
@@ -89,9 +93,9 @@ int rover::QNode::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
 }
@@ -113,5 +117,17 @@ void rover::QNode::slamStateChanged(char _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
+}
+
+// SIGNAL 3
+void rover::QNode::slamMapUpdated()
+{
+    QMetaObject::activate(this, &staticMetaObject, 3, 0);
+}
+
+// SIGNAL 4
+void rover::QNode::cloudUpdated()
+{
+    QMetaObject::activate(this, &staticMetaObject, 4, 0);
 }
 QT_END_MOC_NAMESPACE

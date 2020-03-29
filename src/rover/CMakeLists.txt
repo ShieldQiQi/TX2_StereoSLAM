@@ -10,12 +10,21 @@ project(rover)
 ##############################################################################
 
 # qt_build provides the qt cmake glue, roscpp the comms for a default talker
-find_package(catkin REQUIRED COMPONENTS qt_build roscpp)
-include_directories(${catkin_INCLUDE_DIRS})
+find_package(catkin REQUIRED COMPONENTS qt_build roscpp )
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+  include/rover
+  /usr/include/pcl-1.8
+  /usr/include
+)
 # Use this to define what the package will export (e.g. libs, headers).
 # Since the default here is to produce only a binary, we don't worry about
 # exporting anything. 
 catkin_package()
+
+find_package(catkin COMPONENTS
+  pcl_ros
+)
 
 ##############################################################################
 # Qt Environment
@@ -31,7 +40,7 @@ rosbuild_prepare_qt4(QtCore QtGui) # Add the appropriate components to the compo
 
 file(GLOB QT_FORMS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ui/*.ui)
 file(GLOB QT_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} resources/*.qrc)
-file(GLOB_RECURSE QT_MOC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS include/rover/*.hpp)
+file(GLOB_RECURSE QT_MOC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS include/rover/*.hpp include/rover/*.h)
 
 QT4_ADD_RESOURCES(QT_RESOURCES_CPP ${QT_RESOURCES})
 QT4_WRAP_UI(QT_FORMS_HPP ${QT_FORMS})
@@ -47,7 +56,7 @@ file(GLOB_RECURSE QT_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINK
 # Binaries
 ##############################################################################
 
-add_executable(rover ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
+add_executable(rover ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP} ${PCL_LIBRARIES})
 target_link_libraries(rover ${QT_LIBRARIES} ${catkin_LIBRARIES})
 install(TARGETS rover RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 

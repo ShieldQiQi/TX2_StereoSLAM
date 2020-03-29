@@ -17,8 +17,8 @@ Camera.k3: 0.0
 
 # more to see https://www.stereolabs.com/docs/video/camera-controls/
 
-Camera.width: 2560
-Camera.height: 720
+Camera.width: 3840
+Camera.height: 1080
 Camera.fps: 30.0
 
 # stereo baseline(m) times fx

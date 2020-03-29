@@ -6,5 +6,5 @@ CXX_FLAGS = -O3 -DNDEBUG
 
 CXX_DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_NO_KEYWORDS -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"rover\"
 
-CXX_INCLUDES = -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -isystem /usr/include/qt4 -isystem /usr/include/qt4/QtGui -isystem /usr/include/qt4/QtCore -I/home/qi/catkin_qi/build/rover 
+CXX_INCLUDES = -I/opt/ros/melodic/include -I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/home/qi/catkin_qi/src/rover/include/rover -I/usr/include/pcl-1.8 -isystem /usr/include/qt4 -isystem /usr/include/qt4/QtGui -isystem /usr/include/qt4/QtCore -I/home/qi/catkin_qi/build/rover 
 
