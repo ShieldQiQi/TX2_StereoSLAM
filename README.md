@@ -25,8 +25,8 @@ Open a terminal, and run command below to start:
 
 ***
 
-<image src="https://github.com/ShieldQiQi/TX2_StereoSLAM/tree/master/Demo_Pictures/1.png" width="100" alt="Demo"/>
-<image src="https://github.com/ShieldQiQi/TX2_StereoSLAM/tree/master/Demo_Pictures/2.png" width="100" alt="Demo"/>
+<image src="https://github.com/ShieldQiQi/TX2_StereoSLAM/tree/master/Demo_Pictures/1.png" width="60" alt="Demo"/>
+<image src="https://github.com/ShieldQiQi/TX2_StereoSLAM/tree/master/Demo_Pictures/2.png" width="60" alt="Demo"/>
 
 ***
 
