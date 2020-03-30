@@ -4,6 +4,7 @@
 -I/home/qi/catkin_qi/src/rover/include/rover
 -I/usr/include/pcl-1.8
 -I/usr/include
+-I/usr/include/eigen3
 -I/usr/include/qt4
 -I/usr/include/qt4/QtGui
 -I/usr/include/qt4/QtCore

@@ -32,6 +32,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/home/qi/catkin_qi/src/rover/include/rover"
   "/usr/include/pcl-1.8"
+  "/usr/include/eigen3"
   "/usr/include/qt4"
   "/usr/include/qt4/QtGui"
   "/usr/include/qt4/QtCore"

@@ -377,6 +377,9 @@ EMPY_EXECUTABLE:FILEPATH=/usr/bin/empy
 //Empy script
 EMPY_SCRIPT:STRING=/usr/bin/empy
 
+//The directory containing a CMake configuration file for Eigen3.
+Eigen3_DIR:PATH=/usr/lib/cmake/eigen3
+
 //Build g2o with OpenMP support (EXPERIMENTAL)
 G2O_USE_OPENMP:BOOL=OFF
 

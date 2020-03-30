@@ -46,6 +46,7 @@ public:
     void readPointFusedCloud(const pcl::PCLPointCloud2::ConstPtr& cloud);
     void readPointCloud(const pcl::PCLPointCloud2::ConstPtr& cloud);
     void readTF(geometry_msgs::PoseStamped msg);
+    void readTFzed2(geometry_msgs::PoseStamped msg);
 	bool init(const std::string &master_url, const std::string &host_url);
 	void run();
 
@@ -62,7 +63,7 @@ public:
 
     char count = 0;
     pcl::PointCloud<pcl::PointXYZ> cloud_xyz,cloudFused_xyz;
-    geometry_msgs::PoseStamped carTF;
+    geometry_msgs::PoseStamped carTF,carTFzed2;
 	QStringListModel* loggingModel() { return &logging_model; }
 	void log( const LogLevel &level, const std::string &msg);
 
@@ -77,7 +78,7 @@ private:
 	int init_argc;
 	char** init_argv;
 	ros::Publisher chatter_publisher;
-    ros::Subscriber pointFusedCloud_sub,pointCloud_sub,carTF_sub;
+    ros::Subscriber pointFusedCloud_sub,pointCloud_sub,carTF_sub,carTFzed2_sub;
     QStringListModel logging_model;
 };
 

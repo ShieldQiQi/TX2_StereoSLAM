@@ -9,6 +9,8 @@ project(rover)
 # Catkin
 ##############################################################################
 
+find_package(Eigen3)
+
 # qt_build provides the qt cmake glue, roscpp the comms for a default talker
 find_package(catkin REQUIRED COMPONENTS qt_build roscpp )
 include_directories(
@@ -16,6 +18,7 @@ include_directories(
   include/rover
   /usr/include/pcl-1.8
   /usr/include
+  ${EIGEN3_INCLUDE_DIR}
 )
 # Use this to define what the package will export (e.g. libs, headers).
 # Since the default here is to produce only a binary, we don't worry about
@@ -57,6 +60,6 @@ file(GLOB_RECURSE QT_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINK
 ##############################################################################
 
 add_executable(rover ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP} ${PCL_LIBRARIES})
-target_link_libraries(rover ${QT_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(rover ${QT_LIBRARIES} ${catkin_LIBRARIES} ${EIGEN3_LIBS})
 install(TARGETS rover RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 

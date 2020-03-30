@@ -14,6 +14,9 @@
 #include <iostream>
 #include "main_window.hpp"
 
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
@@ -21,6 +24,7 @@
 namespace rover {
 
 using namespace Qt;
+using namespace Eigen;
 
 /*****************************************************************************
 ** Implementation [MainWindow]
@@ -118,18 +122,29 @@ void MainWindow::updateMap()
 
 void MainWindow::updateCloud()
 {
-    QVector<double> x(qnode.cloud_xyz.width), y(qnode.cloud_xyz.width); // initialize with entries 0..100
-    for (int i=0; i<qnode.cloud_xyz.width; i++)
-    {
-      x[i] = qnode.cloud_xyz.at(i).x; // x goes from -1 to 1
-      y[i] = qnode.cloud_xyz.at(i).y; // let's plot a quadratic function
-    }
-    ui.customPlot->graph(3)->setData(x, y);
-    ui.customPlot->graph(3)->setPen(QPen(Qt::green));
-    ui.customPlot->graph(3)->setLineStyle(QCPGraph::lsNone);
-    ui.customPlot->graph(3)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 2));
+  Quaterniond quaternion(qnode.carTFzed2.pose.orientation.w,
+                         qnode.carTFzed2.pose.orientation.x,
+                         qnode.carTFzed2.pose.orientation.y,
+                         qnode.carTFzed2.pose.orientation.z);
+  Matrix3d rotation_matrix;
+  rotation_matrix=quaternion.toRotationMatrix();
+  std::cout<<rotation_matrix<<std::endl;
 
-    ui.customPlot->replot();
+  QVector<double> x(qnode.cloud_xyz.width), y(qnode.cloud_xyz.width); // initialize with entries 0..100
+  for (int i=0; i<qnode.cloud_xyz.width; i++)
+  {
+    Vector3d position_(qnode.cloud_xyz.at(i).x,qnode.cloud_xyz.at(i).y,qnode.cloud_xyz.at(i).z);
+    Vector3d position = rotation_matrix*position_;
+    x[i] = position[0] + qnode.carTFzed2.pose.position.x;
+    y[i] = position[1] + qnode.carTFzed2.pose.position.y;
+  }
+
+  ui.customPlot->graph(3)->setData(x, y);
+  ui.customPlot->graph(3)->setPen(QPen(Qt::green));
+  ui.customPlot->graph(3)->setLineStyle(QCPGraph::lsNone);
+  ui.customPlot->graph(3)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 2));
+
+  ui.customPlot->replot();
 }
 
 void MainWindow::mouseDcEvent(QMouseEvent *event)

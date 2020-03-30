@@ -45,6 +45,11 @@ void QNode::readTF(geometry_msgs::PoseStamped msg)
   carTF = msg;
 }
 
+void QNode::readTFzed2(geometry_msgs::PoseStamped msg)
+{
+  carTFzed2 = msg;
+}
+
 void QNode::readPointFusedCloud(const pcl::PCLPointCloud2::ConstPtr& cloud)
 {
   if ((cloud->width * cloud->height) == 0)
@@ -84,6 +89,8 @@ bool QNode::init() {
                                  &QNode::readPointCloud, this);
     carTF_sub = n.subscribe("/orb_slam2_stereo/pose",1000,
                             &QNode::readTF, this);
+    carTFzed2_sub = n.subscribe("/zed2/zed_node/pose",1000,
+                            &QNode::readTFzed2, this);
 
 	start();
 	return true;
