@@ -83,9 +83,9 @@ bool QNode::init() {
 	ros::NodeHandle n;
 	// Add your ros communications here.
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
-    pointFusedCloud_sub = n.subscribe("/zed2/zed_node/mapping/fused_cloud",1000,
+    pointFusedCloud_sub = n.subscribe("/zed2/zed_node/mapping/fused_cloud",1,
                                  &QNode::readPointFusedCloud, this);
-    pointCloud_sub = n.subscribe("/zed2/zed_node/point_cloud/cloud_registered",1000,
+    pointCloud_sub = n.subscribe("/zed2/zed_node/point_cloud/cloud_registered",1,
                                  &QNode::readPointCloud, this);
     carTF_sub = n.subscribe("/orb_slam2_stereo/pose",1000,
                             &QNode::readTF, this);

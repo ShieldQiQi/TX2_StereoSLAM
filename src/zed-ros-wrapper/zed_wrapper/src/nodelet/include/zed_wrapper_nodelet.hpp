@@ -38,6 +38,7 @@
 #include <dynamic_reconfigure/server.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <sensor_msgs/JointState.h>
 #include <diagnostic_updater/diagnostic_updater.h>
 
 // Dynamic reconfiguration

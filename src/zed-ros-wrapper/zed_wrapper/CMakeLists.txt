@@ -52,6 +52,9 @@ find_package(catkin COMPONENTS
   diagnostic_updater  
   roslint
   zed_interfaces
+  pcl_conversions
+  pcl_ros
+  pcl_msgs
 )
 
 checkPackage("image_transport" "")
@@ -102,6 +105,8 @@ include_directories(
         ${ZED_INCLUDE_DIRS}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/include
         ${CMAKE_CURRENT_SOURCE_DIR}/src/nodelet/include
+        include /usr/include
+        /usr/include/pcl-1.8
 )
 
 link_directories(${ZED_LIBRARY_DIR})
@@ -124,7 +129,7 @@ target_link_libraries(ZEDWrapper ${LINK_LIBRARIES})
 add_dependencies(ZEDWrapper ${catkin_EXPORTED_TARGETS})
 add_dependencies(ZEDWrapper ${PROJECT_NAME}_gencfg)
 
-add_executable(zed_wrapper_node ${NODE_SRC})
+add_executable(zed_wrapper_node ${NODE_SRC}  ${PCL_LIBRARIES} )
 target_link_libraries(zed_wrapper_node ZEDWrapper ${LINK_LIBRARIES})
 add_dependencies(zed_wrapper_node ${catkin_EXPORTED_TARGETS})
 add_dependencies(zed_wrapper_node ${PROJECT_NAME}_gencfg)

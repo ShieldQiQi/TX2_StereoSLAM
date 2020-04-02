@@ -22,6 +22,10 @@
 
 #include <csignal>
 #include <chrono>
+#include <pcl_ros/filters/voxel_grid.h>
+#include <pcl_conversions/pcl_conversions.h>
+#include <pcl_ros/point_cloud.h>
+#include <pcl/io/pcd_io.h>
 
 #ifndef NDEBUG
 #include <ros/console.h>
@@ -35,9 +39,9 @@
 
 namespace zed_wrapper {
 
-#ifndef DEG2RAD
-#define DEG2RAD 0.017453293
-#define RAD2DEG 57.295777937
+#ifndef DEG2RAD_
+#define DEG2RAD_ 0.017453293
+#define RAD2DEG_ 57.295777937
 #endif
 
 #define MAG_FREQ    50.
@@ -1012,7 +1016,7 @@ bool ZEDWrapperNodelet::getCamera2BaseTransform() {
         NODELET_INFO(" * Translation: {%.3f,%.3f,%.3f}",
                      mCamera2BaseTransf.getOrigin().x(), mCamera2BaseTransf.getOrigin().y(), mCamera2BaseTransf.getOrigin().z());
         NODELET_INFO(" * Rotation: {%.3f,%.3f,%.3f}",
-                     roll * RAD2DEG, pitch * RAD2DEG, yaw * RAD2DEG);
+                     roll * RAD2DEG_, pitch * RAD2DEG_, yaw * RAD2DEG_);
 
     } catch (tf2::TransformException& ex) {
         NODELET_DEBUG_THROTTLE(1.0, "Transform error: %s", ex.what());
@@ -1056,7 +1060,7 @@ bool ZEDWrapperNodelet::getSens2CameraTransform() {
         NODELET_INFO(" * Translation: {%.3f,%.3f,%.3f}",
                      mSensor2CameraTransf.getOrigin().x(), mSensor2CameraTransf.getOrigin().y(), mSensor2CameraTransf.getOrigin().z());
         NODELET_INFO(" * Rotation: {%.3f,%.3f,%.3f}",
-                     roll * RAD2DEG, pitch * RAD2DEG, yaw * RAD2DEG);
+                     roll * RAD2DEG_, pitch * RAD2DEG_, yaw * RAD2DEG_);
     } catch (tf2::TransformException& ex) {
         NODELET_DEBUG_THROTTLE(1.0, "Transform error: %s", ex.what());
         NODELET_WARN_THROTTLE(1.0, "The tf from '%s' to '%s' is not available.",
@@ -1099,7 +1103,7 @@ bool ZEDWrapperNodelet::getSens2BaseTransform() {
         NODELET_INFO(" * Translation: {%.3f,%.3f,%.3f}",
                      mSensor2BaseTransf.getOrigin().x(), mSensor2BaseTransf.getOrigin().y(), mSensor2BaseTransf.getOrigin().z());
         NODELET_INFO(" * Rotation: {%.3f,%.3f,%.3f}",
-                     roll * RAD2DEG, pitch * RAD2DEG, yaw * RAD2DEG);
+                     roll * RAD2DEG_, pitch * RAD2DEG_, yaw * RAD2DEG_);
 
     } catch (tf2::TransformException& ex) {
         NODELET_DEBUG_THROTTLE(1.0, "Transform error: %s", ex.what());
@@ -1791,8 +1795,18 @@ void ZEDWrapperNodelet::publishPointCloud() {
     // We can do a direct memcpy since data organization is the same
     memcpy(ptCloudPtr, (float*)cpu_cloud, 4 * ptsCount * sizeof(float));
 
+//    pcl::PCLPointCloud2::Ptr cloudPtr;
+//    pcl::PCLPointCloud2 cloud_ = *cloudPtr;
+//    pcl::PointCloud<pcl::PointXYZRGB> pcl_cloud;
+//    pcl::fromROSMsg(*mPointcloudMsg, pcl_cloud);
+//    pcl::toPCLPointCloud2 (pcl_cloud, cloud_);
+
+//    pcl::VoxelGrid<pcl::PCLPointCloud2> sor;
+//    sor.setInputCloud (cloudPtr);
+//    sor.setLeafSize (0.1, 0.1, 0.1);
+//    sor.filter(cloud_);
     // Pointcloud publishing
-    mPubCloud.publish(mPointcloudMsg);
+    mPubCloud.publish(*mPointcloudMsg);
 }
 
 void ZEDWrapperNodelet::pubFusedPointCloudCallback(const ros::TimerEvent& e) {
@@ -2830,9 +2844,9 @@ void ZEDWrapperNodelet::pubSensCallback(const ros::TimerEvent& e) {
         mImuMsg->orientation.z = sens_data.imu.pose.getOrientation()[2];
         mImuMsg->orientation.w = sens_data.imu.pose.getOrientation()[3];
 
-        mImuMsg->angular_velocity.x = sens_data.imu.angular_velocity[0] * DEG2RAD;
-        mImuMsg->angular_velocity.y = sens_data.imu.angular_velocity[1] * DEG2RAD;
-        mImuMsg->angular_velocity.z = sens_data.imu.angular_velocity[2] * DEG2RAD;
+        mImuMsg->angular_velocity.x = sens_data.imu.angular_velocity[0] * DEG2RAD_;
+        mImuMsg->angular_velocity.y = sens_data.imu.angular_velocity[1] * DEG2RAD_;
+        mImuMsg->angular_velocity.z = sens_data.imu.angular_velocity[2] * DEG2RAD_;
 
         mImuMsg->linear_acceleration.x = sens_data.imu.linear_acceleration[0];
         mImuMsg->linear_acceleration.y = sens_data.imu.linear_acceleration[1];
@@ -2851,11 +2865,11 @@ void ZEDWrapperNodelet::pubSensCallback(const ros::TimerEvent& e) {
             }
 
             mImuMsg->orientation_covariance[i * 3 + 0] =
-                    sens_data.imu.pose_covariance.r[r * 3 + 0] * DEG2RAD * DEG2RAD;
+                    sens_data.imu.pose_covariance.r[r * 3 + 0] * DEG2RAD_ * DEG2RAD_;
             mImuMsg->orientation_covariance[i * 3 + 1] =
-                    sens_data.imu.pose_covariance.r[r * 3 + 1] * DEG2RAD * DEG2RAD;
+                    sens_data.imu.pose_covariance.r[r * 3 + 1] * DEG2RAD_ * DEG2RAD_;
             mImuMsg->orientation_covariance[i * 3 + 2] =
-                    sens_data.imu.pose_covariance.r[r * 3 + 2] * DEG2RAD * DEG2RAD;
+                    sens_data.imu.pose_covariance.r[r * 3 + 2] * DEG2RAD_ * DEG2RAD_;
 
             mImuMsg->linear_acceleration_covariance[i * 3 + 0] =
                     sens_data.imu.linear_acceleration_covariance.r[r * 3 + 0];
@@ -2865,11 +2879,11 @@ void ZEDWrapperNodelet::pubSensCallback(const ros::TimerEvent& e) {
                     sens_data.imu.linear_acceleration_covariance.r[r * 3 + 2];
 
             mImuMsg->angular_velocity_covariance[i * 3 + 0] =
-                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 0] * DEG2RAD * DEG2RAD;
+                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 0] * DEG2RAD_ * DEG2RAD_;
             mImuMsg->angular_velocity_covariance[i * 3 + 1] =
-                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 1] * DEG2RAD * DEG2RAD;
+                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 1] * DEG2RAD_ * DEG2RAD_;
             mImuMsg->angular_velocity_covariance[i * 3 + 2] =
-                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 2] * DEG2RAD * DEG2RAD;
+                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 2] * DEG2RAD_ * DEG2RAD_;
         }
 
         mPubImu.publish(mImuMsg);
@@ -2883,9 +2897,9 @@ void ZEDWrapperNodelet::pubSensCallback(const ros::TimerEvent& e) {
 
         mImuRawMsg->header.stamp = mFrameTimestamp; // t;
         mImuRawMsg->header.frame_id = mImuFrameId;
-        mImuRawMsg->angular_velocity.x = sens_data.imu.angular_velocity[0] * DEG2RAD;
-        mImuRawMsg->angular_velocity.y = sens_data.imu.angular_velocity[1] * DEG2RAD;
-        mImuRawMsg->angular_velocity.z = sens_data.imu.angular_velocity[2] * DEG2RAD;
+        mImuRawMsg->angular_velocity.x = sens_data.imu.angular_velocity[0] * DEG2RAD_;
+        mImuRawMsg->angular_velocity.y = sens_data.imu.angular_velocity[1] * DEG2RAD_;
+        mImuRawMsg->angular_velocity.z = sens_data.imu.angular_velocity[2] * DEG2RAD_;
         mImuRawMsg->linear_acceleration.x = sens_data.imu.linear_acceleration[0];
         mImuRawMsg->linear_acceleration.y = sens_data.imu.linear_acceleration[1];
         mImuRawMsg->linear_acceleration.z = sens_data.imu.linear_acceleration[2];
@@ -2909,11 +2923,11 @@ void ZEDWrapperNodelet::pubSensCallback(const ros::TimerEvent& e) {
             mImuRawMsg->linear_acceleration_covariance[i * 3 + 2] =
                     sens_data.imu.linear_acceleration_covariance.r[r * 3 + 2];
             mImuRawMsg->angular_velocity_covariance[i * 3 + 0] =
-                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 0] * DEG2RAD * DEG2RAD;
+                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 0] * DEG2RAD_ * DEG2RAD_;
             mImuRawMsg->angular_velocity_covariance[i * 3 + 1] =
-                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 1] * DEG2RAD * DEG2RAD;
+                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 1] * DEG2RAD_ * DEG2RAD_;
             mImuRawMsg->angular_velocity_covariance[i * 3 + 2] =
-                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 2] * DEG2RAD * DEG2RAD;
+                    sens_data.imu.angular_velocity_covariance.r[r * 3 + 2] * DEG2RAD_ * DEG2RAD_;
         }
 
         mImuRawMsg->orientation_covariance[0] =
@@ -3423,7 +3437,7 @@ void ZEDWrapperNodelet::device_poll_thread_func() {
                         NODELET_DEBUG("+++ Odometry [%s -> %s] - {%.3f,%.3f,%.3f} {%.3f,%.3f,%.3f}",
                                       mOdometryFrameId.c_str(), mBaseFrameId.c_str(),
                                       mOdom2BaseTransf.getOrigin().x(), mOdom2BaseTransf.getOrigin().y(), mOdom2BaseTransf.getOrigin().z(),
-                                      roll * RAD2DEG, pitch * RAD2DEG, yaw * RAD2DEG);
+                                      roll * RAD2DEG_, pitch * RAD2DEG_, yaw * RAD2DEG_);
 #endif
 
                         // Publish odometry message
@@ -3454,7 +3468,7 @@ void ZEDWrapperNodelet::device_poll_thread_func() {
                 NODELET_DEBUG("Sensor POSE [%s -> %s] - {%.2f,%.2f,%.2f} {%.2f,%.2f,%.2f}",
                               mLeftCamFrameId.c_str(), mMapFrameId.c_str(),
                               translation.x, translation.y, translation.z,
-                              roll * RAD2DEG, pitch * RAD2DEG, yaw * RAD2DEG);
+                              roll * RAD2DEG_, pitch * RAD2DEG_, yaw * RAD2DEG_);
 
                 NODELET_DEBUG_STREAM("MAP -> Tracking Status: " << sl::toString(mTrackingStatus));
 
@@ -3498,7 +3512,7 @@ void ZEDWrapperNodelet::device_poll_thread_func() {
                     NODELET_DEBUG("*** Base POSE [%s -> %s] - {%.3f,%.3f,%.3f} {%.3f,%.3f,%.3f}",
                                   mMapFrameId.c_str(), mBaseFrameId.c_str(),
                                   mMap2BaseTransf.getOrigin().x(), mMap2BaseTransf.getOrigin().y(), mMap2BaseTransf.getOrigin().z(),
-                                  roll * RAD2DEG, pitch * RAD2DEG, yaw * RAD2DEG);
+                                  roll * RAD2DEG_, pitch * RAD2DEG_, yaw * RAD2DEG_);
 #endif
 
                     bool initOdom = false;
@@ -3536,7 +3550,7 @@ void ZEDWrapperNodelet::device_poll_thread_func() {
                         NODELET_DEBUG("+++ Diff [%s -> %s] - {%.3f,%.3f,%.3f} {%.3f,%.3f,%.3f}",
                                       mMapFrameId.c_str(), mOdometryFrameId.c_str(),
                                       mMap2OdomTransf.getOrigin().x(), mMap2OdomTransf.getOrigin().y(), mMap2OdomTransf.getOrigin().z(),
-                                      roll * RAD2DEG, pitch * RAD2DEG, yaw * RAD2DEG);
+                                      roll * RAD2DEG_, pitch * RAD2DEG_, yaw * RAD2DEG_);
 #endif
                     }
 
@@ -3587,7 +3601,7 @@ void ZEDWrapperNodelet::device_poll_thread_func() {
             NODELET_DEBUG("*** Check [%s -> %s] - {%.3f,%.3f,%.3f} {%.3f,%.3f,%.3f}",
                           mMapFrameId.c_str(), mBaseFrameId.c_str(),
                           map_to_base.getOrigin().x(), map_to_base.getOrigin().y(), map_to_base.getOrigin().z(),
-                          roll * RAD2DEG, pitch * RAD2DEG, yaw * RAD2DEG);
+                          roll * RAD2DEG_, pitch * RAD2DEG_, yaw * RAD2DEG_);
 
             NODELET_DEBUG("*******************************");
 #endif

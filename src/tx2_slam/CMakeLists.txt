@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(tx2_slam)
 
+find_package(Eigen3)
 find_package(OpenCV 3.0 QUIET)
 if(NOT OpenCV_FOUND)
   message(FATAL_ERROR "OpenCV > 3.0.0 not found.")
@@ -16,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   pcl_conversions
   pcl_ros
   pcl_msgs
+  message_filters
 )
 
 catkin_package(
@@ -31,11 +33,12 @@ include_directories(
   /opt/ros/melodic/include
   include /usr/include
   /usr/include/pcl-1.8
+  ${EIGEN3_INCLUDE_DIR}
 )
 link_directories(/usr/lib)
 
 add_executable(MapBuild src/MapBuild.cpp)
-target_link_libraries(MapBuild ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} /usr/lib/libopencv_highgui.so.3.2.0)
+target_link_libraries(MapBuild ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} /usr/lib/libopencv_highgui.so.3.2.0 ${EIGEN3_LIBS})
 
 
 add_executable(MapLoad src/MapLoad.cpp)

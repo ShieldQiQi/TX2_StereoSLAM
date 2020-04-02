@@ -61,3 +61,16 @@ zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/src/zed_wrapper_node
  /opt/ros/melodic/include/rosconsole/macros_generated.h
  /opt/ros/melodic/include/xmlrpcpp/XmlRpcDecl.h
  /opt/ros/melodic/include/xmlrpcpp/XmlRpcValue.h
+ /usr/include/aarch64-linux-gnu/bits/select.h
+ /usr/include/aarch64-linux-gnu/bits/select2.h
+ /usr/include/aarch64-linux-gnu/bits/types.h
+ /usr/include/aarch64-linux-gnu/bits/types/__sigset_t.h
+ /usr/include/aarch64-linux-gnu/bits/types/sigset_t.h
+ /usr/include/aarch64-linux-gnu/bits/types/struct_timespec.h
+ /usr/include/aarch64-linux-gnu/bits/types/struct_timeval.h
+ /usr/include/aarch64-linux-gnu/bits/types/time_t.h
+ /usr/include/aarch64-linux-gnu/bits/typesizes.h
+ /usr/include/aarch64-linux-gnu/bits/wordsize.h
+ /usr/include/aarch64-linux-gnu/sys/select.h
+ /usr/include/aarch64-linux-gnu/sys/time.h
+ /usr/include/aarch64-linux-gnu/sys/timeb.h
