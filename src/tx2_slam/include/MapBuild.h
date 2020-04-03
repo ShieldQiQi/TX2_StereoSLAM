@@ -1,9 +1,11 @@
 # pragma once
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <sensor_msgs/Imu.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl_ros/filters/voxel_grid.h>
+#include <pcl_ros/filters/passthrough.h>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_eigen/tf2_eigen.h>
@@ -19,22 +21,25 @@ public:
     ~MapBuild();
     MapBuild(int argc, char** argv);
 
-//    void readPointCloud(const pcl::PCLPointCloud2::ConstPtr& cloud);
-//    void readTFzed2(geometry_msgs::PoseStamped msg);
-    void callback(const sensor_msgs::PointCloud2::ConstPtr& cloud, const geometry_msgs::PoseStamped::ConstPtr& pose);
+    void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
+    void carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose);
+    void buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud, const geometry_msgs::PoseStamped::ConstPtr& pose);
     bool init();
 
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::PointCloud2, geometry_msgs::PoseStamped> sync_pol;
     message_filters::Subscriber<sensor_msgs::PointCloud2> *pointCloud_sub;
-    message_filters::Subscriber<geometry_msgs::PoseStamped> *carTFzed2_sub;
+    message_filters::Subscriber<geometry_msgs::PoseStamped> *carTF_zed2_sub;
     message_filters::Synchronizer<sync_pol> *sync_;
 
-    ros::Subscriber carTF_sub;
     ros::Publisher pointCloudFused_pub;
+    ros::Subscriber imu_sub;
+    ros::Subscriber carTF_orb_sub;
 
     pcl::PointCloud<pcl::PointXYZRGB> cloud_xyz,cloud_xyzFused;
     sensor_msgs::PointCloud2 mPointcloudFusedMsg;
-    geometry_msgs::PoseStamped carTFzed2;
+    sensor_msgs::Imu imu_Msg;
+    geometry_msgs::PoseStamped carTF_zed2;
+    geometry_msgs::PoseStamped carTF_orb;
 
 private:
     int init_argc;

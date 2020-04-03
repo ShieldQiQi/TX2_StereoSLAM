@@ -60,6 +60,7 @@ tx2_slam/CMakeFiles/MapBuild.dir/src/MapBuild.cpp.o
  /opt/ros/melodic/include/pcl_ros/FilterConfig.h
  /opt/ros/melodic/include/pcl_ros/VoxelGridConfig.h
  /opt/ros/melodic/include/pcl_ros/filters/filter.h
+ /opt/ros/melodic/include/pcl_ros/filters/passthrough.h
  /opt/ros/melodic/include/pcl_ros/filters/voxel_grid.h
  /opt/ros/melodic/include/pcl_ros/pcl_nodelet.h
  /opt/ros/melodic/include/pcl_ros/point_cloud.h
@@ -123,6 +124,7 @@ tx2_slam/CMakeFiles/MapBuild.dir/src/MapBuild.cpp.o
  /opt/ros/melodic/include/rosconsole/macros_generated.h
  /opt/ros/melodic/include/sensor_msgs/ChannelFloat32.h
  /opt/ros/melodic/include/sensor_msgs/Image.h
+ /opt/ros/melodic/include/sensor_msgs/Imu.h
  /opt/ros/melodic/include/sensor_msgs/PointCloud.h
  /opt/ros/melodic/include/sensor_msgs/PointCloud2.h
  /opt/ros/melodic/include/sensor_msgs/PointField.h
@@ -399,8 +401,12 @@ tx2_slam/CMakeFiles/MapBuild.dir/src/MapBuild.cpp.o
  /usr/include/pcl-1.8/pcl/exceptions.h
  /usr/include/pcl-1.8/pcl/filters/boost.h
  /usr/include/pcl-1.8/pcl/filters/filter.h
+ /usr/include/pcl-1.8/pcl/filters/filter_indices.h
  /usr/include/pcl-1.8/pcl/filters/impl/filter.hpp
+ /usr/include/pcl-1.8/pcl/filters/impl/filter_indices.hpp
+ /usr/include/pcl-1.8/pcl/filters/impl/passthrough.hpp
  /usr/include/pcl-1.8/pcl/filters/impl/voxel_grid.hpp
+ /usr/include/pcl-1.8/pcl/filters/passthrough.h
  /usr/include/pcl-1.8/pcl/filters/voxel_grid.h
  /usr/include/pcl-1.8/pcl/for_each_type.h
  /usr/include/pcl-1.8/pcl/impl/cloud_iterator.hpp

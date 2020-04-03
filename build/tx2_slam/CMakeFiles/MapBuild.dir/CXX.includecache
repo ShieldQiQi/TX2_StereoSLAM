@@ -11,11 +11,15 @@ ros/ros.h
 -
 sensor_msgs/PointCloud2.h
 -
+sensor_msgs/Imu.h
+-
 pcl_conversions/pcl_conversions.h
 -
 pcl_ros/point_cloud.h
 -
 pcl_ros/filters/voxel_grid.h
+-
+pcl_ros/filters/passthrough.h
 -
 tf2_ros/buffer.h
 -
@@ -1036,6 +1040,12 @@ dynamic_reconfigure/server.h
 pcl_ros/FilterConfig.h
 /opt/ros/melodic/include/pcl_ros/filters/pcl_ros/FilterConfig.h
 
+/opt/ros/melodic/include/pcl_ros/filters/passthrough.h
+pcl/filters/passthrough.h
+-
+pcl_ros/filters/filter.h
+/opt/ros/melodic/include/pcl_ros/filters/pcl_ros/filters/filter.h
+
 /opt/ros/melodic/include/pcl_ros/filters/voxel_grid.h
 pcl/filters/voxel_grid.h
 -
@@ -1804,6 +1814,30 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 std_msgs/Header.h
+-
+
+/opt/ros/melodic/include/sensor_msgs/Imu.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+geometry_msgs/Quaternion.h
+-
+geometry_msgs/Vector3.h
+-
+geometry_msgs/Vector3.h
 -
 
 /opt/ros/melodic/include/sensor_msgs/PointCloud.h
@@ -3614,10 +3648,28 @@ pcl/PointIndices.h
 pcl/filters/impl/filter.hpp
 -
 
+/usr/include/pcl-1.8/pcl/filters/filter_indices.h
+pcl/filters/filter.h
+-
+pcl/filters/impl/filter_indices.hpp
+-
+
 /usr/include/pcl-1.8/pcl/filters/impl/filter.hpp
 pcl/pcl_macros.h
 -
 pcl/filters/filter.h
+-
+
+/usr/include/pcl-1.8/pcl/filters/impl/filter_indices.hpp
+pcl/pcl_macros.h
+-
+pcl/filters/filter_indices.h
+-
+
+/usr/include/pcl-1.8/pcl/filters/impl/passthrough.hpp
+pcl/filters/passthrough.h
+-
+pcl/common/io.h
 -
 
 /usr/include/pcl-1.8/pcl/filters/impl/voxel_grid.hpp
@@ -3628,6 +3680,12 @@ pcl/common/common.h
 pcl/common/io.h
 -
 pcl/filters/voxel_grid.h
+-
+
+/usr/include/pcl-1.8/pcl/filters/passthrough.h
+pcl/filters/filter_indices.h
+-
+pcl/filters/impl/passthrough.hpp
 -
 
 /usr/include/pcl-1.8/pcl/filters/voxel_grid.h
