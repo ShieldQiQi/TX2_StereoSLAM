@@ -23,11 +23,7 @@ Open a terminal, and run command below to start:
 
 ## Tiral
 
-***
-
 BLANK haha～
-
-***
 
 ## About
 

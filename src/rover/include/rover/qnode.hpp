@@ -22,6 +22,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <pcl_ros/point_cloud.h>
+#include <pcl_ros/filters/voxel_grid.h>
 #endif
 #include <string>
 #include <QThread>

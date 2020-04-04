@@ -10,10 +10,12 @@
 #include <tf2_ros/transform_listener.h>
 #include <tf2_eigen/tf2_eigen.h>
 #include <pcl/io/pcd_io.h>
+#include <pcl/registration/correspondence_estimation.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
+#include <math.h>
 
 class MapBuild
 {
@@ -35,11 +37,23 @@ public:
     ros::Subscriber imu_sub;
     ros::Subscriber carTF_orb_sub;
 
-    pcl::PointCloud<pcl::PointXYZRGB> cloud_xyz,cloud_xyzFused;
+    pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyz = new pcl::PointCloud<pcl::PointXYZRGB>;
+    pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyzFused = new pcl::PointCloud<pcl::PointXYZRGB>;
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_xyzPtr;
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_xyzFusedPtr;
+
     sensor_msgs::PointCloud2 mPointcloudFusedMsg;
     sensor_msgs::Imu imu_Msg;
     geometry_msgs::PoseStamped carTF_zed2;
     geometry_msgs::PoseStamped carTF_orb;
+
+    double timeNow = 0;
+    double timeLast = 0;
+    bool startTimer = 0;
+
+    float x_bias = 0;
+    float y_bias = 0;
+    float z_bias = 0;
 
 private:
     int init_argc;

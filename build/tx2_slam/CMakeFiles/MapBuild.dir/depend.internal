@@ -182,6 +182,8 @@ tx2_slam/CMakeFiles/MapBuild.dir/src/MapBuild.cpp.o
  /usr/include/aarch64-linux-gnu/sys/timeb.h
  /usr/include/eigen3/Eigen/Cholesky
  /usr/include/eigen3/Eigen/Core
+ /usr/include/eigen3/Eigen/Dense
+ /usr/include/eigen3/Eigen/Eigenvalues
  /usr/include/eigen3/Eigen/Geometry
  /usr/include/eigen3/Eigen/Householder
  /usr/include/eigen3/Eigen/Jacobi
@@ -323,6 +325,25 @@ tx2_slam/CMakeFiles/MapBuild.dir/src/MapBuild.cpp.o
  /usr/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h
  /usr/include/eigen3/Eigen/src/Core/util/StaticAssert.h
  /usr/include/eigen3/Eigen/src/Core/util/XprHelper.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/./ComplexSchur.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/./HessenbergDecomposition.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/./RealQZ.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/./RealSchur.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/./Tridiagonalization.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/ComplexEigenSolver.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/ComplexSchur.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/EigenSolver.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/HessenbergDecomposition.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/RealQZ.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/RealSchur.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h
+ /usr/include/eigen3/Eigen/src/Eigenvalues/Tridiagonalization.h
  /usr/include/eigen3/Eigen/src/Geometry/AlignedBox.h
  /usr/include/eigen3/Eigen/src/Geometry/AngleAxis.h
  /usr/include/eigen3/Eigen/src/Geometry/EulerAngles.h
@@ -374,6 +395,10 @@ tx2_slam/CMakeFiles/MapBuild.dir/src/MapBuild.cpp.o
  /usr/include/eigen3/Eigen/src/plugins/CommonCwiseUnaryOps.h
  /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
  /usr/include/eigen3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+ /usr/include/eigen3/unsupported/Eigen/Polynomials
+ /usr/include/eigen3/unsupported/Eigen/src/Polynomials/Companion.h
+ /usr/include/eigen3/unsupported/Eigen/src/Polynomials/PolynomialSolver.h
+ /usr/include/eigen3/unsupported/Eigen/src/Polynomials/PolynomialUtils.h
  /usr/include/pcl-1.8/pcl/ModelCoefficients.h
  /usr/include/pcl-1.8/pcl/PCLHeader.h
  /usr/include/pcl-1.8/pcl/PCLImage.h
@@ -388,13 +413,17 @@ tx2_slam/CMakeFiles/MapBuild.dir/src/MapBuild.cpp.o
  /usr/include/pcl-1.8/pcl/common/common.h
  /usr/include/pcl-1.8/pcl/common/concatenate.h
  /usr/include/pcl-1.8/pcl/common/copy_point.h
+ /usr/include/pcl-1.8/pcl/common/eigen.h
  /usr/include/pcl-1.8/pcl/common/impl/accumulators.hpp
  /usr/include/pcl-1.8/pcl/common/impl/centroid.hpp
  /usr/include/pcl-1.8/pcl/common/impl/common.hpp
  /usr/include/pcl-1.8/pcl/common/impl/copy_point.hpp
+ /usr/include/pcl-1.8/pcl/common/impl/eigen.hpp
  /usr/include/pcl-1.8/pcl/common/impl/io.hpp
+ /usr/include/pcl-1.8/pcl/common/impl/transforms.hpp
  /usr/include/pcl-1.8/pcl/common/io.h
  /usr/include/pcl-1.8/pcl/common/point_tests.h
+ /usr/include/pcl-1.8/pcl/common/transforms.h
  /usr/include/pcl-1.8/pcl/console/print.h
  /usr/include/pcl-1.8/pcl/conversions.h
  /usr/include/pcl-1.8/pcl/correspondence.h
@@ -417,11 +446,25 @@ tx2_slam/CMakeFiles/MapBuild.dir/src/MapBuild.cpp.o
  /usr/include/pcl-1.8/pcl/io/impl/pcd_io.hpp
  /usr/include/pcl-1.8/pcl/io/lzf.h
  /usr/include/pcl-1.8/pcl/io/pcd_io.h
+ /usr/include/pcl-1.8/pcl/kdtree/flann.h
+ /usr/include/pcl-1.8/pcl/kdtree/impl/kdtree_flann.hpp
+ /usr/include/pcl-1.8/pcl/kdtree/kdtree.h
+ /usr/include/pcl-1.8/pcl/kdtree/kdtree_flann.h
  /usr/include/pcl-1.8/pcl/pcl_base.h
  /usr/include/pcl-1.8/pcl/pcl_config.h
  /usr/include/pcl-1.8/pcl/pcl_exports.h
  /usr/include/pcl-1.8/pcl/pcl_macros.h
  /usr/include/pcl-1.8/pcl/point_cloud.h
+ /usr/include/pcl-1.8/pcl/point_representation.h
  /usr/include/pcl-1.8/pcl/point_traits.h
  /usr/include/pcl-1.8/pcl/point_types.h
  /usr/include/pcl-1.8/pcl/register_point_struct.h
+ /usr/include/pcl-1.8/pcl/registration/correspondence_estimation.h
+ /usr/include/pcl-1.8/pcl/registration/correspondence_types.h
+ /usr/include/pcl-1.8/pcl/registration/eigen.h
+ /usr/include/pcl-1.8/pcl/registration/impl/correspondence_estimation.hpp
+ /usr/include/pcl-1.8/pcl/registration/impl/correspondence_types.hpp
+ /usr/include/pcl-1.8/pcl/search/impl/kdtree.hpp
+ /usr/include/pcl-1.8/pcl/search/impl/search.hpp
+ /usr/include/pcl-1.8/pcl/search/kdtree.h
+ /usr/include/pcl-1.8/pcl/search/search.h

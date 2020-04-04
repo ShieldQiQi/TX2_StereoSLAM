@@ -40,68 +40,113 @@ void MapBuild::buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud
   if(imu_Msg.angular_velocity.x<0.1 && imu_Msg.angular_velocity.y<0.1 && imu_Msg.angular_velocity.z<0.1
      && imu_Msg.linear_acceleration.x<0.005 && imu_Msg.linear_acceleration.y<0.005 && imu_Msg.linear_acceleration.z<0.005)
   {
-    carTF_zed2 = *pose;
-//    ROS_WARN("\nthe offset from zed2Pose to orbPose2 is:\nx:%f   y:%f   z:%f \n-------------"
-//              ,carTF_zed2.pose.position.x - carTF_orb.pose.position.x
-//              ,carTF_zed2.pose.position.y - carTF_orb.pose.position.y
-//              ,carTF_zed2.pose.position.z - carTF_orb.pose.position.z);
-    // Perform the actual filtering
-    // VoxelGrid(decrease the memory occupation) & PassThrough(delete some incorrect points)
-    pcl::PCLPointCloud2* cloud2 = new pcl::PCLPointCloud2;
-    pcl::PCLPointCloud2ConstPtr cloudPtr(cloud2);
-    pcl_conversions::toPCL(*cloud, *cloud2);
-    // VoxelGrid
-    pcl::PCLPointCloud2* cloud_filtered_1 = new pcl::PCLPointCloud2;
-    pcl::PCLPointCloud2ConstPtr cloud_filter_1_Ptr(cloud_filtered_1);
-    pcl::VoxelGrid<pcl::PCLPointCloud2> filter_1;
-    filter_1.setInputCloud (cloudPtr);
-    filter_1.setLeafSize (0.05, 0.05, 0.05);
-    filter_1.filter(*cloud_filtered_1);
-    // PassThrough
-    pcl::PCLPointCloud2 cloud_filtered_2;
-    pcl::PassThrough<pcl::PCLPointCloud2> filter_2;
-    filter_2.setInputCloud (cloud_filter_1_Ptr);
-    filter_2.setFilterFieldName ("y");
-    filter_2.setFilterLimits (-1.5, 1.5);
-//    filter_2.setFilterLimitsNegative (true);
-    filter_2.filter(cloud_filtered_2);
-
-    if ((cloud_filtered_2.width * cloud_filtered_2.height) == 0)
-      return;
-    pcl::fromPCLPointCloud2 (cloud_filtered_2, cloud_xyz);
-
-    Quaterniond quaternion(carTF_zed2.pose.orientation.w,
-                           carTF_zed2.pose.orientation.x,
-                           carTF_zed2.pose.orientation.y,
-                           carTF_zed2.pose.orientation.z);
-    Matrix3d rotation_matrix;
-    rotation_matrix=quaternion.toRotationMatrix();
-
-    // transform the cloud link to the "map" frame
-    Vector3d position_transform(carTF_zed2.pose.position.x,carTF_zed2.pose.position.y,carTF_zed2.pose.position.z);
-
-//    float min = 100,max = 0;
-    for (int i=0; i<cloud_xyz.width; i++)
+    if(abs(carTF_zed2.pose.position.x - carTF_orb.pose.position.x - x_bias) < 0.1 &&
+       abs(carTF_zed2.pose.position.y - carTF_orb.pose.position.y - y_bias) < 0.1 &&
+       abs(carTF_zed2.pose.position.z - carTF_orb.pose.position.z - z_bias) < 0.1 )
     {
-      Vector3d position_(cloud_xyz.at(i).x,cloud_xyz.at(i).y,cloud_xyz.at(i).z);
-      Vector3d position = rotation_matrix*position_ + position_transform;
-      cloud_xyz.at(i).x = position[0];
-      cloud_xyz.at(i).y = position[1];
-      cloud_xyz.at(i).z = position[2];
-//      if(min>cloud_xyz.at(i).x)
-//        min = cloud_xyz.at(i).x;
-//      if(max<cloud_xyz.at(i).x)
-//        max = cloud_xyz.at(i).x;
+      carTF_zed2 = *pose;
+      // Perform the actual filtering
+      // VoxelGrid(decrease the memory occupation) & PassThrough(delete some incorrect points)
+      pcl::PCLPointCloud2* cloud2 = new pcl::PCLPointCloud2;
+      pcl::PCLPointCloud2ConstPtr cloudPtr(cloud2);
+      pcl_conversions::toPCL(*cloud, *cloud2);
+      // VoxelGrid
+      pcl::PCLPointCloud2* cloud_filtered_1 = new pcl::PCLPointCloud2;
+      pcl::PCLPointCloud2ConstPtr cloud_filter_1_Ptr(cloud_filtered_1);
+      pcl::VoxelGrid<pcl::PCLPointCloud2> filter_1;
+      filter_1.setInputCloud (cloudPtr);
+      filter_1.setLeafSize (0.05, 0.05, 0.05);
+      filter_1.filter(*cloud_filtered_1);
+      // PassThrough
+      pcl::PCLPointCloud2* cloud_filtered_2 = new pcl::PCLPointCloud2;
+      pcl::PCLPointCloud2ConstPtr cloud_filter_2_Ptr(cloud_filtered_2);
+      pcl::PassThrough<pcl::PCLPointCloud2> filter_2;
+      filter_2.setInputCloud (cloud_filter_1_Ptr);
+      filter_2.setFilterFieldName ("y");
+      filter_2.setFilterLimits (-1.2, 1.2);
+  //    filter_2.setFilterLimitsNegative (true);
+      filter_2.filter(*cloud_filtered_2);
+
+      pcl::PCLPointCloud2 cloud_filtered_3;
+      filter_2.setInputCloud (cloud_filter_2_Ptr);
+      filter_2.setFilterFieldName ("z");
+      filter_2.setFilterLimits (-2, 2);
+  //    filter_2.setFilterLimitsNegative (true);
+      filter_2.filter(cloud_filtered_3);
+
+      if ((cloud_filtered_3.width * cloud_filtered_3.height) == 0)
+        return;
+      pcl::fromPCLPointCloud2 (cloud_filtered_3, *cloud_xyz);
+
+      Quaterniond quaternion(carTF_zed2.pose.orientation.w,
+                             carTF_zed2.pose.orientation.x,
+                             carTF_zed2.pose.orientation.y,
+                             carTF_zed2.pose.orientation.z);
+      Matrix3d rotation_matrix;
+      rotation_matrix=quaternion.toRotationMatrix();
+
+      // transform the cloud link to the "map" frame
+      Vector3d position_transform
+          (carTF_zed2.pose.position.x - x_bias,
+           carTF_zed2.pose.position.y - y_bias,
+           carTF_zed2.pose.position.z - z_bias);
+
+      for (int i=0; i<cloud_xyz->width; i++)
+      {
+        Vector3d position_(cloud_xyz->at(i).x,cloud_xyz->at(i).y,cloud_xyz->at(i).z);
+        Vector3d position = rotation_matrix*position_ + position_transform;
+        cloud_xyz->at(i).x = position[0];
+        cloud_xyz->at(i).y = position[1];
+        cloud_xyz->at(i).z = position[2];
+      }
+
+      // ... read or fill in source and target
+      if(cloud_xyzFused->width == 0){
+        pcl::PointXYZRGB pointFill = cloud_xyz->at(0);
+        cloud_xyzFused->push_back(pointFill);
+      }
+      pcl::registration::CorrespondenceEstimation<pcl::PointXYZRGB, pcl::PointXYZRGB> est;
+      cloud_xyzFusedPtr = cloud_xyzFused->makeShared();
+      cloud_xyzPtr = cloud_xyz->makeShared();
+      est.setInputSource (cloud_xyzPtr);
+      est.setInputTarget (cloud_xyzFusedPtr);
+      pcl::Correspondences all_correspondences;
+      // Determine all reciprocal correspondences
+      est.determineReciprocalCorrespondences (all_correspondences);
+
+      // filter the reciprocal points cloud
+      if(1.0*all_correspondences.size()/cloud_xyz->width < 0.9)
+      {
+        // fused the current cloud to the fused cloud
+        *cloud_xyzFused += *cloud_xyz;
+        pcl::toROSMsg(*cloud_xyzFused, mPointcloudFusedMsg);
+        mPointcloudFusedMsg.header.frame_id = "map";
+        pointCloudFused_pub.publish(mPointcloudFusedMsg);
+      }
+
+      startTimer = 0;
+      timeLast = timeNow = 0;
+    }else
+    {
+      if(!startTimer)
+      {
+        timeLast = ros::Time::now().toSec();
+        startTimer = 1;
+        ROS_ERROR("\noffect between two poseMsgs is too big, stop mapping...");
+        ROS_WARN("the offset from zed2Pose to orbPose2 is:\nx:%f   y:%f   z:%f \n-------------"
+                  ,carTF_zed2.pose.position.x - carTF_orb.pose.position.x
+                  ,carTF_zed2.pose.position.y - carTF_orb.pose.position.y
+                  ,carTF_zed2.pose.position.z - carTF_orb.pose.position.z);
+      }else if(timeNow = ros::Time::now().toSec() - timeLast > 10)
+      {
+        startTimer = 0;
+        timeLast = timeNow = 0;
+        ROS_WARN("Don't warry, it seems that something wrong happend, trying to fix it...");
+        x_bias = carTF_zed2.pose.position.x - carTF_orb.pose.position.x;
+        y_bias = carTF_zed2.pose.position.y - carTF_orb.pose.position.y;
+        z_bias = carTF_zed2.pose.position.z - carTF_orb.pose.position.z;
+      }
     }
-//    ROS_ERROR("min:%f max:%f",min,max);
-
-    // fused the current cloud to the fused cloud
-    cloud_xyzFused += cloud_xyz;
-
-    pcl::toROSMsg(cloud_xyzFused, mPointcloudFusedMsg);
-
-    mPointcloudFusedMsg.header.frame_id = "map";
-    pointCloudFused_pub.publish(mPointcloudFusedMsg);
   }
 }
 

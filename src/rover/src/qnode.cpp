@@ -64,9 +64,18 @@ void QNode::readPointFusedCloud(const pcl::PCLPointCloud2::ConstPtr& cloud)
 
 void QNode::readPointCloud(const pcl::PCLPointCloud2::ConstPtr& cloud)
 {
+
+  // Perform the actual filtering
+  // VoxelGrid(decrease the memory occupation) & PassThrough(delete some incorrect points)
+  pcl::PCLPointCloud2* cloud_filtered = new pcl::PCLPointCloud2;
+  pcl::VoxelGrid<pcl::PCLPointCloud2> filter;
+  filter.setInputCloud (cloud);
+  filter.setLeafSize (0.1, 0.1, 0.1);
+  filter.filter(*cloud_filtered);
+
   if ((cloud->width * cloud->height) == 0)
     return;
-  pcl::fromPCLPointCloud2 (*cloud, cloud_xyz);
+  pcl::fromPCLPointCloud2 (*cloud_filtered, cloud_xyz);
 
 //  if(count++==3){
   Q_EMIT cloudUpdated();
@@ -83,7 +92,7 @@ bool QNode::init() {
 	ros::NodeHandle n;
 	// Add your ros communications here.
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
-    pointFusedCloud_sub = n.subscribe("/zed2/zed_node/mapping/fused_cloud",1,
+    pointFusedCloud_sub = n.subscribe("/mapBuild/cloud_Fused",1,
                                  &QNode::readPointFusedCloud, this);
     pointCloud_sub = n.subscribe("/zed2/zed_node/point_cloud/cloud_registered",1,
                                  &QNode::readPointCloud, this);
