@@ -18,8 +18,8 @@ Open a terminal, clone the repository, update the dependencies and build the pac
 ## Begin
 
 Open a terminal, and run command below to start:
-<br>
-    $roslaunch tx2_slam orb_slam2_zed2_stereo.launch
+
+    $ roslaunch tx2_slam orb_slam2_zed2_stereo.launch
 
 ## Tiral
 
