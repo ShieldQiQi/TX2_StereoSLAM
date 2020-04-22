@@ -1226,6 +1226,9 @@ message_generation_DIR:PATH=/opt/ros/melodic/share/message_generation/cmake
 //The directory containing a CMake configuration file for message_runtime.
 message_runtime_DIR:PATH=/opt/ros/melodic/share/message_runtime/cmake
 
+//The directory containing a CMake configuration file for modbus.
+modbus_DIR:PATH=modbus_DIR-NOTFOUND
+
 //The directory containing a CMake configuration file for nav_msgs.
 nav_msgs_DIR:PATH=/opt/ros/melodic/share/nav_msgs/cmake
 
@@ -1336,6 +1339,18 @@ rover_SOURCE_DIR:STATIC=/home/qi/catkin_qi/src/rover
 
 //The directory containing a CMake configuration file for sensor_msgs.
 sensor_msgs_DIR:PATH=/opt/ros/melodic/share/sensor_msgs/cmake
+
+//Value Computed by CMake
+serial_BINARY_DIR:STATIC=/home/qi/catkin_qi/build/serial
+
+//The directory containing a CMake configuration file for serial.
+serial_DIR:PATH=/home/qi/catkin_qi/devel/share/serial/cmake
+
+//Dependencies for the target
+serial_LIB_DEPENDS:STATIC=general;rt;general;pthread;
+
+//Value Computed by CMake
+serial_SOURCE_DIR:STATIC=/home/qi/catkin_qi/src/serial
 
 //The directory containing a CMake configuration file for smclib.
 smclib_DIR:PATH=/opt/ros/melodic/share/smclib/cmake

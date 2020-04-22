@@ -311,6 +311,7 @@ MapBuild_EXTERNAL_OBJECTS =
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /usr/lib/aarch64-linux-gnu/libboost_atomic.so
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /usr/lib/aarch64-linux-gnu/libpthread.so
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /usr/lib/aarch64-linux-gnu/libconsole_bridge.so.0.4
+/home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /usr/local/lib/libmodbus.so
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /usr/lib/libopencv_highgui.so.3.2.0
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: tx2_slam/CMakeFiles/MapBuild.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/qi/catkin_qi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild"

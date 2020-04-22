@@ -1806,6 +1806,19 @@ DBoW2/fast:
 .PHONY : DBoW2/fast
 
 #=============================================================================
+# Target rules for targets named Navigation
+
+# Build rule for target.
+Navigation: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Navigation
+.PHONY : Navigation
+
+# fast build rule for target.
+Navigation/fast:
+	$(MAKE) -f tx2_slam/CMakeFiles/Navigation.dir/build.make tx2_slam/CMakeFiles/Navigation.dir/build
+.PHONY : Navigation/fast
+
+#=============================================================================
 # Target rules for targets named MapBuild
 
 # Build rule for target.
@@ -2724,6 +2737,7 @@ help:
 	@echo "... orb_slam2_ros_generate_messages_py"
 	@echo "... orb_slam2_ros_genpy"
 	@echo "... DBoW2"
+	@echo "... Navigation"
 	@echo "... MapBuild"
 	@echo "... MapLoad"
 	@echo "... dummy_zed_ar_track_alvar_example"

@@ -68,6 +68,16 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -102,16 +112,6 @@ test:
 test/fast: test
 
 .PHONY : test/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -166,6 +166,21 @@ preinstall/fast:
 depend:
 	cd /home/qi/catkin_qi/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+# Convenience name for target.
+tx2_slam/CMakeFiles/Navigation.dir/rule:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f CMakeFiles/Makefile2 tx2_slam/CMakeFiles/Navigation.dir/rule
+.PHONY : tx2_slam/CMakeFiles/Navigation.dir/rule
+
+# Convenience name for target.
+Navigation: tx2_slam/CMakeFiles/Navigation.dir/rule
+
+.PHONY : Navigation
+
+# fast build rule for target.
+Navigation/fast:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/Navigation.dir/build.make tx2_slam/CMakeFiles/Navigation.dir/build
+.PHONY : Navigation/fast
 
 # Convenience name for target.
 tx2_slam/CMakeFiles/MapBuild.dir/rule:
@@ -251,6 +266,33 @@ src/MapLoad.cpp.s:
 	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/MapLoad.dir/build.make tx2_slam/CMakeFiles/MapLoad.dir/src/MapLoad.cpp.s
 .PHONY : src/MapLoad.cpp.s
 
+src/Navigation.o: src/Navigation.cpp.o
+
+.PHONY : src/Navigation.o
+
+# target to build an object file
+src/Navigation.cpp.o:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/Navigation.dir/build.make tx2_slam/CMakeFiles/Navigation.dir/src/Navigation.cpp.o
+.PHONY : src/Navigation.cpp.o
+
+src/Navigation.i: src/Navigation.cpp.i
+
+.PHONY : src/Navigation.i
+
+# target to preprocess a source file
+src/Navigation.cpp.i:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/Navigation.dir/build.make tx2_slam/CMakeFiles/Navigation.dir/src/Navigation.cpp.i
+.PHONY : src/Navigation.cpp.i
+
+src/Navigation.s: src/Navigation.cpp.s
+
+.PHONY : src/Navigation.s
+
+# target to generate assembly for a file
+src/Navigation.cpp.s:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/Navigation.dir/build.make tx2_slam/CMakeFiles/Navigation.dir/src/Navigation.cpp.s
+.PHONY : src/Navigation.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -258,11 +300,12 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... install"
+	@echo "... Navigation"
 	@echo "... MapBuild"
 	@echo "... install/local"
 	@echo "... test"
-	@echo "... list_install_components"
 	@echo "... edit_cache"
 	@echo "... MapLoad"
 	@echo "... rebuild_cache"
@@ -272,6 +315,9 @@ help:
 	@echo "... src/MapLoad.o"
 	@echo "... src/MapLoad.i"
 	@echo "... src/MapLoad.s"
+	@echo "... src/Navigation.o"
+	@echo "... src/Navigation.i"
+	@echo "... src/Navigation.s"
 .PHONY : help
 
 

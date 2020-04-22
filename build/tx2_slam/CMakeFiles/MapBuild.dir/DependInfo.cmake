@@ -37,6 +37,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/jsoncpp"
   "/usr/include/tcl"
   "/home/qi/catkin_qi/src/tx2_slam/include"
+  "/usr/local/include/modbus"
   )
 
 # Targets to which this target links.

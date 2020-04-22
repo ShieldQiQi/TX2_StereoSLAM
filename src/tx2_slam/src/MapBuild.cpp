@@ -55,7 +55,7 @@ void MapBuild::buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud
       pcl::PCLPointCloud2ConstPtr cloud_filter_1_Ptr(cloud_filtered_1);
       pcl::VoxelGrid<pcl::PCLPointCloud2> filter_1;
       filter_1.setInputCloud (cloudPtr);
-      filter_1.setLeafSize (0.05, 0.05, 0.05);
+      filter_1.setLeafSize (0.03, 0.03, 0.03);
       filter_1.filter(*cloud_filtered_1);
       // PassThrough
       pcl::PCLPointCloud2* cloud_filtered_2 = new pcl::PCLPointCloud2;
@@ -171,7 +171,7 @@ bool MapBuild::init()
   sync_ = new message_filters::Synchronizer<sync_pol> (sync_pol(10), *pointCloud_sub, *carTF_zed2_sub);
   sync_->registerCallback(boost::bind(&MapBuild::buildMap_callback, this, _1, _2));
 
-
+  // call save map services
   {
   //  ros::ServiceClient client = n.serviceClient<orb_slam2_ros::SaveMap>("/orb_slam2_stereo/save_map");
 
@@ -189,8 +189,19 @@ bool MapBuild::init()
   //  PointCloudToPCD b;
   }
 
-  ros::spin ();
+  //------------------------------------------------------------------
+  //指定循环的频率
+  ros::Rate loop_rate(10);
+  while(ros::ok())
+  {
+    if(ser.isConnected == TRUE)
+    {
+      ser.ReadFromPort();
+    }
 
+    loop_rate.sleep();
+    ros::spinOnce();
+  }
 }
 
 int main(int argc, char** argv)

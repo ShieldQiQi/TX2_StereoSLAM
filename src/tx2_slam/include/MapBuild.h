@@ -16,6 +16,7 @@
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
 #include <math.h>
+#include "../include/ModbusRS485.hpp"
 
 class MapBuild
 {
@@ -54,6 +55,8 @@ public:
     float x_bias = 0;
     float y_bias = 0;
     float z_bias = 0;
+
+    ModbusRS485 ser;
 
 private:
     int init_argc;
