@@ -55,7 +55,7 @@ void MapBuild::buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud
       pcl::PCLPointCloud2ConstPtr cloud_filter_1_Ptr(cloud_filtered_1);
       pcl::VoxelGrid<pcl::PCLPointCloud2> filter_1;
       filter_1.setInputCloud (cloudPtr);
-      filter_1.setLeafSize (0.03, 0.03, 0.03);
+      filter_1.setLeafSize (0.05, 0.05, 0.05);
       filter_1.filter(*cloud_filtered_1);
       // PassThrough
       pcl::PCLPointCloud2* cloud_filtered_2 = new pcl::PCLPointCloud2;
@@ -63,20 +63,29 @@ void MapBuild::buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud
       pcl::PassThrough<pcl::PCLPointCloud2> filter_2;
       filter_2.setInputCloud (cloud_filter_1_Ptr);
       filter_2.setFilterFieldName ("y");
-      filter_2.setFilterLimits (-1.2, 1.2);
+      filter_2.setFilterLimits (-4, 4);
   //    filter_2.setFilterLimitsNegative (true);
       filter_2.filter(*cloud_filtered_2);
 
-      pcl::PCLPointCloud2 cloud_filtered_3;
+      pcl::PCLPointCloud2* cloud_filtered_3 = new pcl::PCLPointCloud2;
+      pcl::PCLPointCloud2ConstPtr cloud_filter_3_Ptr(cloud_filtered_3);
       filter_2.setInputCloud (cloud_filter_2_Ptr);
       filter_2.setFilterFieldName ("z");
-      filter_2.setFilterLimits (-2, 2);
+      filter_2.setFilterLimits (-1, 2);
   //    filter_2.setFilterLimitsNegative (true);
-      filter_2.filter(cloud_filtered_3);
+      filter_2.filter(*cloud_filtered_3);
 
-      if ((cloud_filtered_3.width * cloud_filtered_3.height) == 0)
+      pcl::PCLPointCloud2 cloud_filtered_4;
+      // StatisticalOutlierRemoval
+      pcl::StatisticalOutlierRemoval<pcl::PCLPointCloud2> filter_3;
+      filter_3.setInputCloud (cloud_filter_3_Ptr);
+      filter_3.setMeanK (50);
+      filter_3.setStddevMulThresh (0.3);
+      filter_3.filter (cloud_filtered_4);
+
+      if ((cloud_filtered_4.width * cloud_filtered_4.height) == 0)
         return;
-      pcl::fromPCLPointCloud2 (cloud_filtered_3, *cloud_xyz);
+      pcl::fromPCLPointCloud2 (cloud_filtered_4, *cloud_xyz);
 
       Quaterniond quaternion(carTF_zed2.pose.orientation.w,
                              carTF_zed2.pose.orientation.x,
@@ -191,15 +200,14 @@ bool MapBuild::init()
 
   //------------------------------------------------------------------
   //指定循环的频率
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(100);
   while(ros::ok())
   {
-    if(ser.isConnected == TRUE)
-    {
-      ser.ReadFromPort();
-    }
-
-    loop_rate.sleep();
+//    if(ser.isConnected == TRUE)
+//    {
+//      ser.ReadFromPort();
+//    }
+//    loop_rate.sleep();
     ros::spinOnce();
   }
 }

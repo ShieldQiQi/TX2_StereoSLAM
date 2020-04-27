@@ -29,9 +29,9 @@ public:
   const uint16_t UT_INPUT_BITS_NB = 0x16;
   const uint8_t  UT_INPUT_BITS_TAB[3] = { 0xAC, 0xDB, 0x35 };
   const uint16_t UT_REGISTERS_ADDRESS = 0x160;
-  const uint16_t UT_REGISTERS_NB = 0x3;
+  const uint16_t UT_REGISTERS_NB = 0x4;
   const uint16_t UT_REGISTERS_NB_MAX = 0x20;
-  const uint16_t UT_REGISTERS_TAB[3] = { 0x022B, 0x0001, 0x0064 };
+  uint16_t UT_REGISTERS_TAB[4] = { 0x0000, 0x0000, 0x0000, 0x0000 };
   /* Raise a manual exception when this address is used for the first byte */
   const uint16_t UT_REGISTERS_ADDRESS_SPECIAL = 0x170;
   /* The response of the server will contains an invalid TID or slave */
@@ -98,7 +98,7 @@ private:
 ModbusRS485::ModbusRS485()
 {
   // initialize the ttyUSB Port
-  ctx = modbus_new_rtu("/dev/ttyUSB1", 115200, 'N', 8, 1);
+  ctx = modbus_new_rtu("/dev/ttyUSB0", 115200, 'N', 8, 1);
   if (ctx == NULL) {
       ROS_ERROR("Unable to initialize the ttyUSB Port\n");
   }
@@ -148,15 +148,13 @@ bool ModbusRS485::WriteToPort()
 {
   rc = modbus_write_registers(ctx, UT_REGISTERS_ADDRESS,
                               UT_REGISTERS_NB, UT_REGISTERS_TAB);
-  printf("1/5 modbus_write_registers: ");
-  ASSERT_TRUE(rc == UT_REGISTERS_NB, "");
+//  ASSERT_TRUE(rc == UT_REGISTERS_NB, "");
 }
 
 bool ModbusRS485::ReadFromPort()
 {
   rc = modbus_read_registers(ctx, UT_REGISTERS_ADDRESS,
                              UT_REGISTERS_NB, tab_rp_registers);
-  printf("2/5 modbus_read_registers: ");
   ASSERT_TRUE(rc == UT_REGISTERS_NB, "FAILED (nb points %d)\n", rc);
 
   for (i=0; i < UT_REGISTERS_NB; i++) {
@@ -166,7 +164,6 @@ bool ModbusRS485::ReadFromPort()
 
   rc = modbus_read_registers(ctx, UT_REGISTERS_ADDRESS,
                              0, tab_rp_registers);
-  printf("3/5 modbus_read_registers (0): ");
   ASSERT_TRUE(rc == -1, "FAILED (nb_points %d)\n", rc);
 }
 
@@ -187,7 +184,6 @@ bool ModbusRS485::ReadandWrite()
                                        UT_REGISTERS_ADDRESS,
                                        UT_REGISTERS_NB,
                                        tab_rp_registers);
-  printf("4/5 modbus_write_and_read_registers: ");
   ASSERT_TRUE(rc == UT_REGISTERS_NB, "FAILED (nb points %d != %d)\n",
               rc, UT_REGISTERS_NB);
 

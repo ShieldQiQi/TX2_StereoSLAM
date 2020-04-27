@@ -6,6 +6,7 @@
 #include <pcl_ros/point_cloud.h>
 #include <pcl_ros/filters/voxel_grid.h>
 #include <pcl_ros/filters/passthrough.h>
+#include <pcl_ros/filters/statistical_outlier_removal.h>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_eigen/tf2_eigen.h>
