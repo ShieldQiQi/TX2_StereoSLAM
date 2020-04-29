@@ -6,6 +6,8 @@
 #include <string>
 #include <sstream>
 
+namespace tx2slam {
+
 template <typename T>
 T get_param(std::string const& name, T default_value) {
     T value;
@@ -118,3 +120,7 @@ public:
         ROS_INFO_STREAM(" * channel names: " << pcl::getFieldsList(cloud));
     }
 };
+
+}
+
+

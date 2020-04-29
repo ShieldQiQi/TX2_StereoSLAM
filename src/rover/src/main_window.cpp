@@ -46,6 +46,10 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
     QObject::connect(&qnode, SIGNAL(cloudUpdated()), this, SLOT(updateCloud()));
     QObject::connect(ui.customPlot,SIGNAL(mouseDoubleClick(QMouseEvent *)),this,SLOT(mouseDcEvent(QMouseEvent *)));
 
+    QObject::connect(ui.commandLinkButton_1,SIGNAL(clicked()),this,SLOT(on_commandLinkButton_1_clicked()));
+    QObject::connect(ui.commandLinkButton_2,SIGNAL(clicked()),this,SLOT(on_commandLinkButton_2_clicked()));
+    QObject::connect(ui.commandLinkButton_3,SIGNAL(clicked()),this,SLOT(on_commandLinkButton_3_clicked()));
+
 	/*********************
 	** Logging
 	**********************/
@@ -91,6 +95,22 @@ void MainWindow::showNoMasterMessage() {
 	msgBox.setText("Couldn't find the ros master.");
 	msgBox.exec();
     close();
+}
+
+void MainWindow::on_commandLinkButton_1_clicked()
+{
+  // save map cmd
+  qnode.cmdArray.data.at(0) = 1;
+}
+void MainWindow::on_commandLinkButton_2_clicked()
+{
+  // start map cmd
+  qnode.cmdArray.data.at(1) = 1;
+}
+void MainWindow::on_commandLinkButton_3_clicked()
+{
+  // start map cmd
+  qnode.cmdArray.data.at(1) = 0;
 }
 
 void MainWindow::updateMap()

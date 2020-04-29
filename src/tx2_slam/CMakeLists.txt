@@ -9,6 +9,7 @@ if(NOT OpenCV_FOUND)
 endif()
 
 find_package(catkin REQUIRED COMPONENTS
+  serial
   roscpp
   rospy
   std_msgs

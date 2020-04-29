@@ -311,6 +311,175 @@ _catkin_empty_exported_target/fast:
 .PHONY : _catkin_empty_exported_target/fast
 
 #=============================================================================
+# Target rules for targets named serial
+
+# Build rule for target.
+serial: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 serial
+.PHONY : serial
+
+# fast build rule for target.
+serial/fast:
+	$(MAKE) -f serial/CMakeFiles/serial.dir/build.make serial/CMakeFiles/serial.dir/build
+.PHONY : serial/fast
+
+#=============================================================================
+# Target rules for targets named serial_example
+
+# Build rule for target.
+serial_example: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 serial_example
+.PHONY : serial_example
+
+# fast build rule for target.
+serial_example/fast:
+	$(MAKE) -f serial/CMakeFiles/serial_example.dir/build.make serial/CMakeFiles/serial_example.dir/build
+.PHONY : serial_example/fast
+
+#=============================================================================
+# Target rules for targets named _run_tests_serial_gtest
+
+# Build rule for target.
+_run_tests_serial_gtest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _run_tests_serial_gtest
+.PHONY : _run_tests_serial_gtest
+
+# fast build rule for target.
+_run_tests_serial_gtest/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/_run_tests_serial_gtest.dir/build.make serial/tests/CMakeFiles/_run_tests_serial_gtest.dir/build
+.PHONY : _run_tests_serial_gtest/fast
+
+#=============================================================================
+# Target rules for targets named run_tests_serial_gtest
+
+# Build rule for target.
+run_tests_serial_gtest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 run_tests_serial_gtest
+.PHONY : run_tests_serial_gtest
+
+# fast build rule for target.
+run_tests_serial_gtest/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/run_tests_serial_gtest.dir/build.make serial/tests/CMakeFiles/run_tests_serial_gtest.dir/build
+.PHONY : run_tests_serial_gtest/fast
+
+#=============================================================================
+# Target rules for targets named _run_tests_serial_gtest_serial-test-timer
+
+# Build rule for target.
+_run_tests_serial_gtest_serial-test-timer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _run_tests_serial_gtest_serial-test-timer
+.PHONY : _run_tests_serial_gtest_serial-test-timer
+
+# fast build rule for target.
+_run_tests_serial_gtest_serial-test-timer/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/_run_tests_serial_gtest_serial-test-timer.dir/build.make serial/tests/CMakeFiles/_run_tests_serial_gtest_serial-test-timer.dir/build
+.PHONY : _run_tests_serial_gtest_serial-test-timer/fast
+
+#=============================================================================
+# Target rules for targets named serial-test
+
+# Build rule for target.
+serial-test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 serial-test
+.PHONY : serial-test
+
+# fast build rule for target.
+serial-test/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/serial-test.dir/build.make serial/tests/CMakeFiles/serial-test.dir/build
+.PHONY : serial-test/fast
+
+#=============================================================================
+# Target rules for targets named run_tests_serial_gtest_serial-test
+
+# Build rule for target.
+run_tests_serial_gtest_serial-test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 run_tests_serial_gtest_serial-test
+.PHONY : run_tests_serial_gtest_serial-test
+
+# fast build rule for target.
+run_tests_serial_gtest_serial-test/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/run_tests_serial_gtest_serial-test.dir/build.make serial/tests/CMakeFiles/run_tests_serial_gtest_serial-test.dir/build
+.PHONY : run_tests_serial_gtest_serial-test/fast
+
+#=============================================================================
+# Target rules for targets named run_tests_serial
+
+# Build rule for target.
+run_tests_serial: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 run_tests_serial
+.PHONY : run_tests_serial
+
+# fast build rule for target.
+run_tests_serial/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/run_tests_serial.dir/build.make serial/tests/CMakeFiles/run_tests_serial.dir/build
+.PHONY : run_tests_serial/fast
+
+#=============================================================================
+# Target rules for targets named _run_tests_serial_gtest_serial-test
+
+# Build rule for target.
+_run_tests_serial_gtest_serial-test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _run_tests_serial_gtest_serial-test
+.PHONY : _run_tests_serial_gtest_serial-test
+
+# fast build rule for target.
+_run_tests_serial_gtest_serial-test/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/_run_tests_serial_gtest_serial-test.dir/build.make serial/tests/CMakeFiles/_run_tests_serial_gtest_serial-test.dir/build
+.PHONY : _run_tests_serial_gtest_serial-test/fast
+
+#=============================================================================
+# Target rules for targets named clean_test_results_serial
+
+# Build rule for target.
+clean_test_results_serial: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 clean_test_results_serial
+.PHONY : clean_test_results_serial
+
+# fast build rule for target.
+clean_test_results_serial/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/clean_test_results_serial.dir/build.make serial/tests/CMakeFiles/clean_test_results_serial.dir/build
+.PHONY : clean_test_results_serial/fast
+
+#=============================================================================
+# Target rules for targets named serial-test-timer
+
+# Build rule for target.
+serial-test-timer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 serial-test-timer
+.PHONY : serial-test-timer
+
+# fast build rule for target.
+serial-test-timer/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/serial-test-timer.dir/build.make serial/tests/CMakeFiles/serial-test-timer.dir/build
+.PHONY : serial-test-timer/fast
+
+#=============================================================================
+# Target rules for targets named run_tests_serial_gtest_serial-test-timer
+
+# Build rule for target.
+run_tests_serial_gtest_serial-test-timer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 run_tests_serial_gtest_serial-test-timer
+.PHONY : run_tests_serial_gtest_serial-test-timer
+
+# fast build rule for target.
+run_tests_serial_gtest_serial-test-timer/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/run_tests_serial_gtest_serial-test-timer.dir/build.make serial/tests/CMakeFiles/run_tests_serial_gtest_serial-test-timer.dir/build
+.PHONY : run_tests_serial_gtest_serial-test-timer/fast
+
+#=============================================================================
+# Target rules for targets named _run_tests_serial
+
+# Build rule for target.
+_run_tests_serial: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _run_tests_serial
+.PHONY : _run_tests_serial
+
+# fast build rule for target.
+_run_tests_serial/fast:
+	$(MAKE) -f serial/tests/CMakeFiles/_run_tests_serial.dir/build.make serial/tests/CMakeFiles/_run_tests_serial.dir/build
+.PHONY : _run_tests_serial/fast
+
+#=============================================================================
 # Target rules for targets named qt_tutorials_generate_messages_py
 
 # Build rule for target.
@@ -2622,6 +2791,19 @@ help:
 	@echo "... gtest_main"
 	@echo "... gtest"
 	@echo "... _catkin_empty_exported_target"
+	@echo "... serial"
+	@echo "... serial_example"
+	@echo "... _run_tests_serial_gtest"
+	@echo "... run_tests_serial_gtest"
+	@echo "... _run_tests_serial_gtest_serial-test-timer"
+	@echo "... serial-test"
+	@echo "... run_tests_serial_gtest_serial-test"
+	@echo "... run_tests_serial"
+	@echo "... _run_tests_serial_gtest_serial-test"
+	@echo "... clean_test_results_serial"
+	@echo "... serial-test-timer"
+	@echo "... run_tests_serial_gtest_serial-test-timer"
+	@echo "... _run_tests_serial"
 	@echo "... qt_tutorials_generate_messages_py"
 	@echo "... qt_tutorials_generate_messages_nodejs"
 	@echo "... qt_tutorials_genlisp"

@@ -1,44 +1,55 @@
 #include "../include/MapBuild.h"
-#include "../include/SaveMap.h"
 #include <cstdlib>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
 using namespace std;
 using namespace Eigen;
+using namespace tx2slam;
 
-MapBuild::MapBuild(int argc, char** argv ) : init_argc(argc), init_argv(argv)
+void MapBuild::speedCtrlCallback(const ros::TimerEvent& event)
 {
-  if(init()) {
-    ROS_ERROR("fail to init the mapBuild node");
+  if(mappingStatusCmd == 1)
+  {
+//    setTargetSpeed(0.3, 0.3, 0);
+    setTargetOmega(0.3, pidController(0.3, imu_Msg.angular_velocity.z));
+    ROS_INFO("omega_target is: %f, omega_actual is: %f",0.3,imu_Msg.angular_velocity.z);
+  }else{
+    setTargetSpeed(0, 0, 0);
   }
 }
 
-MapBuild::~MapBuild()
-{
-
-}
-
-void MapBuild::carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose)
-{
+void MapBuild::carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose){
   carTF_orb = *pose;
 }
 
 void MapBuild::imuCallback(const sensor_msgs::Imu::ConstPtr& msg) {
   imu_Msg = *msg;
-  {
-    //    ROS_INFO( "Accel: %.3f,%.3f,%.3f [m/s^2] - Ang. vel: %.3f,%.3f,%.3f [deg/sec] - Orient. Quat: %.3f,%.3f,%.3f,%.3f",
-    //              msg->linear_acceleration.x, msg->linear_acceleration.y, msg->linear_acceleration.z,
-    //              msg->angular_velocity.x, msg->angular_velocity.y, msg->angular_velocity.z,
-    //              msg->orientation.x, msg->orientation.y, msg->orientation.z, msg->orientation.w);
+}
+
+void MapBuild::QTUI_cmd_Callback(const std_msgs::Int16MultiArray& msg)
+{
+  savemapFlag = msg.data.at(0);
+  mappingStatusCmd = msg.data.at(1);
+
+  if(savemapFlag == 1){
+
+    if (client.call(srv))
+      ROS_INFO("Ready to create Map");
+    else
+      ROS_ERROR("Failed to call service SaveMap");
+
+    PointCloudToPCD saveAsPcd;
+    pcl::PCLPointCloud2ConstPtr mPointcloudFusedMsg_Ptr(mPointcloudFusedMsg_pointer);
+    pcl_conversions::toPCL(mPointcloudFusedMsg, *mPointcloudFusedMsg_pointer);
+    saveAsPcd.save(mPointcloudFusedMsg_Ptr);
 
   }
 }
 
 void MapBuild::buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud, const geometry_msgs::PoseStamped::ConstPtr& pose)
 {
-  if(imu_Msg.angular_velocity.x<0.1 && imu_Msg.angular_velocity.y<0.1 && imu_Msg.angular_velocity.z<0.1
-     && imu_Msg.linear_acceleration.x<0.005 && imu_Msg.linear_acceleration.y<0.005 && imu_Msg.linear_acceleration.z<0.005)
+  if(mappingStatusCmd == 1 && imu_Msg.angular_velocity.x<0.8 && imu_Msg.angular_velocity.y<0.8 && imu_Msg.angular_velocity.z<0.8)
   {
     if(abs(carTF_zed2.pose.position.x - carTF_orb.pose.position.x - x_bias) < 0.1 &&
        abs(carTF_zed2.pose.position.y - carTF_orb.pose.position.y - y_bias) < 0.1 &&
@@ -160,18 +171,16 @@ void MapBuild::buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud
 }
 
 
-bool MapBuild::init()
+void MapBuild::init()
 {
-
-  ros::init (init_argc, init_argv, "MapBuild", ros::init_options::AnonymousName);
-
+  ros::init (init_argc, init_argv, "MapBuild");
   ros::NodeHandle n;
-
   pointCloudFused_pub = n.advertise<sensor_msgs::PointCloud2>("/mapBuild/cloud_Fused", 1);
-
-  imu_sub = n.subscribe("/zed/zed_node/imu/data", 1, &MapBuild::imuCallback,this);
+  imu_sub = n.subscribe("/zed2/zed_node/imu/data", 1, &MapBuild::imuCallback,this);
   carTF_orb_sub = n.subscribe("/orb_slam2_stereo/pose", 1, &MapBuild::carTF_orb_Callback,this);
 
+  speedCtrlTimer = n.createTimer(ros::Duration(0.07), &MapBuild::speedCtrlCallback,this);
+  QTUI_cmd_sub = n.subscribe("/rover/QtUI_cmd_Msg", 1, &MapBuild::QTUI_cmd_Callback,this);
   pointCloud_sub = new message_filters::Subscriber<sensor_msgs::PointCloud2>
       ( n, "/zed2/zed_node/point_cloud/cloud_registered", 1);
   carTF_zed2_sub = new message_filters::Subscriber<geometry_msgs::PoseStamped>
@@ -181,33 +190,15 @@ bool MapBuild::init()
   sync_->registerCallback(boost::bind(&MapBuild::buildMap_callback, this, _1, _2));
 
   // call save map services
-  {
-  //  ros::ServiceClient client = n.serviceClient<orb_slam2_ros::SaveMap>("/orb_slam2_stereo/save_map");
+  client = n.serviceClient<orb_slam2_ros::SaveMap>("/orb_slam2_stereo/save_map");
 
-  //  orb_slam2_ros::SaveMap srv;
-  //  srv.request.name = "/home/qi/catkin_qi/src/tx2_slam/map/bin/zed2_slam_Map.bin";
-  //  if (client.call(srv))
-  //  {
-  //    ROS_INFO("Ready to create Map");
-  //  }
-  //  else
-  //  {
-  //    ROS_ERROR("Failed to call service SaveMap");
-  //    return 1;
-  //  }
-  //  PointCloudToPCD b;
-  }
+  srv.request.name = "/home/qi/catkin_qi/src/tx2_slam/map/bin/zed2_slam_Map.bin";
 
   //------------------------------------------------------------------
   //指定循环的频率
   ros::Rate loop_rate(100);
   while(ros::ok())
   {
-//    if(ser.isConnected == TRUE)
-//    {
-//      ser.ReadFromPort();
-//    }
-//    loop_rate.sleep();
     ros::spinOnce();
   }
 }

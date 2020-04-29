@@ -22,7 +22,7 @@ static const uint qt_meta_data_rover__MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,6 +36,9 @@ static const uint qt_meta_data_rover__MainWindow[] = {
      112,  139,   58,   58, 0x0a,
      144,   58,   58,   58, 0x0a,
      156,   58,   58,   58, 0x0a,
+     170,   58,   58,   58, 0x0a,
+     203,   58,   58,   58, 0x0a,
+     236,   58,   58,   58, 0x0a,
 
        0        // eod
 };
@@ -46,6 +49,9 @@ static const char qt_meta_stringdata_rover__MainWindow[] = {
     "\0mouseDcEvent(QMouseEvent*)\0event\0"
     "updateLoggingView()\0changeStateIndicator(char)\0"
     "flag\0updateMap()\0updateCloud()\0"
+    "on_commandLinkButton_1_clicked()\0"
+    "on_commandLinkButton_2_clicked()\0"
+    "on_commandLinkButton_3_clicked()\0"
 };
 
 void rover::MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -60,6 +66,9 @@ void rover::MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 3: _t->changeStateIndicator((*reinterpret_cast< char(*)>(_a[1]))); break;
         case 4: _t->updateMap(); break;
         case 5: _t->updateCloud(); break;
+        case 6: _t->on_commandLinkButton_1_clicked(); break;
+        case 7: _t->on_commandLinkButton_2_clicked(); break;
+        case 8: _t->on_commandLinkButton_3_clicked(); break;
         default: ;
         }
     }
@@ -97,9 +106,9 @@ int rover::MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 9;
     }
     return _id;
 }

@@ -91,7 +91,8 @@ bool QNode::init() {
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
 	ros::NodeHandle n;
 	// Add your ros communications here.
-	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
+    cmd_publisher = n.advertise<std_msgs::Int16MultiArray>("/rover/QtUI_cmd_Msg", 1000);
+//	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
     pointFusedCloud_sub = n.subscribe("/mapBuild/cloud_Fused",1,
                                  &QNode::readPointFusedCloud, this);
     pointCloud_sub = n.subscribe("/zed2/zed_node/point_cloud/cloud_registered",1,
@@ -100,6 +101,9 @@ bool QNode::init() {
                             &QNode::readTF, this);
     carTFzed2_sub = n.subscribe("/zed2/zed_node/pose",1000,
                             &QNode::readTFzed2, this);
+
+    cmdArray.data.push_back(0);
+    cmdArray.data.push_back(0);
 
 	start();
 	return true;
@@ -131,7 +135,10 @@ void QNode::run() {
 		std::stringstream ss;
 		ss << "hello world " << count;
 		msg.data = ss.str();
-        chatter_publisher.publish(msg);
+//        chatter_publisher.publish(msg);
+        cmd_publisher.publish(cmdArray);
+        if(cmdArray.data.at(0) == 1)
+          cmdArray.data.at(0) = 0;
 //        log(Info,std::string("I sent: ")+msg.data);
 		ros::spinOnce();
 		loop_rate.sleep();

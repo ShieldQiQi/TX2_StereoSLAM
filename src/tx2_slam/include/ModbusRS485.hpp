@@ -9,6 +9,8 @@
 #include <stdint.h>
 #include <ros/ros.h>
 
+namespace tx2slam {
+
 class ModbusRS485
 {
 public:
@@ -29,9 +31,9 @@ public:
   const uint16_t UT_INPUT_BITS_NB = 0x16;
   const uint8_t  UT_INPUT_BITS_TAB[3] = { 0xAC, 0xDB, 0x35 };
   const uint16_t UT_REGISTERS_ADDRESS = 0x160;
-  const uint16_t UT_REGISTERS_NB = 0x4;
+  const uint16_t UT_REGISTERS_NB = 0x1;
   const uint16_t UT_REGISTERS_NB_MAX = 0x20;
-  uint16_t UT_REGISTERS_TAB[4] = { 0x0000, 0x0000, 0x0000, 0x0000 };
+  uint16_t UT_REGISTERS_TAB[1] = { 0x0000 };
   /* Raise a manual exception when this address is used for the first byte */
   const uint16_t UT_REGISTERS_ADDRESS_SPECIAL = 0x170;
   /* The response of the server will contains an invalid TID or slave */
@@ -148,7 +150,7 @@ bool ModbusRS485::WriteToPort()
 {
   rc = modbus_write_registers(ctx, UT_REGISTERS_ADDRESS,
                               UT_REGISTERS_NB, UT_REGISTERS_TAB);
-//  ASSERT_TRUE(rc == UT_REGISTERS_NB, "");
+  return (rc == UT_REGISTERS_NB);
 }
 
 bool ModbusRS485::ReadFromPort()
@@ -196,3 +198,7 @@ bool ModbusRS485::ReadandWrite()
                   tab_rp_registers[i], 0);
   }
 }
+
+
+}
+

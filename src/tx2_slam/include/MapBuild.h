@@ -1,5 +1,7 @@
 # pragma once
 #include <ros/ros.h>
+#include "../include/SaveMap.h"
+#include <std_msgs/Int16MultiArray.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <sensor_msgs/Imu.h>
 #include <pcl_conversions/pcl_conversions.h>
@@ -17,18 +19,27 @@
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
 #include <math.h>
-#include "../include/ModbusRS485.hpp"
+#include "../include/Navigation.hpp"
 
-class MapBuild
+namespace tx2slam {
+
+class MapBuild:public Navigation
 {
 public:
-    ~MapBuild();
-    MapBuild(int argc, char** argv);
+    ~MapBuild(){}
+    MapBuild(int argc, char** argv):Navigation(argc,argv)
+    {
+      init_argc = argc;
+      init_argv = argv;
+      init();
+    }
 
+    void QTUI_cmd_Callback(const std_msgs::Int16MultiArray& msg);
+    void speedCtrlCallback(const ros::TimerEvent& event);
     void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
     void carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose);
     void buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud, const geometry_msgs::PoseStamped::ConstPtr& pose);
-    bool init();
+    void init();
 
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::PointCloud2, geometry_msgs::PoseStamped> sync_pol;
     message_filters::Subscriber<sensor_msgs::PointCloud2> *pointCloud_sub;
@@ -37,12 +48,19 @@ public:
 
     ros::Publisher pointCloudFused_pub;
     ros::Subscriber imu_sub;
+    ros::Subscriber QTUI_cmd_sub;
     ros::Subscriber carTF_orb_sub;
+    ros::Timer speedCtrlTimer;
+    ros::ServiceClient client;
+
+    orb_slam2_ros::SaveMap srv;
 
     pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyz = new pcl::PointCloud<pcl::PointXYZRGB>;
     pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyzFused = new pcl::PointCloud<pcl::PointXYZRGB>;
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_xyzPtr;
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_xyzFusedPtr;
+
+    pcl::PCLPointCloud2* mPointcloudFusedMsg_pointer = new pcl::PCLPointCloud2;
 
     sensor_msgs::PointCloud2 mPointcloudFusedMsg;
     sensor_msgs::Imu imu_Msg;
@@ -57,7 +75,8 @@ public:
     float y_bias = 0;
     float z_bias = 0;
 
-    ModbusRS485 ser;
+    uint16_t savemapFlag = 0;
+    uint16_t mappingStatusCmd = 0;
 
 private:
     int init_argc;
@@ -67,12 +86,12 @@ private:
 
 class PointCloudToPCD
 {
-  protected:
-    ros::NodeHandle nh_;
+//  protected:
+//    ros::NodeHandle nh_;
 
   private:
-    std::string prefix_;
-    std::string filename_;
+    std::string prefix_ = "/home/qi/catkin_qi/src/tx2_slam/map/pcd_files/";
+    std::string filename_ = "slamMap";
     bool binary_;
     bool compressed_;
     std::string fixed_frame_;
@@ -80,13 +99,10 @@ class PointCloudToPCD
     tf2_ros::TransformListener tf_listener_;
 
   public:
-    std::string cloud_topic_;
+//    std::string cloud_topic_;
+//    ros::Subscriber sub_;
 
-    ros::Subscriber sub_;
-
-    ////////////////////////////////////////////////////////////////////////////////
-    // Callback
-    void cloud_cb (const pcl::PCLPointCloud2::ConstPtr& cloud)
+    void save (const pcl::PCLPointCloud2::ConstPtr& cloud)
     {
       if ((cloud->width * cloud->height) == 0)
         return;
@@ -114,7 +130,7 @@ class PointCloudToPCD
       std::stringstream ss;
       if (filename_ != "")
       {
-        ss << filename_ << ".pcd";
+        ss << prefix_ << filename_ << ".pcd";
       }
       else
       {
@@ -144,47 +160,50 @@ class PointCloudToPCD
     ////////////////////////////////////////////////////////////////////////////////
     PointCloudToPCD () : binary_(false), compressed_(false), tf_listener_(tf_buffer_)
     {
-      // Check if a prefix parameter is defined for output file names.
-      ros::NodeHandle priv_nh("~");
-      if (priv_nh.getParam ("prefix", prefix_))
-        {
-          ROS_INFO_STREAM ("PCD file prefix is: " << prefix_);
-        }
-      else if (nh_.getParam ("prefix", prefix_))
-        {
-          ROS_WARN_STREAM ("Non-private PCD prefix parameter is DEPRECATED: "
-                           << prefix_);
-        }
+//      // Check if a prefix parameter is defined for output file names.
+//      ros::NodeHandle priv_nh("~");
+//      if (priv_nh.getParam ("prefix", prefix_))
+//        {
+//          ROS_INFO_STREAM ("PCD file prefix is: " << prefix_);
+//        }
+//      else if (nh_.getParam ("prefix", prefix_))
+//        {
+//          ROS_WARN_STREAM ("Non-private PCD prefix parameter is DEPRECATED: "
+//                           << prefix_);
+//        }
 
-      priv_nh.getParam ("fixed_frame", fixed_frame_);
-      priv_nh.getParam ("binary", binary_);
-      priv_nh.getParam ("compressed", compressed_);
-      priv_nh.getParam ("filename", filename_);
-      if(binary_)
-      {
-        if(compressed_)
-        {
-          ROS_INFO_STREAM ("Saving as binary compressed PCD");
-        }
-        else
-        {
-          ROS_INFO_STREAM ("Saving as binary uncompressed PCD");
-        }
-      }
-      else
-      {
-        ROS_INFO_STREAM ("Saving as ASCII PCD");
-      }
+//      priv_nh.getParam ("fixed_frame", fixed_frame_);
+//      priv_nh.getParam ("binary", binary_);
+//      priv_nh.getParam ("compressed", compressed_);
+//      priv_nh.getParam ("filename", filename_);
+//      if(binary_)
+//      {
+//        if(compressed_)
+//        {
+//          ROS_INFO_STREAM ("Saving as binary compressed PCD");
+//        }
+//        else
+//        {
+//          ROS_INFO_STREAM ("Saving as binary uncompressed PCD");
+//        }
+//      }
+//      else
+//      {
+//        ROS_INFO_STREAM ("Saving as ASCII PCD");
+//      }
 
-      if (filename_ != "")
-      {
-        ROS_INFO_STREAM ("Saving to fixed filename: " << filename_);
-      }
+//      if (filename_ != "")
+//      {
+//        ROS_INFO_STREAM ("Saving to fixed filename: " << filename_);
+//      }
 
-      cloud_topic_ = "/zed2/zed_node/mapping/fused_cloud";
+//      cloud_topic_ = "/zed2/zed_node/mapping/fused_cloud";
 
-      sub_ = nh_.subscribe (cloud_topic_, 1,  &PointCloudToPCD::cloud_cb, this);
-      ROS_INFO ("Listening for incoming data on topic %s",
-                nh_.resolveName (cloud_topic_).c_str ());
+//      sub_ = nh_.subscribe (cloud_topic_, 1,  &PointCloudToPCD::cloud_cb, this);
+//      ROS_INFO ("Listening for incoming data on topic %s",
+//                nh_.resolveName (cloud_topic_).c_str ());
     }
+    ~PointCloudToPCD(){}
 };
+
+}

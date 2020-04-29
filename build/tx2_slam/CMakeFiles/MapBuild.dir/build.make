@@ -90,6 +90,8 @@ MapBuild_EXTERNAL_OBJECTS =
 
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: tx2_slam/CMakeFiles/MapBuild.dir/src/MapBuild.cpp.o
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: tx2_slam/CMakeFiles/MapBuild.dir/build.make
+/home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /home/qi/catkin_qi/devel/lib/libserial.so
+/home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /usr/lib/aarch64-linux-gnu/librt.so
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /opt/ros/melodic/lib/libcv_bridge.so
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /usr/lib/aarch64-linux-gnu/libopencv_core.so.3.2.0
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapBuild: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.3.2.0

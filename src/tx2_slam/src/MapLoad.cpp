@@ -1,5 +1,7 @@
 #include "../include/MapLoad.h"
 
+using namespace tx2slam;
+
 int main (int argc, char** argv) {
     // init ROS
     ros::init(argc, argv, "pcd_to_pointcloud");

@@ -90,6 +90,8 @@ MapLoad_EXTERNAL_OBJECTS =
 
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapLoad: tx2_slam/CMakeFiles/MapLoad.dir/src/MapLoad.cpp.o
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapLoad: tx2_slam/CMakeFiles/MapLoad.dir/build.make
+/home/qi/catkin_qi/devel/lib/tx2_slam/MapLoad: /home/qi/catkin_qi/devel/lib/libserial.so
+/home/qi/catkin_qi/devel/lib/tx2_slam/MapLoad: /usr/lib/aarch64-linux-gnu/librt.so
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapLoad: /opt/ros/melodic/lib/libcv_bridge.so
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapLoad: /usr/lib/aarch64-linux-gnu/libopencv_core.so.3.2.0
 /home/qi/catkin_qi/devel/lib/tx2_slam/MapLoad: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.3.2.0

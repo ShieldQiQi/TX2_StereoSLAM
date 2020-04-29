@@ -90,6 +90,8 @@ Navigation_EXTERNAL_OBJECTS =
 
 /home/qi/catkin_qi/devel/lib/tx2_slam/Navigation: tx2_slam/CMakeFiles/Navigation.dir/src/Navigation.cpp.o
 /home/qi/catkin_qi/devel/lib/tx2_slam/Navigation: tx2_slam/CMakeFiles/Navigation.dir/build.make
+/home/qi/catkin_qi/devel/lib/tx2_slam/Navigation: /home/qi/catkin_qi/devel/lib/libserial.so
+/home/qi/catkin_qi/devel/lib/tx2_slam/Navigation: /usr/lib/aarch64-linux-gnu/librt.so
 /home/qi/catkin_qi/devel/lib/tx2_slam/Navigation: /opt/ros/melodic/lib/libcv_bridge.so
 /home/qi/catkin_qi/devel/lib/tx2_slam/Navigation: /usr/lib/aarch64-linux-gnu/libopencv_core.so.3.2.0
 /home/qi/catkin_qi/devel/lib/tx2_slam/Navigation: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.3.2.0

@@ -20,6 +20,7 @@
 //    https://bugreports.qt.io/browse/QTBUG-22829
 #ifndef Q_MOC_RUN
 #include <ros/ros.h>
+#include <std_msgs/Int16MultiArray.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl_ros/filters/voxel_grid.h>
@@ -62,6 +63,7 @@ public:
 	         Fatal
 	 };
 
+    std_msgs::Int16MultiArray cmdArray;
     char count = 0;
     pcl::PointCloud<pcl::PointXYZ> cloud_xyz,cloudFused_xyz;
     geometry_msgs::PoseStamped carTF,carTFzed2;
@@ -79,6 +81,7 @@ private:
 	int init_argc;
 	char** init_argv;
 	ros::Publisher chatter_publisher;
+    ros::Publisher cmd_publisher;
     ros::Subscriber pointFusedCloud_sub,pointCloud_sub,carTF_sub,carTFzed2_sub;
     QStringListModel logging_model;
 };

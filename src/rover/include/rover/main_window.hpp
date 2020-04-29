@@ -60,6 +60,10 @@ public Q_SLOTS:
     void updateMap();
     void updateCloud();
 
+    void on_commandLinkButton_1_clicked();
+    void on_commandLinkButton_2_clicked();
+    void on_commandLinkButton_3_clicked();
+
 private:
 	Ui::MainWindowDesign ui;
 	QNode qnode;
