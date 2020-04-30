@@ -366,7 +366,10 @@ CUDNN_LIBRARY_STATIC:FILEPATH=/usr/lib/aarch64-linux-gnu/libcudnn_static_v7.a
 DBoW2_LIB_DEPENDS:STATIC=general;opencv_calib3d;general;opencv_core;general;opencv_cudaarithm;general;opencv_cudabgsegm;general;opencv_cudacodec;general;opencv_cudafeatures2d;general;opencv_cudafilters;general;opencv_cudaimgproc;general;opencv_cudalegacy;general;opencv_cudaobjdetect;general;opencv_cudaoptflow;general;opencv_cudastereo;general;opencv_cudawarping;general;opencv_cudev;general;opencv_features2d;general;opencv_flann;general;opencv_highgui;general;opencv_imgcodecs;general;opencv_imgproc;general;opencv_ml;general;opencv_objdetect;general;opencv_photo;general;opencv_shape;general;opencv_stitching;general;opencv_superres;general;opencv_video;general;opencv_videoio;general;opencv_videostab;
 
 //Path to a program.
-DOXYGEN_EXECUTABLE:FILEPATH=DOXYGEN_EXECUTABLE-NOTFOUND
+DOXYGEN_EXECUTABLE:FILEPATH=/usr/local/bin/doxygen
+
+//Doxygen found
+DOXYGEN_FOUND:BOOL=TRUE
 
 //Path to a file.
 EIGEN3_INCLUDE_DIR:PATH=/usr/include/eigen3
@@ -409,6 +412,18 @@ LSB_RELEASE_EXECUTABLE:FILEPATH=/usr/bin/lsb_release
 
 //Path to a program.
 NOSETESTS:FILEPATH=/usr/bin/nosetests-2.7
+
+//Path to a library.
+OMPLAPPBASE_LIBRARY:FILEPATH=OMPLAPPBASE_LIBRARY-NOTFOUND
+
+//Path to a library.
+OMPLAPP_LIBRARY:FILEPATH=OMPLAPP_LIBRARY-NOTFOUND
+
+//Include path for OMPL and its dependencies
+OMPL_INCLUDE_DIRS:STRING=/usr/local/include/ompl-1.5;/usr/local/include/eigen3
+
+//Path to a library.
+OMPL_LIBRARIES:FILEPATH=/usr/local/lib/libompl.so
 
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=/usr/share/OpenCV
@@ -1117,6 +1132,9 @@ catkin_qi_BINARY_DIR:STATIC=/home/qi/catkin_qi/build
 //Value Computed by CMake
 catkin_qi_SOURCE_DIR:STATIC=/home/qi/catkin_qi/src
 
+//The directory containing a CMake configuration file for ccd.
+ccd_DIR:PATH=/usr/local/lib/ccd
+
 //The directory containing a CMake configuration file for class_loader.
 class_loader_DIR:PATH=/opt/ros/melodic/share/class_loader/cmake
 
@@ -1134,6 +1152,9 @@ diagnostic_updater_DIR:PATH=/opt/ros/melodic/share/diagnostic_updater/cmake
 
 //The directory containing a CMake configuration file for dynamic_reconfigure.
 dynamic_reconfigure_DIR:PATH=/opt/ros/melodic/share/dynamic_reconfigure/cmake
+
+//The directory containing a CMake configuration file for fcl.
+fcl_DIR:PATH=/usr/local/lib/cmake/fcl
 
 //Target for the libraries
 g2o_LIBRARY_OUTPUT_DIRECTORY:PATH=/home/qi/catkin_qi/src/orb_slam_2_ros/orb_slam2/Thirdparty/g2o/lib
@@ -1237,6 +1258,15 @@ nodelet_DIR:PATH=/opt/ros/melodic/share/nodelet/cmake
 
 //The directory containing a CMake configuration file for nodelet_topic_tools.
 nodelet_topic_tools_DIR:PATH=/opt/ros/melodic/share/nodelet_topic_tools/cmake
+
+//The directory containing a CMake configuration file for octomap.
+octomap_DIR:PATH=/opt/ros/melodic/share/octomap
+
+//The directory containing a CMake configuration file for ompl-1.5.
+ompl-1.5_DIR:PATH=ompl-1.5_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for ompl.
+ompl_DIR:PATH=/usr/local/share/ompl/cmake
 
 //Value Computed by CMake
 orb_slam2_ros_BINARY_DIR:STATIC=/home/qi/catkin_qi/build/orb_slam_2_ros
@@ -1388,11 +1418,17 @@ tf_DIR:PATH=/opt/ros/melodic/share/tf/cmake
 //The directory containing a CMake configuration file for topic_tools.
 topic_tools_DIR:PATH=/opt/ros/melodic/share/topic_tools/cmake
 
+//The directory containing a CMake configuration file for trajectory_msgs.
+trajectory_msgs_DIR:PATH=/opt/ros/melodic/share/trajectory_msgs/cmake
+
 //Value Computed by CMake
 tx2_slam_BINARY_DIR:STATIC=/home/qi/catkin_qi/build/tx2_slam
 
 //Value Computed by CMake
 tx2_slam_SOURCE_DIR:STATIC=/home/qi/catkin_qi/src/tx2_slam
+
+//The directory containing a CMake configuration file for visualization_msgs.
+visualization_msgs_DIR:PATH=/opt/ros/melodic/share/visualization_msgs/cmake
 
 //The directory containing a CMake configuration file for xmlrpcpp.
 xmlrpcpp_DIR:PATH=/opt/ros/melodic/share/xmlrpcpp/cmake
@@ -1762,6 +1798,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/usr/bin/python2][v2.7.17()]
 FIND_PACKAGE_MESSAGE_DETAILS_Qt4:INTERNAL=[/usr/bin/qmake-qt4][/usr/lib/aarch64-linux-gnu/qt4/bin/moc][/usr/lib/aarch64-linux-gnu/qt4/bin/rcc][/usr/include/qt4][/usr/lib/aarch64-linux-gnu][/usr/include/qt4/QtCore][/usr/lib/aarch64-linux-gnu/libQtCore.so][/usr/include/qt4/QtGui][/usr/lib/aarch64-linux-gnu/libQtGui.so][/usr/lib/aarch64-linux-gnu/qt4/bin/uic][v4.8.7()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//Details about finding ompl
+FIND_PACKAGE_MESSAGE_DETAILS_ompl:INTERNAL=[/usr/local/include/ompl-1.5;/usr/local/include/eigen3][/usr/local/lib/libompl.so][v()]
 GMOCK_FROM_SOURCE_FOUND:INTERNAL=TRUE
 GMOCK_FROM_SOURCE_INCLUDE_DIRS:INTERNAL=/usr/include
 GMOCK_FROM_SOURCE_LIBRARIES:INTERNAL=gmock

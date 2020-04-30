@@ -39,6 +39,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/tcl"
   "/home/qi/catkin_qi/src/tx2_slam/include"
   "/usr/local/include/modbus"
+  "/usr/local/include/fcl"
+  "/usr/local/include/ompl-1.5"
   )
 
 # Targets to which this target links.
