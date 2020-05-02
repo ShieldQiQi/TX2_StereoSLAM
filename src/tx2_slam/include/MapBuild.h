@@ -1,7 +1,7 @@
 # pragma once
 #include <ros/ros.h>
 #include "../include/SaveMap.h"
-#include <std_msgs/Int16MultiArray.h>
+#include <std_msgs/Int32MultiArray.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <sensor_msgs/Imu.h>
 #include <pcl_conversions/pcl_conversions.h>
@@ -23,7 +23,7 @@
 
 namespace tx2slam {
 
-class MapBuild:public Navigation
+class MapBuild/*:public Navigation*/
 {
 public:
     ~MapBuild(){}
@@ -34,8 +34,8 @@ public:
       init();
     }
 
-    void QTUI_cmd_Callback(const std_msgs::Int16MultiArray& msg);
-    void navigation_Callback(const ros::TimerEvent& event);
+    void QTUI_cmd_Callback(const std_msgs::Int32MultiArray::ConstPtr& msg);
+//    void navigation_Callback(const ros::TimerEvent& event);
     void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
     void carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose);
     void buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud, const geometry_msgs::PoseStamped::ConstPtr& pose);
@@ -46,11 +46,12 @@ public:
     message_filters::Subscriber<geometry_msgs::PoseStamped> *carTF_zed2_sub;
     message_filters::Synchronizer<sync_pol> *sync_;
 
+//    ros::Publisher smoothTraj_pub;
+//    ros::Publisher traj_pub;
     ros::Publisher pointCloudFused_pub;
     ros::Subscriber imu_sub;
     ros::Subscriber QTUI_cmd_sub;
     ros::Subscriber carTF_orb_sub;
-    ros::Timer navigationCtrlTimer;
     ros::ServiceClient client;
 
     orb_slam2_ros::SaveMap srv;
@@ -62,7 +63,7 @@ public:
 
     pcl::PCLPointCloud2* mPointcloudFusedMsg_pointer = new pcl::PCLPointCloud2;
 
-    sensor_msgs::PointCloud2 mPointcloudFusedMsg;
+    sensor_msgs::PointCloud2Ptr mPointcloudFusedMsg;
     sensor_msgs::Imu imu_Msg;
     geometry_msgs::PoseStamped carTF_zed2;
     geometry_msgs::PoseStamped carTF_orb;
@@ -77,6 +78,9 @@ public:
 
     uint16_t savemapFlag = 0;
     uint16_t mappingStatusCmd = 0;
+//    uint16_t goalSet = 0;
+//    float cmd_vel = 0;
+//    geometry_msgs::PoseStamped goalPoseStamped;
 
 private:
     int init_argc;

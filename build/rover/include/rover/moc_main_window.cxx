@@ -22,7 +22,7 @@ static const uint qt_meta_data_rover__MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -39,6 +39,9 @@ static const uint qt_meta_data_rover__MainWindow[] = {
      170,   58,   58,   58, 0x0a,
      203,   58,   58,   58, 0x0a,
      236,   58,   58,   58, 0x0a,
+     269,   58,   58,   58, 0x0a,
+     302,   58,   58,   58, 0x0a,
+     335,  373,   58,   58, 0x0a,
 
        0        // eod
 };
@@ -52,6 +55,10 @@ static const char qt_meta_stringdata_rover__MainWindow[] = {
     "on_commandLinkButton_1_clicked()\0"
     "on_commandLinkButton_2_clicked()\0"
     "on_commandLinkButton_3_clicked()\0"
+    "on_commandLinkButton_4_clicked()\0"
+    "on_commandLinkButton_5_clicked()\0"
+    "on_horizontalSlider_valueChanged(int)\0"
+    "value\0"
 };
 
 void rover::MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -69,6 +76,9 @@ void rover::MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 6: _t->on_commandLinkButton_1_clicked(); break;
         case 7: _t->on_commandLinkButton_2_clicked(); break;
         case 8: _t->on_commandLinkButton_3_clicked(); break;
+        case 9: _t->on_commandLinkButton_4_clicked(); break;
+        case 10: _t->on_commandLinkButton_5_clicked(); break;
+        case 11: _t->on_horizontalSlider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -106,9 +116,9 @@ int rover::MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 12;
     }
     return _id;
 }

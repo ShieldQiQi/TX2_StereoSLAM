@@ -64,6 +64,9 @@
         <param name="prefix" type="string" value="$(find tx2_slam)/map/pcd_files/" />
     </node>
 
+    <node name="Navigation" pkg="tx2_slam" type="Navigation" output="screen">
+    </node>
+
     <node name="rover" pkg="rover" type="rover">
     </node>
 

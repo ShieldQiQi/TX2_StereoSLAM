@@ -20,10 +20,13 @@
 //    https://bugreports.qt.io/browse/QTBUG-22829
 #ifndef Q_MOC_RUN
 #include <ros/ros.h>
-#include <std_msgs/Int16MultiArray.h>
+#include <std_msgs/Int32MultiArray.h>
+#include <sensor_msgs/PointCloud2.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl_ros/filters/voxel_grid.h>
+#include <pcl_conversions/pcl_conversions.h>
+#include <nav_msgs/Path.h>
 #endif
 #include <string>
 #include <QThread>
@@ -45,9 +48,10 @@ public:
 	QNode(int argc, char** argv );
 	virtual ~QNode();
 	bool init();
-    void readPointFusedCloud(const pcl::PCLPointCloud2::ConstPtr& cloud);
-    void readPointCloud(const pcl::PCLPointCloud2::ConstPtr& cloud);
+    void readPointFusedCloud(const sensor_msgs::PointCloud2::ConstPtr& cloud);
+    void readPointCloud(const sensor_msgs::PointCloud2::ConstPtr& cloud);
     void readTF(geometry_msgs::PoseStamped msg);
+    void readpathSolution(const nav_msgs::Path::ConstPtr& pathMsg);
     void readTFzed2(geometry_msgs::PoseStamped msg);
 	bool init(const std::string &master_url, const std::string &host_url);
 	void run();
@@ -63,7 +67,8 @@ public:
 	         Fatal
 	 };
 
-    std_msgs::Int16MultiArray cmdArray;
+    nav_msgs::Path::ConstPtr pathSolution = boost::make_shared<nav_msgs::Path>();
+    std_msgs::Int32MultiArrayPtr cmdArray;
     char count = 0;
     pcl::PointCloud<pcl::PointXYZ> cloud_xyz,cloudFused_xyz;
     geometry_msgs::PoseStamped carTF,carTFzed2;
@@ -83,6 +88,7 @@ private:
 	ros::Publisher chatter_publisher;
     ros::Publisher cmd_publisher;
     ros::Subscriber pointFusedCloud_sub,pointCloud_sub,carTF_sub,carTFzed2_sub;
+    ros::Subscriber pathSolution_sub;
     QStringListModel logging_model;
 };
 

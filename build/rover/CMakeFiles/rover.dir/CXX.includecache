@@ -105,13 +105,19 @@ QtPrintSupport/QtPrintSupport
 /home/qi/catkin_qi/src/rover/include/rover/qnode.hpp
 ros/ros.h
 -
-std_msgs/Int16MultiArray.h
+std_msgs/Int32MultiArray.h
+-
+sensor_msgs/PointCloud2.h
 -
 geometry_msgs/PoseStamped.h
 -
 pcl_ros/point_cloud.h
 -
 pcl_ros/filters/voxel_grid.h
+-
+pcl_conversions/pcl_conversions.h
+-
+nav_msgs/Path.h
 -
 string
 -
@@ -902,6 +908,26 @@ deque
 vector
 -
 string
+-
+
+/opt/ros/melodic/include/nav_msgs/Path.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+geometry_msgs/PoseStamped.h
 -
 
 /opt/ros/melodic/include/nodelet/exception.h
@@ -1966,7 +1992,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/opt/ros/melodic/include/std_msgs/Int16MultiArray.h
+/opt/ros/melodic/include/std_msgs/Int32MultiArray.h
 string
 -
 vector
@@ -5626,6 +5652,10 @@ qprintengine.h
 qprinter.h
 /usr/include/qt4/QtGui/qprinter.h
 
+/usr/include/qt4/QtGui/QSlider
+qslider.h
+/usr/include/qt4/QtGui/qslider.h
+
 /usr/include/qt4/QtGui/QStatusBar
 qstatusbar.h
 /usr/include/qt4/QtGui/qstatusbar.h
@@ -7980,6 +8010,8 @@ QtGui/QMainWindow
 QtGui/QMenu
 -
 QtGui/QMenuBar
+-
+QtGui/QSlider
 -
 QtGui/QStatusBar
 -

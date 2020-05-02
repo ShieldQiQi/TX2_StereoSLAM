@@ -63,10 +63,16 @@ public Q_SLOTS:
     void on_commandLinkButton_1_clicked();
     void on_commandLinkButton_2_clicked();
     void on_commandLinkButton_3_clicked();
+    void on_commandLinkButton_4_clicked();
+    void on_commandLinkButton_5_clicked();
+
+    void on_horizontalSlider_valueChanged(int value);
 
 private:
 	Ui::MainWindowDesign ui;
 	QNode qnode;
+    double goal_x;
+    double goal_y;
 };
 
 }  // namespace rover

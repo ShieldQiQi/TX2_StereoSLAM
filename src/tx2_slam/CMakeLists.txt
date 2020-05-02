@@ -4,7 +4,7 @@ project(tx2_slam)
 find_package(Eigen3)
 find_package(modbus)
 find_package(octomap REQUIRED)
-find_package(ompl-1.5)
+find_package(ompl)
 find_package(fcl REQUIRED)
 
 find_package(OpenCV 3.0 QUIET)
@@ -54,6 +54,10 @@ link_directories(/usr/lib)
 
 add_executable(Slam src/Slam.cpp)
 target_link_libraries(Slam /usr/local/lib/libccd.so ${fcl_LIBRARIES} /usr/local/lib/libompl.so /usr/local/lib/libfcl.so ${OCTOMAP_LIBRARIES} ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} /usr/local/lib/libmodbus.so /usr/lib/libopencv_highgui.so.3.2.0 ${EIGEN3_LIBS})
+
+add_executable(Navigation src/Navigation.cpp)
+target_link_libraries(Navigation /usr/local/lib/libccd.so ${fcl_LIBRARIES} /usr/local/lib/libompl.so /usr/local/lib/libfcl.so ${OCTOMAP_LIBRARIES} ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES} /usr/local/lib/libmodbus.so /usr/lib/libopencv_highgui.so.3.2.0 ${EIGEN3_LIBS})
+
 
 add_executable(MapLoad src/MapLoad.cpp)
 target_link_libraries(MapLoad ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${PCL_LIBRARIES})

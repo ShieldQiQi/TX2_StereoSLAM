@@ -1795,18 +1795,8 @@ void ZEDWrapperNodelet::publishPointCloud() {
     // We can do a direct memcpy since data organization is the same
     memcpy(ptCloudPtr, (float*)cpu_cloud, 4 * ptsCount * sizeof(float));
 
-//    pcl::PCLPointCloud2::Ptr cloudPtr;
-//    pcl::PCLPointCloud2 cloud_ = *cloudPtr;
-//    pcl::PointCloud<pcl::PointXYZRGB> pcl_cloud;
-//    pcl::fromROSMsg(*mPointcloudMsg, pcl_cloud);
-//    pcl::toPCLPointCloud2 (pcl_cloud, cloud_);
-
-//    pcl::VoxelGrid<pcl::PCLPointCloud2> sor;
-//    sor.setInputCloud (cloudPtr);
-//    sor.setLeafSize (0.1, 0.1, 0.1);
-//    sor.filter(cloud_);
     // Pointcloud publishing
-    mPubCloud.publish(*mPointcloudMsg);
+    mPubCloud.publish(mPointcloudMsg);
 }
 
 void ZEDWrapperNodelet::pubFusedPointCloudCallback(const ros::TimerEvent& e) {

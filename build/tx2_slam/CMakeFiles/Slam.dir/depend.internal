@@ -166,7 +166,7 @@ tx2_slam/CMakeFiles/Slam.dir/src/Slam.cpp.o
  /opt/ros/melodic/include/std_msgs/ColorRGBA.h
  /opt/ros/melodic/include/std_msgs/Empty.h
  /opt/ros/melodic/include/std_msgs/Header.h
- /opt/ros/melodic/include/std_msgs/Int16MultiArray.h
+ /opt/ros/melodic/include/std_msgs/Int32MultiArray.h
  /opt/ros/melodic/include/std_msgs/MultiArrayDimension.h
  /opt/ros/melodic/include/std_msgs/MultiArrayLayout.h
  /opt/ros/melodic/include/tf/FrameGraph.h

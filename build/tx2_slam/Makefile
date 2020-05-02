@@ -408,6 +408,21 @@ visualization_msgs_generate_messages_nodejs/fast:
 .PHONY : visualization_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
+tx2_slam/CMakeFiles/Navigation.dir/rule:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f CMakeFiles/Makefile2 tx2_slam/CMakeFiles/Navigation.dir/rule
+.PHONY : tx2_slam/CMakeFiles/Navigation.dir/rule
+
+# Convenience name for target.
+Navigation: tx2_slam/CMakeFiles/Navigation.dir/rule
+
+.PHONY : Navigation
+
+# fast build rule for target.
+Navigation/fast:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/Navigation.dir/build.make tx2_slam/CMakeFiles/Navigation.dir/build
+.PHONY : Navigation/fast
+
+# Convenience name for target.
 tx2_slam/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule:
 	cd /home/qi/catkin_qi/build && $(MAKE) -f CMakeFiles/Makefile2 tx2_slam/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule
 .PHONY : tx2_slam/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule
@@ -448,6 +463,33 @@ src/MapLoad.s: src/MapLoad.cpp.s
 src/MapLoad.cpp.s:
 	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/MapLoad.dir/build.make tx2_slam/CMakeFiles/MapLoad.dir/src/MapLoad.cpp.s
 .PHONY : src/MapLoad.cpp.s
+
+src/Navigation.o: src/Navigation.cpp.o
+
+.PHONY : src/Navigation.o
+
+# target to build an object file
+src/Navigation.cpp.o:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/Navigation.dir/build.make tx2_slam/CMakeFiles/Navigation.dir/src/Navigation.cpp.o
+.PHONY : src/Navigation.cpp.o
+
+src/Navigation.i: src/Navigation.cpp.i
+
+.PHONY : src/Navigation.i
+
+# target to preprocess a source file
+src/Navigation.cpp.i:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/Navigation.dir/build.make tx2_slam/CMakeFiles/Navigation.dir/src/Navigation.cpp.i
+.PHONY : src/Navigation.cpp.i
+
+src/Navigation.s: src/Navigation.cpp.s
+
+.PHONY : src/Navigation.s
+
+# target to generate assembly for a file
+src/Navigation.cpp.s:
+	cd /home/qi/catkin_qi/build && $(MAKE) -f tx2_slam/CMakeFiles/Navigation.dir/build.make tx2_slam/CMakeFiles/Navigation.dir/src/Navigation.cpp.s
+.PHONY : src/Navigation.cpp.s
 
 src/Slam.o: src/Slam.cpp.o
 
@@ -505,10 +547,14 @@ help:
 	@echo "... visualization_msgs_generate_messages_cpp"
 	@echo "... visualization_msgs_generate_messages_eus"
 	@echo "... visualization_msgs_generate_messages_nodejs"
+	@echo "... Navigation"
 	@echo "... visualization_msgs_generate_messages_py"
 	@echo "... src/MapLoad.o"
 	@echo "... src/MapLoad.i"
 	@echo "... src/MapLoad.s"
+	@echo "... src/Navigation.o"
+	@echo "... src/Navigation.i"
+	@echo "... src/Navigation.s"
 	@echo "... src/Slam.o"
 	@echo "... src/Slam.i"
 	@echo "... src/Slam.s"

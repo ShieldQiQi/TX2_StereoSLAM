@@ -7,20 +7,6 @@ using namespace std;
 using namespace Eigen;
 using namespace tx2slam;
 
-void MapBuild::navigation_Callback(const ros::TimerEvent& event)
-{
-  if(mappingStatusCmd == 1)
-  {
-//    setTargetSpeed(0.3, 0.3, 0);
-//    setTargetOmega(0.7, 0/*pidController(0.3, imu_Msg.angular_velocity.z)*/);
-//    ROS_INFO("omega_target is: %f, omega_actual is: %f",0.3,imu_Msg.angular_velocity.z);
-    rrtStarPlan(cloud_xyzFused,carTF_zed2,carTF_orb);
-    cmdVelPub();
-  }else{
-    setTargetSpeed(0, 0, 0);
-  }
-}
-
 void MapBuild::carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose){
   carTF_orb = *pose;
 }
@@ -29,10 +15,19 @@ void MapBuild::imuCallback(const sensor_msgs::Imu::ConstPtr& msg) {
   imu_Msg = *msg;
 }
 
-void MapBuild::QTUI_cmd_Callback(const std_msgs::Int16MultiArray& msg)
+void MapBuild::QTUI_cmd_Callback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 {
-  savemapFlag = msg.data.at(0);
-  mappingStatusCmd = msg.data.at(1);
+  savemapFlag = msg->data.at(0);
+  mappingStatusCmd = msg->data.at(1);
+
+//  goalPoseStamped.pose.position.x = msg->data.at(4)/1000.0;
+//  goalPoseStamped.pose.position.y = msg->data.at(5)/1000.0;
+
+//  if(msg->data.at(2) != 0){
+//    goalSet = msg->data.at(2);
+//  }
+
+//  cmd_vel = msg->data.at(3)/100.0;
 
   if(savemapFlag == 1){
 
@@ -43,7 +38,10 @@ void MapBuild::QTUI_cmd_Callback(const std_msgs::Int16MultiArray& msg)
 
     PointCloudToPCD saveAsPcd;
     pcl::PCLPointCloud2ConstPtr mPointcloudFusedMsg_Ptr(mPointcloudFusedMsg_pointer);
-    pcl_conversions::toPCL(mPointcloudFusedMsg, *mPointcloudFusedMsg_pointer);
+    if( !mPointcloudFusedMsg ) {
+        mPointcloudFusedMsg = boost::make_shared<sensor_msgs::PointCloud2>();
+    }
+    pcl_conversions::toPCL(*mPointcloudFusedMsg, *mPointcloudFusedMsg_pointer);
     saveAsPcd.save(mPointcloudFusedMsg_Ptr);
 
   }
@@ -141,13 +139,17 @@ void MapBuild::buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud
       {
         // fused the current cloud to the fused cloud
         *cloud_xyzFused += *cloud_xyz;
-        pcl::toROSMsg(*cloud_xyzFused, mPointcloudFusedMsg);
-        mPointcloudFusedMsg.header.frame_id = "map";
+        if( !mPointcloudFusedMsg ) {
+            mPointcloudFusedMsg = boost::make_shared<sensor_msgs::PointCloud2>();
+        }
+        pcl::toROSMsg(*cloud_xyzFused, *mPointcloudFusedMsg);
+        mPointcloudFusedMsg->header.frame_id = "map";
         pointCloudFused_pub.publish(mPointcloudFusedMsg);
       }
 
       startTimer = 0;
       timeLast = timeNow = 0;
+
     }else
     {
       if(!startTimer)
@@ -172,34 +174,45 @@ void MapBuild::buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud
   }
 }
 
-
 void MapBuild::init()
 {
   ros::init (init_argc, init_argv, "Slam");
   ros::NodeHandle n;
+
+  // publish planned path
+//  smoothTraj_pub = n.advertise<nav_msgs::Path>( "Trajectory_marker", 1 );
+//  traj_pub = n.advertise<nav_msgs::Path>("waypoints",1);
+
+  // publish Fused cloud
   pointCloudFused_pub = n.advertise<sensor_msgs::PointCloud2>("/mapBuild/cloud_Fused", 1);
+
+  // subscribe pose and imu msg
   imu_sub = n.subscribe("/zed2/zed_node/imu/data", 1, &MapBuild::imuCallback,this);
   carTF_orb_sub = n.subscribe("/orb_slam2_stereo/pose", 1, &MapBuild::carTF_orb_Callback,this);
 
-  navigationCtrlTimer = n.createTimer(ros::Duration(0.07), &MapBuild::navigation_Callback,this);
+  // set a Timer to call path-plan function
+//  navigationCtrlTimer = n.createTimer(ros::Duration(2.5), &MapBuild::navigation_Callback,this);
+
+  // receive the UI cmd
   QTUI_cmd_sub = n.subscribe("/rover/QtUI_cmd_Msg", 1, &MapBuild::QTUI_cmd_Callback,this);
+
+  // receive the origin cloud and camera pose
   pointCloud_sub = new message_filters::Subscriber<sensor_msgs::PointCloud2>
       ( n, "/zed2/zed_node/point_cloud/cloud_registered", 1);
   carTF_zed2_sub = new message_filters::Subscriber<geometry_msgs::PoseStamped>
       (n, "/zed2/zed_node/pose", 1);
-
   sync_ = new message_filters::Synchronizer<sync_pol> (sync_pol(10), *pointCloud_sub, *carTF_zed2_sub);
   sync_->registerCallback(boost::bind(&MapBuild::buildMap_callback, this, _1, _2));
 
-  // call save map services
+  // call save map service
   client = n.serviceClient<orb_slam2_ros::SaveMap>("/orb_slam2_stereo/save_map");
-
   srv.request.name = "/home/qi/catkin_qi/src/tx2_slam/map/bin/zed2_slam_Map.bin";
 
   //------------------------------------------------------------------
-  // Use 5 threads
-  ros::MultiThreadedSpinner spinner(5);
-  spinner.spin();
+  // Use 5 threads to release the exe pressure
+//  ros::MultiThreadedSpinner spinner(5);
+//  spinner.spin();
+  ros::spin();
 
 }
 

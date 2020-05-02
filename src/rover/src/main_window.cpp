@@ -49,6 +49,9 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
     QObject::connect(ui.commandLinkButton_1,SIGNAL(clicked()),this,SLOT(on_commandLinkButton_1_clicked()));
     QObject::connect(ui.commandLinkButton_2,SIGNAL(clicked()),this,SLOT(on_commandLinkButton_2_clicked()));
     QObject::connect(ui.commandLinkButton_3,SIGNAL(clicked()),this,SLOT(on_commandLinkButton_3_clicked()));
+//    QObject::connect(ui.commandLinkButton_4,SIGNAL(clicked()),this,SLOT(on_commandLinkButton_4_clicked()));
+    QObject::connect(ui.commandLinkButton_5,SIGNAL(clicked()),this,SLOT(on_commandLinkButton_5_clicked()));
+    QObject::connect(ui.horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(on_horizontalSlider_valueChanged(int)));
 
 	/*********************
 	** Logging
@@ -79,6 +82,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
     ui.customPlot->addGraph();
     ui.customPlot->addGraph();
     ui.customPlot->addGraph();
+    ui.customPlot->addGraph();
 
     ui.customPlot->xAxis->setLabel("x");
     ui.customPlot->yAxis->setLabel("y");
@@ -100,26 +104,50 @@ void MainWindow::showNoMasterMessage() {
 void MainWindow::on_commandLinkButton_1_clicked()
 {
   // save map cmd
-  qnode.cmdArray.data.at(0) = 1;
+  qnode.cmdArray->data.at(0) = 1;
 }
 void MainWindow::on_commandLinkButton_2_clicked()
 {
   // start map cmd
-  qnode.cmdArray.data.at(1) = 1;
+  qnode.cmdArray->data.at(1) = 1;
 }
 void MainWindow::on_commandLinkButton_3_clicked()
 {
   // start map cmd
-  qnode.cmdArray.data.at(1) = 0;
+  qnode.cmdArray->data.at(1) = 0;
+}
+void MainWindow::on_commandLinkButton_4_clicked()
+{
+  // confirm goal
+  if(QMessageBox::Yes == QMessageBox::question(this,"confirm it","are you sure to make this point a target?",QMessageBox::Yes | QMessageBox:: No))
+  {
+    qnode.cmdArray->data.at(2) = 1;
+    // set goal x-y position
+    qnode.cmdArray->data.at(4) = (int)(1000*goal_x);
+    qnode.cmdArray->data.at(5) = (int)(1000*goal_y);
+  }
+  std::cout<<"/*/";
+}
+void MainWindow::on_commandLinkButton_5_clicked()
+{
+  // start to the goal
+  qnode.cmdArray->data.at(2) = 2;
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+  // change the cmd_vel
+  qnode.cmdArray->data.at(3) = value;
 }
 
 void MainWindow::updateMap()
 {
-    QVector<double> x(qnode.cloudFused_xyz.width), y(qnode.cloudFused_xyz.width); // initialize with entries 0..100
+    QVector<double> x(qnode.cloudFused_xyz.width);
+    QVector<double> y(qnode.cloudFused_xyz.width);
     for (int i=0; i<qnode.cloudFused_xyz.width; i++)
     {
-      x[i] = qnode.cloudFused_xyz.at(i).x; // x goes from -1 to 1
-      y[i] = qnode.cloudFused_xyz.at(i).y; // let's plot a quadratic function
+      x[i] = qnode.cloudFused_xyz.at(i).x;
+      y[i] = qnode.cloudFused_xyz.at(i).y;
     }
     ui.customPlot->graph(0)->setData(x, y);
     ui.customPlot->graph(0)->setPen(QPen(Qt::yellow));
@@ -133,6 +161,18 @@ void MainWindow::updateMap()
     ui.customPlot->graph(1)->setPen(QPen(Qt::red));
     ui.customPlot->graph(1)->setLineStyle(QCPGraph::lsNone);
     ui.customPlot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCrossCircle, 10));
+
+    QVector<double> x_path(qnode.pathSolution->poses.size());
+    QVector<double> y_path(qnode.pathSolution->poses.size());
+    for (int i=0; i<qnode.pathSolution->poses.size(); i++)
+    {
+      x_path[i] = qnode.pathSolution->poses.at(i).pose.position.x;
+      y_path[i] = qnode.pathSolution->poses.at(i).pose.position.y;
+    }
+    ui.customPlot->graph(4)->setData(x_path, y_path);
+    ui.customPlot->graph(4)->setPen(QPen(Qt::black));
+    ui.customPlot->graph(4)->setLineStyle(QCPGraph::lsNone);
+    ui.customPlot->graph(4)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 5));
 
     // set axes ranges, so we see all data:
 //    ui.customPlot->xAxis->setRange(-1, 1);
@@ -169,23 +209,20 @@ void MainWindow::updateCloud()
 
 void MainWindow::mouseDcEvent(QMouseEvent *event)
 {
-  if(QMessageBox::Yes == QMessageBox::question(this,"confirm it","are you sure to make this point a target?",QMessageBox::Yes | QMessageBox:: No))
-  {
-    double x = event->pos().x();
-    double y = event->pos().y();
-    double x_ = ui.customPlot->xAxis->pixelToCoord(x);
-    double y_ = ui.customPlot->yAxis->pixelToCoord(y);
-    QVector<double> x_pose(1), y_pose(1);
-    x_pose[0] = x_;
-    y_pose[0] = y_;
-    ui.customPlot->graph(2)->setData(x_pose,y_pose);
-    ui.customPlot->graph(2)->setPen(QPen(Qt::blue));
-    ui.customPlot->graph(2)->setLineStyle(QCPGraph::lsNone);
-    ui.customPlot->graph(2)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCrossCircle, 10));
+  double x = event->pos().x();
+  double y = event->pos().y();
+  goal_x = ui.customPlot->xAxis->pixelToCoord(x);
+  goal_y = ui.customPlot->yAxis->pixelToCoord(y);
 
-    ui.customPlot->replot();
-  }
+  QVector<double> x_pose(1), y_pose(1);
+  x_pose[0] = goal_x;
+  y_pose[0] = goal_y;
+  ui.customPlot->graph(2)->setData(x_pose,y_pose);
+  ui.customPlot->graph(2)->setPen(QPen(Qt::blue));
+  ui.customPlot->graph(2)->setLineStyle(QCPGraph::lsNone);
+  ui.customPlot->graph(2)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCrossCircle, 10));
 
+  ui.customPlot->replot();
 
 //  QString *str = new QString;
 //  *str = QString("X: Y:");

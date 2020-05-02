@@ -279,6 +279,7 @@
 /home/qi/catkin_qi/build/tx2_slam/CMakeFiles/visualization_msgs_generate_messages_cpp.dir
 /home/qi/catkin_qi/build/tx2_slam/CMakeFiles/visualization_msgs_generate_messages_eus.dir
 /home/qi/catkin_qi/build/tx2_slam/CMakeFiles/visualization_msgs_generate_messages_nodejs.dir
+/home/qi/catkin_qi/build/tx2_slam/CMakeFiles/Navigation.dir
 /home/qi/catkin_qi/build/tx2_slam/CMakeFiles/visualization_msgs_generate_messages_py.dir
 /home/qi/catkin_qi/build/zed-ros-examples/examples/zed_ar_track_alvar_example/CMakeFiles/install/strip.dir
 /home/qi/catkin_qi/build/zed-ros-examples/examples/zed_ar_track_alvar_example/CMakeFiles/install/local.dir

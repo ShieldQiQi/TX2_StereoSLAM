@@ -50,11 +50,20 @@ void QNode::readTFzed2(geometry_msgs::PoseStamped msg)
   carTFzed2 = msg;
 }
 
-void QNode::readPointFusedCloud(const pcl::PCLPointCloud2::ConstPtr& cloud)
+void QNode::readpathSolution(const nav_msgs::Path::ConstPtr& pathMsg)
 {
-  if ((cloud->width * cloud->height) == 0)
+  pathSolution = pathMsg;
+}
+
+void QNode::readPointFusedCloud(const sensor_msgs::PointCloud2::ConstPtr& cloud)
+{
+  pcl::PCLPointCloud2* cloud2 = new pcl::PCLPointCloud2;
+  pcl::PCLPointCloud2ConstPtr cloudPtr(cloud2);
+  pcl_conversions::toPCL(*cloud, *cloud2);
+
+  if ((cloudPtr->width * cloudPtr->height) == 0)
     return;
-  pcl::fromPCLPointCloud2 (*cloud, cloudFused_xyz);
+  pcl::fromPCLPointCloud2 (*cloudPtr, cloudFused_xyz);
 
   if(count++==3){
     Q_EMIT slamMapUpdated();
@@ -62,20 +71,23 @@ void QNode::readPointFusedCloud(const pcl::PCLPointCloud2::ConstPtr& cloud)
   }
 }
 
-void QNode::readPointCloud(const pcl::PCLPointCloud2::ConstPtr& cloud)
+void QNode::readPointCloud(const sensor_msgs::PointCloud2::ConstPtr& cloud)
 {
+//  pcl::PCLPointCloud2* cloud2 = new pcl::PCLPointCloud2;
+//  pcl::PCLPointCloud2ConstPtr cloudPtr(cloud2);
+//  pcl_conversions::toPCL(*cloud, *cloud2);
 
-  // Perform the actual filtering
-  // VoxelGrid(decrease the memory occupation) & PassThrough(delete some incorrect points)
-  pcl::PCLPointCloud2* cloud_filtered = new pcl::PCLPointCloud2;
-  pcl::VoxelGrid<pcl::PCLPointCloud2> filter;
-  filter.setInputCloud (cloud);
-  filter.setLeafSize (0.1, 0.1, 0.1);
-  filter.filter(*cloud_filtered);
+//  // Perform the actual filtering
+//  // VoxelGrid(decrease the memory occupation) & PassThrough(delete some incorrect points)
+//  pcl::PCLPointCloud2* cloud_filtered = new pcl::PCLPointCloud2;
+//  pcl::VoxelGrid<pcl::PCLPointCloud2> filter;
+//  filter.setInputCloud (cloudPtr);
+//  filter.setLeafSize (0.1, 0.1, 0.1);
+//  filter.filter(*cloud_filtered);
 
-  if ((cloud->width * cloud->height) == 0)
-    return;
-  pcl::fromPCLPointCloud2 (*cloud_filtered, cloud_xyz);
+//  if ((cloud->width * cloud->height) == 0)
+//    return;
+//  pcl::fromPCLPointCloud2 (*cloud_filtered, cloud_xyz);
 
 //  if(count++==3){
   Q_EMIT cloudUpdated();
@@ -91,19 +103,33 @@ bool QNode::init() {
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
 	ros::NodeHandle n;
 	// Add your ros communications here.
-    cmd_publisher = n.advertise<std_msgs::Int16MultiArray>("/rover/QtUI_cmd_Msg", 1000);
+    cmd_publisher = n.advertise<std_msgs::Int32MultiArray>("/rover/QtUI_cmd_Msg", 1000);
 //	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
     pointFusedCloud_sub = n.subscribe("/mapBuild/cloud_Fused",1,
                                  &QNode::readPointFusedCloud, this);
     pointCloud_sub = n.subscribe("/zed2/zed_node/point_cloud/cloud_registered",1,
                                  &QNode::readPointCloud, this);
+    pathSolution_sub = n.subscribe("Trajectory_marker",1,
+                                  &QNode::readpathSolution, this);
     carTF_sub = n.subscribe("/orb_slam2_stereo/pose",1000,
                             &QNode::readTF, this);
     carTFzed2_sub = n.subscribe("/zed2/zed_node/pose",1000,
                             &QNode::readTFzed2, this);
 
-    cmdArray.data.push_back(0);
-    cmdArray.data.push_back(0);
+    if( !cmdArray ) {
+        cmdArray = boost::make_shared<std_msgs::Int32MultiArray>();
+    }
+    // save map
+    cmdArray->data.push_back(0);
+    // mapping status
+    cmdArray->data.push_back(0);
+    // confirm/Go to goal
+    cmdArray->data.push_back(0);
+    // change the cmd_vel
+    cmdArray->data.push_back(0);
+    // the goal x-y position
+    cmdArray->data.push_back(0);
+    cmdArray->data.push_back(0);
 
 	start();
 	return true;
@@ -126,7 +152,7 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 }
 
 void QNode::run() {
-	ros::Rate loop_rate(1);
+    ros::Rate loop_rate(5);
     int count = 0;\
     char flag = 0;
 	while ( ros::ok() ) {
@@ -137,18 +163,21 @@ void QNode::run() {
 		msg.data = ss.str();
 //        chatter_publisher.publish(msg);
         cmd_publisher.publish(cmdArray);
-        if(cmdArray.data.at(0) == 1)
-          cmdArray.data.at(0) = 0;
+        if(cmdArray->data.at(0) == 1)
+          cmdArray->data.at(0) = 0;
+        if(cmdArray->data.at(2) != 0)
+          cmdArray->data.at(2) = 0;
 //        log(Info,std::string("I sent: ")+msg.data);
-		ros::spinOnce();
-		loop_rate.sleep();
-		++count;       
+        ++count;
 
         Q_EMIT slamStateChanged(flag);
         flag+=10;
         if(flag == 40){
           flag = 0;
         }
+
+		ros::spinOnce();
+		loop_rate.sleep();
 	}
 	std::cout << "Ros shutdown, proceeding to close the gui." << std::endl;
 	Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)

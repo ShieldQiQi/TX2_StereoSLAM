@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>909</width>
-    <height>531</height>
+    <width>1290</width>
+    <height>781</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,6 +33,12 @@
       <property name="enabled">
        <bool>true</bool>
       </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="autoFillBackground">
        <bool>true</bool>
       </property>
@@ -53,6 +59,9 @@
          <width>241</width>
          <height>404</height>
         </rect>
+       </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">border-radius:20px; 
@@ -75,7 +84,7 @@ border-color: rgb(46, 52, 54);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -92,6 +101,9 @@ border-color: rgb(46, 52, 54);</string>
           <width>221</width>
           <height>41</height>
          </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.455399 rgba(255, 255, 255, 0), stop:1 rgba(198, 183, 0, 255));
@@ -112,6 +124,9 @@ border-color: rgb(85, 87, 83);</string>
           <height>41</height>
          </rect>
         </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.338028 rgba(27, 43, 255, 0), stop:1 rgba(255, 5, 100, 255));
 border-radius:10px; 
@@ -130,6 +145,9 @@ border-color: rgb(85, 87, 83);</string>
           <width>221</width>
           <height>41</height>
          </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));
@@ -151,7 +169,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -169,6 +187,9 @@ border-color: rgb(85, 87, 83);</string>
           <height>24</height>
          </rect>
         </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
         </property>
@@ -184,6 +205,9 @@ border-color: rgb(85, 87, 83);</string>
           <width>100</width>
           <height>24</height>
          </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -202,7 +226,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -221,7 +245,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -239,6 +263,9 @@ border-color: rgb(85, 87, 83);</string>
           <height>24</height>
          </rect>
         </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
         </property>
@@ -254,6 +281,9 @@ border-color: rgb(85, 87, 83);</string>
           <width>100</width>
           <height>24</height>
          </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -271,6 +301,9 @@ border-color: rgb(85, 87, 83);</string>
           <height>24</height>
          </rect>
         </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
         </property>
@@ -286,6 +319,9 @@ border-color: rgb(85, 87, 83);</string>
           <width>100</width>
           <height>24</height>
          </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -303,6 +339,9 @@ border-color: rgb(85, 87, 83);</string>
           <height>24</height>
          </rect>
         </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
         </property>
@@ -318,6 +357,9 @@ border-color: rgb(85, 87, 83);</string>
           <width>100</width>
           <height>24</height>
          </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -336,7 +378,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:20px; 
@@ -356,7 +398,7 @@ border-color: rgb(85, 87, 83);</string>
           <x>0</x>
           <y>220</y>
           <width>241</width>
-          <height>184</height>
+          <height>181</height>
          </rect>
         </property>
         <property name="autoFillBackground">
@@ -402,7 +444,7 @@ border-color: rgb(85, 87, 83);</string>
         </rect>
        </property>
        <property name="autoFillBackground">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">image: url(:/images/logo_2.png);</string>
@@ -427,6 +469,112 @@ border-color: rgb(85, 87, 83);</string>
         <string/>
        </property>
       </widget>
+      <widget class="QFrame" name="frame_4">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>480</y>
+         <width>241</width>
+         <height>221</height>
+        </rect>
+       </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius:20px; 
+border:1px solid;
+border-color: rgb(85, 87, 83);</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QCommandLinkButton" name="commandLinkButton_4">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>221</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));
+border-radius:10px; 
+border:1px solid;
+border-color: rgb(85, 87, 83);</string>
+        </property>
+        <property name="text">
+         <string>confirm the Goal</string>
+        </property>
+       </widget>
+       <widget class="QCommandLinkButton" name="commandLinkButton_5">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>221</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));
+border-radius:10px; 
+border:1px solid;
+border-color: rgb(85, 87, 83);</string>
+        </property>
+        <property name="text">
+         <string>Go to the goal</string>
+        </property>
+       </widget>
+       <widget class="QSlider" name="horizontalSlider">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>180</y>
+          <width>221</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none</string>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>14</x>
+          <y>140</y>
+          <width>151</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none</string>
+        </property>
+        <property name="text">
+         <string>Set the Speed</string>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </item>
     <item>
@@ -447,119 +595,122 @@ border-color: rgb(85, 87, 83);</string>
        <locale language="English" country="Australia"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_status">
        <attribute name="title">
         <string>Ros Communications</string>
        </attribute>
-       <widget class="QGroupBox" name="groupBox_2">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>9</y>
-          <width>610</width>
-          <height>425</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="autoFillBackground">
-         <bool>true</bool>
-        </property>
-        <property name="title">
-         <string>  This terminal show the topic and msgs</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
-          <widget class="QListView" name="view_logging_2">
-           <property name="cursor" stdset="0">
-            <cursorShape>IBeamCursor</cursorShape>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">border:1px solid;
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="title">
+           <string>  This terminal show the topic and msgs</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <widget class="QListView" name="view_logging_2">
+             <property name="cursor" stdset="0">
+              <cursorShape>IBeamCursor</cursorShape>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border:1px solid;
 background-color: rgba(44, 0, 30, 255);
 </string>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::ContiguousSelection</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::ContiguousSelection</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="slam_status">
        <attribute name="title">
         <string>SLAM Status</string>
        </attribute>
-       <widget class="QGroupBox" name="groupBox_3">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>9</y>
-          <width>610</width>
-          <height>425</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="title">
-         <string>  This terminal show the feature points and status during mapping</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="0">
-          <widget class="QListView" name="view_logging_3">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="cursor" stdset="0">
-            <cursorShape>IBeamCursor</cursorShape>
-           </property>
-           <property name="autoFillBackground">
-            <bool>true</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">border:1px solid;
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="title">
+           <string>  This terminal show the feature points and status during mapping</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QListView" name="view_logging_3">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="cursor" stdset="0">
+              <cursorShape>IBeamCursor</cursorShape>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border:1px solid;
 background-color: rgba(44, 0, 30, 255);
 </string>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::ContiguousSelection</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::ContiguousSelection</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="slam_map">
        <attribute name="title">
         <string>Dynamic 2D map</string>
        </attribute>
-       <widget class="QCustomPlot" name="customPlot" native="true">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>601</width>
-          <height>401</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QCustomPlot" name="customPlot" native="true">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -575,7 +726,7 @@ background-color: rgba(44, 0, 30, 255);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>909</width>
+     <width>1290</width>
      <height>23</height>
     </rect>
    </property>
