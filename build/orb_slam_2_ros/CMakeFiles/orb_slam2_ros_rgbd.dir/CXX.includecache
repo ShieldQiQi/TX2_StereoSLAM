@@ -625,6 +625,8 @@ sensor_msgs/PointCloud2.h
 -
 geometry_msgs/PoseStamped.h
 -
+std_msgs/Int32.h
+-
 System.h
 /home/qi/catkin_qi/src/orb_slam_2_ros/ros/include/System.h
 
@@ -2203,6 +2205,22 @@ string
 -
 
 /opt/ros/melodic/include/std_msgs/Header.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/opt/ros/melodic/include/std_msgs/Int32.h
 string
 -
 vector

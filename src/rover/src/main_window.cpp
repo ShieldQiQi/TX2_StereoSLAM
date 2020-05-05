@@ -44,6 +44,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
     QObject::connect(&qnode, SIGNAL(slamStateChanged(char)), this, SLOT(changeStateIndicator(char)));
     QObject::connect(&qnode, SIGNAL(slamMapUpdated()), this, SLOT(updateMap()));
     QObject::connect(&qnode, SIGNAL(cloudUpdated()), this, SLOT(updateCloud()));
+    QObject::connect(&qnode, SIGNAL(pathUpdated()), this, SLOT(updatePath()));
     QObject::connect(ui.customPlot,SIGNAL(mouseDoubleClick(QMouseEvent *)),this,SLOT(mouseDcEvent(QMouseEvent *)));
 
     QObject::connect(ui.commandLinkButton_1,SIGNAL(clicked()),this,SLOT(on_commandLinkButton_1_clicked()));
@@ -126,12 +127,18 @@ void MainWindow::on_commandLinkButton_4_clicked()
     qnode.cmdArray->data.at(4) = (int)(1000*goal_x);
     qnode.cmdArray->data.at(5) = (int)(1000*goal_y);
   }
-  std::cout<<"/*/";
 }
 void MainWindow::on_commandLinkButton_5_clicked()
 {
   // start to the goal
-  qnode.cmdArray->data.at(2) = 2;
+  if(qnode.pathSolution->poses.empty()){
+    QMessageBox::critical(this, "Error", "The solution is empty!", QMessageBox::Yes, QMessageBox::Yes);
+  }else if(abs(goal_x - qnode.pathSolution->poses.back().pose.position.x) < 0.01 &&
+     abs(goal_y - qnode.pathSolution->poses.back().pose.position.y) < 0.01){
+    qnode.cmdArray->data.at(2) = 2;
+  }else{
+    QMessageBox::critical(this, "Error", "goal not set yet!", QMessageBox::Yes, QMessageBox::Yes);
+  }
 }
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
@@ -162,22 +169,30 @@ void MainWindow::updateMap()
     ui.customPlot->graph(1)->setLineStyle(QCPGraph::lsNone);
     ui.customPlot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCrossCircle, 10));
 
-    QVector<double> x_path(qnode.pathSolution->poses.size());
-    QVector<double> y_path(qnode.pathSolution->poses.size());
-    for (int i=0; i<qnode.pathSolution->poses.size(); i++)
-    {
-      x_path[i] = qnode.pathSolution->poses.at(i).pose.position.x;
-      y_path[i] = qnode.pathSolution->poses.at(i).pose.position.y;
-    }
-    ui.customPlot->graph(4)->setData(x_path, y_path);
-    ui.customPlot->graph(4)->setPen(QPen(Qt::black));
-    ui.customPlot->graph(4)->setLineStyle(QCPGraph::lsNone);
-    ui.customPlot->graph(4)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 5));
-
     // set axes ranges, so we see all data:
 //    ui.customPlot->xAxis->setRange(-1, 1);
 //    ui.customPlot->yAxis->setRange(0, 1);
     ui.customPlot->replot();
+}
+
+void MainWindow::updatePath()
+{
+  QVector<double> x_path(qnode.pathSolution->poses.size());
+  QVector<double> y_path(qnode.pathSolution->poses.size());
+  for (int i=0; i<qnode.pathSolution->poses.size(); i++)
+  {
+    x_path[i] = qnode.pathSolution->poses.at(i).pose.position.x;
+    y_path[i] = qnode.pathSolution->poses.at(i).pose.position.y;
+  }
+  ui.customPlot->graph(4)->setData(x_path, y_path);
+  ui.customPlot->graph(4)->setPen(QPen(Qt::black));
+  ui.customPlot->graph(4)->setLineStyle(QCPGraph::lsNone);
+  ui.customPlot->graph(4)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 3));
+
+  // set axes ranges, so we see all data:
+//    ui.customPlot->xAxis->setRange(-1, 1);
+//    ui.customPlot->yAxis->setRange(0, 1);
+  ui.customPlot->replot();
 }
 
 void MainWindow::updateCloud()

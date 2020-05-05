@@ -59,6 +59,7 @@ public Q_SLOTS:
     void changeStateIndicator(char flag);
     void updateMap();
     void updateCloud();
+    void updatePath();
 
     void on_commandLinkButton_1_clicked();
     void on_commandLinkButton_2_clicked();

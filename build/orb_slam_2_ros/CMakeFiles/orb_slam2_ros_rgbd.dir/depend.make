@@ -164,6 +164,7 @@ orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/Node.cc.o: /opt/ros/mel
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/Node.cc.o: /opt/ros/melodic/include/sensor_msgs/RegionOfInterest.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/Node.cc.o: /opt/ros/melodic/include/sensor_msgs/image_encodings.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/Node.cc.o: /opt/ros/melodic/include/std_msgs/Header.h
+orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/Node.cc.o: /opt/ros/melodic/include/std_msgs/Int32.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/Node.cc.o: /opt/ros/melodic/include/tf/LinearMath/Matrix3x3.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/Node.cc.o: /opt/ros/melodic/include/tf/LinearMath/MinMax.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/Node.cc.o: /opt/ros/melodic/include/tf/LinearMath/QuadWord.h
@@ -573,6 +574,7 @@ orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/RGBDNode.cc.o: /opt/ros
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/RGBDNode.cc.o: /opt/ros/melodic/include/sensor_msgs/RegionOfInterest.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/RGBDNode.cc.o: /opt/ros/melodic/include/sensor_msgs/image_encodings.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/RGBDNode.cc.o: /opt/ros/melodic/include/std_msgs/Header.h
+orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/RGBDNode.cc.o: /opt/ros/melodic/include/std_msgs/Int32.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/RGBDNode.cc.o: /opt/ros/melodic/include/tf/LinearMath/Matrix3x3.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/RGBDNode.cc.o: /opt/ros/melodic/include/tf/LinearMath/MinMax.h
 orb_slam_2_ros/CMakeFiles/orb_slam2_ros_rgbd.dir/ros/src/RGBDNode.cc.o: /opt/ros/melodic/include/tf/LinearMath/QuadWord.h

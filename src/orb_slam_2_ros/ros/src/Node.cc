@@ -36,6 +36,8 @@ Node::Node (ORB_SLAM2::System::eSensor sensor, ros::NodeHandle &node_handle, ima
     pose_publisher_ = node_handle_.advertise<geometry_msgs::PoseStamped> (name_of_node_+"/pose", 1);
   }
 
+  trackingState_publisher_ = node_handle_.advertise<std_msgs::Int32> (name_of_node_+"/trackingState", 1);
+
 }
 
 
@@ -60,6 +62,10 @@ void Node::Update () {
       PublishPositionAsPoseStamped (position);
     }
   }
+
+  std_msgs::Int32 trackingState;
+  trackingState.data = orb_slam_->GetTrackingState();
+  trackingState_publisher_.publish(trackingState);
 
   PublishRenderedImage (orb_slam_->DrawCurrentFrame());
 

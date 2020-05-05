@@ -2,6 +2,7 @@
 #include <ros/ros.h>
 #include "../include/SaveMap.h"
 #include <std_msgs/Int32MultiArray.h>
+#include <std_msgs/Int32.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <sensor_msgs/Imu.h>
 #include <pcl_conversions/pcl_conversions.h>
@@ -26,65 +27,90 @@ namespace tx2slam {
 class MapBuild/*:public Navigation*/
 {
 public:
-    ~MapBuild(){}
-    MapBuild(int argc, char** argv)
-    {
-      init_argc = argc;
-      init_argv = argv;
-      init();
-    }
+  ~MapBuild()
+  {
+//    delete cloud_xyz;
+//    delete cloud_xyzFused;
+//    delete mPointcloudFusedMsg_pointer;
+  }
+  MapBuild(int argc, char** argv)
+  {
+    init_argc = argc;
+    init_argv = argv;
+    init();
+  }
 
-    void QTUI_cmd_Callback(const std_msgs::Int32MultiArray::ConstPtr& msg);
+  void QTUI_cmd_Callback(const std_msgs::Int32MultiArray::ConstPtr& msg);
 //    void navigation_Callback(const ros::TimerEvent& event);
-    void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
-    void carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose);
-    void buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud, const geometry_msgs::PoseStamped::ConstPtr& pose);
-    void init();
+  void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
+  void carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose);
+  void buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud, const geometry_msgs::PoseStamped::ConstPtr& pose);
+  void trackingState_Callback(const std_msgs::Int32::ConstPtr& trackingStateMsg);
+  void init();
 
-    typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::PointCloud2, geometry_msgs::PoseStamped> sync_pol;
-    message_filters::Subscriber<sensor_msgs::PointCloud2> *pointCloud_sub;
-    message_filters::Subscriber<geometry_msgs::PoseStamped> *carTF_zed2_sub;
-    message_filters::Synchronizer<sync_pol> *sync_;
+  typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::PointCloud2, geometry_msgs::PoseStamped> sync_pol;
+  message_filters::Subscriber<sensor_msgs::PointCloud2> *pointCloud_sub;
+  message_filters::Subscriber<geometry_msgs::PoseStamped> *carTF_zed2_sub;
+  message_filters::Synchronizer<sync_pol> *sync_;
 
 //    ros::Publisher smoothTraj_pub;
 //    ros::Publisher traj_pub;
-    ros::Publisher pointCloudFused_pub;
-    ros::Subscriber imu_sub;
-    ros::Subscriber QTUI_cmd_sub;
-    ros::Subscriber carTF_orb_sub;
-    ros::ServiceClient client;
+  ros::Publisher pointCloudFused_pub;
+  ros::Subscriber imu_sub;
+  ros::Subscriber QTUI_cmd_sub;
+  ros::Subscriber carTF_orb_sub;
+  ros::Subscriber trackingStat_sub;
+  ros::ServiceClient client;
 
-    orb_slam2_ros::SaveMap srv;
+  orb_slam2_ros::SaveMap srv;
 
-    pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyz = new pcl::PointCloud<pcl::PointXYZRGB>;
-    pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyzFused = new pcl::PointCloud<pcl::PointXYZRGB>;
-    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_xyzPtr;
-    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_xyzFusedPtr;
+  pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyz = new pcl::PointCloud<pcl::PointXYZRGB>;
+  pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyzFused = new pcl::PointCloud<pcl::PointXYZRGB>;
+  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_xyzPtr;
+  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_xyzFusedPtr;
 
-    pcl::PCLPointCloud2* mPointcloudFusedMsg_pointer = new pcl::PCLPointCloud2;
+  pcl::PCLPointCloud2* mPointcloudFusedMsg_pointer = new pcl::PCLPointCloud2;
 
-    sensor_msgs::PointCloud2Ptr mPointcloudFusedMsg;
-    sensor_msgs::Imu imu_Msg;
-    geometry_msgs::PoseStamped carTF_zed2;
-    geometry_msgs::PoseStamped carTF_orb;
+  sensor_msgs::PointCloud2Ptr mPointcloudFusedMsg;
+  sensor_msgs::Imu imu_Msg;
+  geometry_msgs::PoseStamped carTF_zed2;
+  geometry_msgs::PoseStamped carTF_orb;
 
-    double timeNow = 0;
-    double timeLast = 0;
-    bool startTimer = 0;
+  /*
+   * SYSTEM_NOT_READY=-1,
+   * NO_IMAGES_YET=0,
+   * NOT_INITIALIZED=1,
+   * OK=2,
+   * LOST=3
+  */
+  std_msgs::Int32 trackingState;
 
-    float x_bias = 0;
-    float y_bias = 0;
-    float z_bias = 0;
+  double timeNow = 0;
+  double timeLast = 0;
+  bool startTimer = 0;
 
-    uint16_t savemapFlag = 0;
-    uint16_t mappingStatusCmd = 0;
-//    uint16_t goalSet = 0;
-//    float cmd_vel = 0;
-//    geometry_msgs::PoseStamped goalPoseStamped;
+  float x_bias = 0;
+  float y_bias = 0;
+  float z_bias = 0;
+
+  uint16_t savemapFlag = 0;
+  uint16_t mappingStatusCmd = 0;
+
+  double VoxelGrid_LeafSize = 0.05;
+  double PassThrough_yMin = -4.0;
+  double PassThrough_yMax = 4.0;
+  double PassThrough_zMin = -1.0;
+  double PassThrough_zMax = 2.0;
+  double StatisticalOutlierRemoval_MeanK = 50;
+  double StatisticalOutlierRemoval_StddevMulThresh = 0.3;
+
+  double TimeLimit = 10.0;
+  double PoseBiasLimit = 0.1;
+  double angular_velocityLimit = 0.8;
 
 private:
-    int init_argc;
-    char** init_argv;
+  int init_argc;
+  char** init_argv;
 
 };
 

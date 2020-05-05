@@ -81,6 +81,7 @@ Q_SIGNALS:
     void slamStateChanged(char flag);
     void slamMapUpdated();
     void cloudUpdated();
+    void pathUpdated();
 
 private:
 	int init_argc;

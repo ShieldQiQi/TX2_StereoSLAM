@@ -144,7 +144,7 @@ public:
         frame_2 = new QFrame(groupBox_1);
         frame_2->setObjectName(QString::fromUtf8("frame_2"));
         frame_2->setGeometry(QRect(2, 61, 241, 404));
-        frame_2->setAutoFillBackground(true);
+        frame_2->setAutoFillBackground(false);
         frame_2->setStyleSheet(QString::fromUtf8("border-radius:20px; \n"
 "border:1px solid;\n"
 "border-color: rgb(46, 52, 54);"));
@@ -153,12 +153,12 @@ public:
         checkBox = new QCheckBox(frame_2);
         checkBox->setObjectName(QString::fromUtf8("checkBox"));
         checkBox->setGeometry(QRect(10, 20, 100, 24));
-        checkBox->setAutoFillBackground(true);
+        checkBox->setAutoFillBackground(false);
         checkBox->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         commandLinkButton_1 = new QCommandLinkButton(frame_2);
         commandLinkButton_1->setObjectName(QString::fromUtf8("commandLinkButton_1"));
         commandLinkButton_1->setGeometry(QRect(10, 240, 221, 41));
-        commandLinkButton_1->setAutoFillBackground(true);
+        commandLinkButton_1->setAutoFillBackground(false);
         commandLinkButton_1->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.455399 rgba(255, 255, 255, 0), stop:1 rgba(198, 183, 0, 255));\n"
 "border-radius:10px; \n"
 "border:1px solid;\n"
@@ -166,7 +166,7 @@ public:
         commandLinkButton_2 = new QCommandLinkButton(frame_2);
         commandLinkButton_2->setObjectName(QString::fromUtf8("commandLinkButton_2"));
         commandLinkButton_2->setGeometry(QRect(10, 290, 221, 41));
-        commandLinkButton_2->setAutoFillBackground(true);
+        commandLinkButton_2->setAutoFillBackground(false);
         commandLinkButton_2->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.338028 rgba(27, 43, 255, 0), stop:1 rgba(255, 5, 100, 255));\n"
 "border-radius:10px; \n"
 "border:1px solid;\n"
@@ -174,7 +174,7 @@ public:
         commandLinkButton_3 = new QCommandLinkButton(frame_2);
         commandLinkButton_3->setObjectName(QString::fromUtf8("commandLinkButton_3"));
         commandLinkButton_3->setGeometry(QRect(10, 340, 221, 41));
-        commandLinkButton_3->setAutoFillBackground(true);
+        commandLinkButton_3->setAutoFillBackground(false);
         commandLinkButton_3->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));\n"
 "border-radius:10px; \n"
 "border:1px solid;\n"
@@ -182,62 +182,62 @@ public:
         checkBox_2 = new QCheckBox(frame_2);
         checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
         checkBox_2->setGeometry(QRect(10, 50, 100, 24));
-        checkBox_2->setAutoFillBackground(true);
+        checkBox_2->setAutoFillBackground(false);
         checkBox_2->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_3 = new QCheckBox(frame_2);
         checkBox_3->setObjectName(QString::fromUtf8("checkBox_3"));
         checkBox_3->setGeometry(QRect(130, 20, 100, 24));
-        checkBox_3->setAutoFillBackground(true);
+        checkBox_3->setAutoFillBackground(false);
         checkBox_3->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_4 = new QCheckBox(frame_2);
         checkBox_4->setObjectName(QString::fromUtf8("checkBox_4"));
         checkBox_4->setGeometry(QRect(130, 50, 100, 24));
-        checkBox_4->setAutoFillBackground(true);
+        checkBox_4->setAutoFillBackground(false);
         checkBox_4->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_5 = new QCheckBox(frame_2);
         checkBox_5->setObjectName(QString::fromUtf8("checkBox_5"));
         checkBox_5->setGeometry(QRect(10, 80, 100, 24));
-        checkBox_5->setAutoFillBackground(true);
+        checkBox_5->setAutoFillBackground(false);
         checkBox_5->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_6 = new QCheckBox(frame_2);
         checkBox_6->setObjectName(QString::fromUtf8("checkBox_6"));
         checkBox_6->setGeometry(QRect(10, 110, 100, 24));
-        checkBox_6->setAutoFillBackground(true);
+        checkBox_6->setAutoFillBackground(false);
         checkBox_6->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_7 = new QCheckBox(frame_2);
         checkBox_7->setObjectName(QString::fromUtf8("checkBox_7"));
         checkBox_7->setGeometry(QRect(130, 80, 100, 24));
-        checkBox_7->setAutoFillBackground(true);
+        checkBox_7->setAutoFillBackground(false);
         checkBox_7->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_8 = new QCheckBox(frame_2);
         checkBox_8->setObjectName(QString::fromUtf8("checkBox_8"));
         checkBox_8->setGeometry(QRect(130, 110, 100, 24));
-        checkBox_8->setAutoFillBackground(true);
+        checkBox_8->setAutoFillBackground(false);
         checkBox_8->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_9 = new QCheckBox(frame_2);
         checkBox_9->setObjectName(QString::fromUtf8("checkBox_9"));
         checkBox_9->setGeometry(QRect(10, 140, 100, 24));
-        checkBox_9->setAutoFillBackground(true);
+        checkBox_9->setAutoFillBackground(false);
         checkBox_9->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_10 = new QCheckBox(frame_2);
         checkBox_10->setObjectName(QString::fromUtf8("checkBox_10"));
         checkBox_10->setGeometry(QRect(10, 170, 100, 24));
-        checkBox_10->setAutoFillBackground(true);
+        checkBox_10->setAutoFillBackground(false);
         checkBox_10->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_11 = new QCheckBox(frame_2);
         checkBox_11->setObjectName(QString::fromUtf8("checkBox_11"));
         checkBox_11->setGeometry(QRect(130, 140, 100, 24));
-        checkBox_11->setAutoFillBackground(true);
+        checkBox_11->setAutoFillBackground(false);
         checkBox_11->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         checkBox_12 = new QCheckBox(frame_2);
         checkBox_12->setObjectName(QString::fromUtf8("checkBox_12"));
         checkBox_12->setGeometry(QRect(130, 170, 100, 24));
-        checkBox_12->setAutoFillBackground(true);
+        checkBox_12->setAutoFillBackground(false);
         checkBox_12->setStyleSheet(QString::fromUtf8("border-radius:7px; "));
         frame = new QFrame(frame_2);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setGeometry(QRect(0, 5, 241, 201));
-        frame->setAutoFillBackground(true);
+        frame->setAutoFillBackground(false);
         frame->setStyleSheet(QString::fromUtf8("border-radius:20px; \n"
 "border:1px solid;\n"
 "border-color: rgb(85, 87, 83);"));
@@ -272,7 +272,7 @@ public:
         label = new QLabel(groupBox_1);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(0, 30, 250, 31));
-        label->setAutoFillBackground(true);
+        label->setAutoFillBackground(false);
         label->setStyleSheet(QString::fromUtf8("image: url(:/images/logo_2.png);"));
         label_2 = new QLabel(groupBox_1);
         label_2->setObjectName(QString::fromUtf8("label_2"));
@@ -280,8 +280,8 @@ public:
         label_2->setStyleSheet(QString::fromUtf8("image: url(:/images/sleep.png);"));
         frame_4 = new QFrame(groupBox_1);
         frame_4->setObjectName(QString::fromUtf8("frame_4"));
-        frame_4->setGeometry(QRect(0, 480, 241, 221));
-        frame_4->setAutoFillBackground(true);
+        frame_4->setGeometry(QRect(0, 480, 241, 236));
+        frame_4->setAutoFillBackground(false);
         frame_4->setStyleSheet(QString::fromUtf8("border-radius:20px; \n"
 "border:1px solid;\n"
 "border-color: rgb(85, 87, 83);"));
@@ -290,7 +290,7 @@ public:
         commandLinkButton_4 = new QCommandLinkButton(frame_4);
         commandLinkButton_4->setObjectName(QString::fromUtf8("commandLinkButton_4"));
         commandLinkButton_4->setGeometry(QRect(10, 20, 221, 41));
-        commandLinkButton_4->setAutoFillBackground(true);
+        commandLinkButton_4->setAutoFillBackground(false);
         commandLinkButton_4->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));\n"
 "border-radius:10px; \n"
 "border:1px solid;\n"
@@ -298,7 +298,7 @@ public:
         commandLinkButton_5 = new QCommandLinkButton(frame_4);
         commandLinkButton_5->setObjectName(QString::fromUtf8("commandLinkButton_5"));
         commandLinkButton_5->setGeometry(QRect(10, 80, 221, 41));
-        commandLinkButton_5->setAutoFillBackground(true);
+        commandLinkButton_5->setAutoFillBackground(false);
         commandLinkButton_5->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));\n"
 "border-radius:10px; \n"
 "border:1px solid;\n"
@@ -306,13 +306,13 @@ public:
         horizontalSlider = new QSlider(frame_4);
         horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
         horizontalSlider->setGeometry(QRect(10, 180, 221, 20));
-        horizontalSlider->setAutoFillBackground(true);
+        horizontalSlider->setAutoFillBackground(false);
         horizontalSlider->setStyleSheet(QString::fromUtf8("border:none"));
         horizontalSlider->setOrientation(Qt::Horizontal);
         label_3 = new QLabel(frame_4);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(14, 140, 151, 31));
-        label_3->setAutoFillBackground(true);
+        label_3->setAutoFillBackground(false);
         label_3->setStyleSheet(QString::fromUtf8("border:none"));
 
         hboxLayout->addWidget(groupBox_1);

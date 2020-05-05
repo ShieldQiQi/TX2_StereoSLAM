@@ -39,6 +39,8 @@ ros/ros.h
 /home/qi/catkin_qi/src/tx2_slam/include/SaveMap.h
 std_msgs/Int32MultiArray.h
 -
+std_msgs/Int32.h
+-
 sensor_msgs/PointCloud2.h
 -
 sensor_msgs/Imu.h
@@ -133,6 +135,10 @@ geometry_msgs/PoseStamped.h
 -
 std_msgs/Int32MultiArray.h
 -
+std_msgs/Int32.h
+-
+sensor_msgs/Imu.h
+-
 ompl/base/spaces/SE3StateSpace.h
 -
 ompl/base/OptimizationObjective.h
@@ -146,6 +152,14 @@ ompl/geometric/SimpleSetup.h
 ompl/config.h
 -
 iostream
+-
+queue
+-
+Eigen/Core
+-
+Eigen/Geometry
+-
+cmath
 -
 fcl/fcl.h
 /home/qi/catkin_qi/src/tx2_slam/include/fcl/fcl.h
@@ -2375,6 +2389,22 @@ ros/message_operations.h
 -
 
 /opt/ros/melodic/include/std_msgs/Header.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/opt/ros/melodic/include/std_msgs/Int32.h
 string
 -
 vector

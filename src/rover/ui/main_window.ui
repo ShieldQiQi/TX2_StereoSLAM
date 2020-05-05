@@ -61,7 +61,7 @@
         </rect>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">border-radius:20px; 
@@ -84,7 +84,7 @@ border-color: rgb(46, 52, 54);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -103,7 +103,7 @@ border-color: rgb(46, 52, 54);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.455399 rgba(255, 255, 255, 0), stop:1 rgba(198, 183, 0, 255));
@@ -125,7 +125,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.338028 rgba(27, 43, 255, 0), stop:1 rgba(255, 5, 100, 255));
@@ -147,7 +147,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));
@@ -169,7 +169,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -188,7 +188,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -207,7 +207,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -226,7 +226,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -245,7 +245,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -264,7 +264,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -283,7 +283,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -302,7 +302,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -321,7 +321,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -340,7 +340,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -359,7 +359,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:7px; </string>
@@ -378,7 +378,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border-radius:20px; 
@@ -444,7 +444,7 @@ border-color: rgb(85, 87, 83);</string>
         </rect>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">image: url(:/images/logo_2.png);</string>
@@ -475,11 +475,11 @@ border-color: rgb(85, 87, 83);</string>
          <x>0</x>
          <y>480</y>
          <width>241</width>
-         <height>221</height>
+         <height>236</height>
         </rect>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">border-radius:20px; 
@@ -502,7 +502,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));
@@ -524,7 +524,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.183099 rgba(27, 43, 255, 0), stop:1 rgba(23, 5, 255, 255));
@@ -546,7 +546,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border:none</string>
@@ -565,7 +565,7 @@ border-color: rgb(85, 87, 83);</string>
          </rect>
         </property>
         <property name="autoFillBackground">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="styleSheet">
          <string notr="true">border:none</string>

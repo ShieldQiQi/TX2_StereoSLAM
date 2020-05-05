@@ -22,12 +22,12 @@ static const uint qt_meta_data_rover__QNode[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       6,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       13,   30,   30,   30, 0x05,
@@ -35,6 +35,7 @@ static const uint qt_meta_data_rover__QNode[] = {
       45,   68,   30,   30, 0x05,
       73,   30,   30,   30, 0x05,
       90,   30,   30,   30, 0x05,
+     105,   30,   30,   30, 0x05,
 
        0        // eod
 };
@@ -43,6 +44,7 @@ static const char qt_meta_stringdata_rover__QNode[] = {
     "rover::QNode\0loggingUpdated()\0\0"
     "rosShutdown()\0slamStateChanged(char)\0"
     "flag\0slamMapUpdated()\0cloudUpdated()\0"
+    "pathUpdated()\0"
 };
 
 void rover::QNode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -56,6 +58,7 @@ void rover::QNode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 2: _t->slamStateChanged((*reinterpret_cast< char(*)>(_a[1]))); break;
         case 3: _t->slamMapUpdated(); break;
         case 4: _t->cloudUpdated(); break;
+        case 5: _t->pathUpdated(); break;
         default: ;
         }
     }
@@ -93,9 +96,9 @@ int rover::QNode::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }
@@ -129,5 +132,11 @@ void rover::QNode::slamMapUpdated()
 void rover::QNode::cloudUpdated()
 {
     QMetaObject::activate(this, &staticMetaObject, 4, 0);
+}
+
+// SIGNAL 5
+void rover::QNode::pathUpdated()
+{
+    QMetaObject::activate(this, &staticMetaObject, 5, 0);
 }
 QT_END_MOC_NAMESPACE

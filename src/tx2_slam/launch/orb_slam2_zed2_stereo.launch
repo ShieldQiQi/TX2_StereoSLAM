@@ -61,10 +61,65 @@
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tx2_slam)/config/rviz_config.rviz" output="screen" />
 
     <node name="Slam" pkg="tx2_slam" type="Slam" output="screen">
+
+        <!--set the map/pcd save prefix-->
         <param name="prefix" type="string" value="$(find tx2_slam)/map/pcd_files/" />
+
+        <!--set filter parameters-->
+        <param name="VoxelGrid_LeafSize" type="double" value="0.05" />
+        <param name="PassThrough_yMin" type="double" value="-4.0" />
+        <param name="PassThrough_yMax" type="double" value="4.0" />
+        <param name="PassThrough_zMin" type="double" value="-1.0" />
+        <param name="PassThrough_zMax" type="double" value="2.0" />
+        <param name="StatisticalOutlierRemoval_MeanK" type="double" value="50" />
+        <param name="StatisticalOutlierRemoval_StddevMulThresh" type="double" value="0.3" />
+
+        <!--set the pose calibration parameters-->
+        <param name="TimeLimit" type="double" value="10.0" />
+        <param name="PoseBiasLimit" type="double" value="0.1" />
+        <param name="angular_velocityLimit" type="double" value="0.8" />
+
     </node>
 
     <node name="Navigation" pkg="tx2_slam" type="Navigation" output="screen">
+
+        <!--set the rrt plan parameters-->
+        <param name="rrtRange" type="double" value="1.0" />
+        <param name="rrtSolutionTimeLimit" type="double" value="0.2" />
+        <param name="NavigatonTimerDuration" type="double" value="0.1" />
+        <param name="bounds_lmin" type="double" value="-5" />
+        <param name="bounds_lmax" type="double" value="5" />
+        <param name="bounds_wmin" type="double" value="-5" />
+        <param name="bounds_wmax" type="double" value="5" />
+        <param name="bounds_hmin" type="double" value="-0.5" />
+        <param name="bounds_hmax" type="double" value="0.5" />
+        <param name="SLAMCarShape_l" type="double" value="0.8" />
+        <param name="SLAMCarShape_w" type="double" value="0.8" />
+        <param name="SLAMCarShape_h" type="double" value="0.3" />
+
+        <!--set speed cmd value limit-->
+        <param name="cmd_vel_l_max" type="double" value="0.4" />
+        <param name="cmd_vel_r_max" type="double" value="0.4" />
+
+        <!--set pid parameters-->
+        <param name="straight_kp" type="double" value="0.4" />
+        <param name="straight_ki" type="double" value="0.0" />
+        <param name="straight_kd" type="double" value="0.0" />
+        <param name="orient_kp" type="double" value="2.0" />
+        <param name="orient_ki" type="double" value="0.0" />
+        <param name="orient_kd" type="double" value="0.0" />
+        <param name="omega_kp" type="double" value="1.0" />
+        <param name="omega_ki" type="double" value="0.0" />
+        <param name="omega_kd" type="double" value="0.0" />
+        <param name="isUseOmegaPid" type="bool" value="false" />
+        <param name="isUsePosePid" type="bool" value="true" />
+        <param name="constSpeed" type="double" value="0.3" />
+        <param name="constOmega" type="double" value="0.7" />
+
+        <!--set the task finished satisfied threshold value-->
+        <param name="straight_bia" type="double" value="0.05" />
+        <param name="orient_bia" type="double" value="0.09" />
+
     </node>
 
     <node name="rover" pkg="rover" type="rover">

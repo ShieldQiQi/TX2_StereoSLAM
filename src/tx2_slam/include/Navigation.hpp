@@ -18,6 +18,8 @@
 #include <nav_msgs/Path.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <std_msgs/Int32MultiArray.h>
+#include <std_msgs/Int32.h>
+#include <sensor_msgs/Imu.h>
 
 #include <ompl/base/spaces/SE3StateSpace.h>
 #include <ompl/base/OptimizationObjective.h>
@@ -27,6 +29,10 @@
 #include <ompl/geometric/SimpleSetup.h>
 #include <ompl/config.h>
 #include <iostream>
+#include <queue>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+#include <cmath>
 
 #include "fcl/fcl.h"
 //#include "fcl/config.h"
@@ -50,12 +56,17 @@ public:
   nav_msgs::Path msg;
 
   bool rrtStarPlan(pcl::PointCloud<pcl::PointXYZRGB>* pclCloud, geometry_msgs::PoseStamped pose_Start, geometry_msgs::PoseStamped pose_Goal);
-  void cmdVelPub();
 
+  bool fromPoseCmdvel(geometry_msgs::PoseStamped);
   bool setTargetSpeed(float vLeft, float vRight, uint8_t direction);
   bool setTargetOmega(float omega, float omegaBias);
-  float pidController(float omegaTarget, float omegaActual);
+  bool posePidController(float targetAngle, float currentAngle);
+  void trackingState_Callback(const std_msgs::Int32::ConstPtr& trackingStateMsg);
+  bool posePidController(float target_x, float target_y, float current_x, float current_y);
+  float omegaPidController(float omegaTarget, float omegaActual);
 
+  // create the path-to-act queue
+  std::queue<geometry_msgs::PoseStamped> pathQueue;
 
 //  ModbusRS485 ser;
   serial::Serial ser;
@@ -72,6 +83,16 @@ public:
   pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyzFused = new pcl::PointCloud<pcl::PointXYZRGB>;
   geometry_msgs::PoseStamped carTF_zed2;
   geometry_msgs::PoseStamped carTF_orb;
+  sensor_msgs::Imu imu_Msg;
+
+  /*
+   * SYSTEM_NOT_READY=-1,
+   * NO_IMAGES_YET=0,
+   * NOT_INITIALIZED=1,
+   * OK=2,
+   * LOST=3
+  */
+  std_msgs::Int32 trackingState;
 
   ros::Publisher smoothTraj_pub;
   ros::Publisher traj_pub;
@@ -80,18 +101,53 @@ public:
   ros::Subscriber pointFusedCloud_sub;
   ros::Subscriber QTUI_cmd_sub;
   ros::Timer navigationCtrlTimer;
+  ros::Subscriber trackingStat_sub;
+  ros::Subscriber imu_sub;
 
   void QTUI_cmd_Callback(const std_msgs::Int32MultiArray::ConstPtr &msg);
   void navigation_Callback(const ros::TimerEvent& event);
   void carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose);
+  void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
   void carTF_zed2_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose);
   void readPointFusedCloud(const sensor_msgs::PointCloud2::ConstPtr& cloud);
 
+  double rrtRange = 1.0;
+  double rrtSolutionTimeLimit = 0.2;
+  double NavigatonTimerDuration = 0.05;
+  double bounds_lmin = -5.0;
+  double bounds_lmax = 5.0;
+  double bounds_wmin = -5.0;
+  double bounds_wmax = 5.0;
+  double bounds_hmin = -0.5;
+  double bounds_hmax = 0.5;
+  double SLAMCarShape_l = 0.8;
+  double SLAMCarShape_w = 0.8;
+  double SLAMCarShape_h = 0.3;
+
+  double cmd_vel_l_max = 0.4;
+  double cmd_vel_r_max = 0.4;
+
+  double straight_kp = 2.0;
+  double straight_ki = 0.0;
+  double straight_kd = 0.0;
+  double orient_kp = 5.0;
+  double orient_ki = 0.0;
+  double orient_kd = 0.0;
+  double omega_kp = 0.6;
+  double omega_ki = 0.0;
+  double omega_kd = 0.0;
+  bool isUseOmegaPid = false;
+  bool isUsePosePid = true;
+  double constSpeed = 0.3;
+  double constOmega = 0.7;
+
+  double straight_bia = 0.1;
+  double orient_bia = 0.09;
+
+
 private:
 
-  const float KP = 0.6;
-  const float KI = 0.0;
-  const float KD = 0.0;
+  bool isFinishRotation = false;
 
   // construct the state space we are planning in
   ompl::base::StateSpacePtr space;

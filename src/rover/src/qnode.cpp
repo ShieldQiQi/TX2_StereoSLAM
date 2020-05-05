@@ -53,6 +53,7 @@ void QNode::readTFzed2(geometry_msgs::PoseStamped msg)
 void QNode::readpathSolution(const nav_msgs::Path::ConstPtr& pathMsg)
 {
   pathSolution = pathMsg;
+  Q_EMIT pathUpdated();
 }
 
 void QNode::readPointFusedCloud(const sensor_msgs::PointCloud2::ConstPtr& cloud)

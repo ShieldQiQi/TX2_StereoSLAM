@@ -111,10 +111,12 @@ tx2_slam/CMakeFiles/Navigation.dir/src/Navigation.cpp.o
  /opt/ros/melodic/include/ros/wall_timer_options.h
  /opt/ros/melodic/include/rosconsole/macros_generated.h
  /opt/ros/melodic/include/sensor_msgs/Image.h
+ /opt/ros/melodic/include/sensor_msgs/Imu.h
  /opt/ros/melodic/include/sensor_msgs/PointCloud2.h
  /opt/ros/melodic/include/sensor_msgs/PointField.h
  /opt/ros/melodic/include/std_msgs/ColorRGBA.h
  /opt/ros/melodic/include/std_msgs/Header.h
+ /opt/ros/melodic/include/std_msgs/Int32.h
  /opt/ros/melodic/include/std_msgs/Int32MultiArray.h
  /opt/ros/melodic/include/std_msgs/MultiArrayDimension.h
  /opt/ros/melodic/include/std_msgs/MultiArrayLayout.h
