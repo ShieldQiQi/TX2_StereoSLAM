@@ -105,19 +105,22 @@ bool Navigation::fromPoseCmdvel(geometry_msgs::PoseStamped)
             acos(rotation_matrix_0(0,0)*1 + rotation_matrix_0(1,0)*0):
             -acos(rotation_matrix_0(0,0)*1 + rotation_matrix_0(1,0)*0);
 
-      float targetAngle = pathQueue.front().pose.position.y - carTF_zed2.pose.position.y > 0?
-            acos((pathQueue.front().pose.position.x - carTF_zed2.pose.position.x)
-                 /sqrt(pow(pathQueue.front().pose.position.x - carTF_zed2.pose.position.x, 2) +
-                       pow(pathQueue.front().pose.position.y - carTF_zed2.pose.position.y,2))*1
-                 + (pathQueue.front().pose.position.y - carTF_zed2.pose.position.y)
-                 /sqrt(pow(pathQueue.front().pose.position.x - carTF_zed2.pose.position.x, 2) +
-                       pow(pathQueue.front().pose.position.y - carTF_zed2.pose.position.y,2))*0):
-            -acos((pathQueue.front().pose.position.x - carTF_zed2.pose.position.x)
-                  /sqrt(pow(pathQueue.front().pose.position.x - carTF_zed2.pose.position.x, 2) +
-                        pow(pathQueue.front().pose.position.y - carTF_zed2.pose.position.y,2))*1
-                  + (pathQueue.front().pose.position.y - carTF_zed2.pose.position.y)
-                  /sqrt(pow(pathQueue.front().pose.position.x - carTF_zed2.pose.position.x, 2) +
-                        pow(pathQueue.front().pose.position.y - carTF_zed2.pose.position.y,2))*0);
+      float current_x = carTF_zed2.pose.position.x - carLength*cos(currentAngle);
+      float current_y = carTF_zed2.pose.position.y - carLength*sin(currentAngle);
+
+      float targetAngle = pathQueue.front().pose.position.y - current_y > 0?
+            acos((pathQueue.front().pose.position.x - current_x)
+                 /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
+                       pow(pathQueue.front().pose.position.y - current_y,2))*1
+                 + (pathQueue.front().pose.position.y - current_y)
+                 /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
+                       pow(pathQueue.front().pose.position.y - current_y,2))*0):
+            -acos((pathQueue.front().pose.position.x - current_x)
+                  /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
+                        pow(pathQueue.front().pose.position.y - current_y,2))*1
+                  + (pathQueue.front().pose.position.y - current_y)
+                  /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
+                        pow(pathQueue.front().pose.position.y - current_y,2))*0);
        ROS_INFO("currentAngle:%f targetAngle :%f", currentAngle, targetAngle);
       isFinishRotation = posePidController(targetAngle, currentAngle);
     }else{
@@ -201,11 +204,11 @@ float Navigation::omegaPidController(float omegaTarget, float omegaActual)
 
 bool Navigation::setTargetSpeed(float vLeft, float vRight, uint8_t direction)
 {
-  if(vLeft < 0)
-    vLeft = 0;
+//  if(vLeft < 0)
+//    vLeft = 0;
 
-  if(vRight < 0)
-    vRight = 0;
+//  if(vRight < 0)
+//    vRight = 0;
 
   if(isFinishRotation == true){
     if(vLeft > cmd_vel_l_max)
@@ -213,36 +216,45 @@ bool Navigation::setTargetSpeed(float vLeft, float vRight, uint8_t direction)
     if(vRight > cmd_vel_r_max)
       vRight = cmd_vel_r_max;
   }else{
-    if(vLeft > 1)
-      vLeft = 1;
-    if(vRight > 1)
-      vRight = 1;
+    if(vLeft > 2)
+      vLeft = 2;
+    if(vRight > 2)
+      vRight = 2;
   }
 
-  if(goalSet == 2 || slamGoalSet == 2)
-    ROS_INFO("V_left:%f    V_right:%f     %d",vLeft,vRight, direction);
+  if(goalSet == 2 || slamGoalSet == 2){
+
+    if(vLeft < cmd_vel_l_min)
+      vLeft = cmd_vel_l_min;
+
+    if(vRight < cmd_vel_r_min)
+      vRight = cmd_vel_r_min;
+
+    vLeft += l_r_vel_bia;
+    ROS_INFO("V_left:%f    V_right:%f     %d", vLeft, vRight, direction);
+  }
 
   switch(direction)
   {
   case 0: // go straight
 //    ser.UT_REGISTERS_TAB[0] = (((uint16_t)(vLeft/1*127)) << 8) | ((uint16_t)(vRight/1*127));
-    speedArray[1] = (uint8_t)(vLeft/1*127);
-    speedArray[2] = (uint8_t)(vRight/1*127);
+    speedArray[1] = (uint8_t)(vLeft/2*127);
+    speedArray[2] = (uint8_t)(vRight/2*127);
     break;
   case 1: // turn left
 //    ser.UT_REGISTERS_TAB[0] = (((uint16_t)(255-vLeft/1*127)) << 8) | ((uint8_t)(vRight/1*127));
-    speedArray[1] = (uint8_t)(255-vLeft/1*127);
-    speedArray[2] = (uint8_t)(vRight/1*127);
+    speedArray[1] = (uint8_t)(255-vLeft/2*127);
+    speedArray[2] = (uint8_t)(vRight/2*127);
     break;
   case 2: // turn right
 //    ser.UT_REGISTERS_TAB[0] = (((uint16_t)(vLeft/1*127)) << 8) | ((uint8_t)(255-vRight/1*127));
-    speedArray[1] = (uint8_t)(vLeft/1*127);
-    speedArray[2] = (uint8_t)(255-vRight/1*127);
+    speedArray[1] = (uint8_t)(vLeft/2*127);
+    speedArray[2] = (uint8_t)(255-vRight/2*127);
     break;
   case 3: // go back
 //    ser.UT_REGISTERS_TAB[0] = (((uint16_t)(255-vLeft/1*127)) << 8) | ((uint8_t)(255-vRight/1*127));
-    speedArray[1] = (uint8_t)(255-vLeft/1*127);
-    speedArray[2] = (uint8_t)(255-vRight/1*127);
+    speedArray[1] = (uint8_t)(255-vLeft/2*127);
+    speedArray[2] = (uint8_t)(255-vRight/2*127);
     break;
   }
 
@@ -263,9 +275,9 @@ bool Navigation::setTargetSpeed(float vLeft, float vRight, uint8_t direction)
 bool Navigation::setTargetOmega(float omega, float omegaBias)
 {
   if(omega >= 0){
-    setTargetSpeed((omega+omegaBias)*0.4,omega+omegaBias,1);
+    setTargetSpeed((omega+omegaBias),omega+omegaBias,1);
   }else{
-    setTargetSpeed(-omega+omegaBias,(-omega+omegaBias)*0.4,2);
+    setTargetSpeed(-omega+omegaBias,(-omega+omegaBias),2);
   }
   return true;
 }
@@ -318,7 +330,7 @@ bool Navigation::plan(void)
     ompl::base::PathPtr path = pdef->getSolutionPath();
     ompl::geometric::PathGeometric* pth = pdef->getSolutionPath()->as<ompl::geometric::PathGeometric>();
     ROS_INFO("Origin Path:");
-    pth->printAsMatrix(std::cout);
+//    pth->printAsMatrix(std::cout);
     // print the path to screen
     path->print(std::cout);
 
@@ -348,15 +360,15 @@ bool Navigation::plan(void)
         pose.pose.orientation.w = rot->w;
 
         msg.poses.push_back(pose);
-//        pathQueue.push(pose);
-        if(pathQueue.empty())
-        {
-          geometry_msgs::PoseStamped poseConst;
-          poseConst.pose.position.x = 2;
-          poseConst.pose.position.y = -1;
-          poseConst.pose.position.z = 0;
-          pathQueue.push(poseConst);
-        }
+        pathQueue.push(pose);
+//        if(pathQueue.empty())
+//        {
+//          geometry_msgs::PoseStamped poseConst;
+//          poseConst.pose.position.x = 2;
+//          poseConst.pose.position.y = -1;
+//          poseConst.pose.position.z = 0;
+//          pathQueue.push(poseConst);
+//        }
     }
 
     // Path smoothing using bspline
@@ -364,8 +376,8 @@ bool Navigation::plan(void)
     ompl::geometric::PathSimplifier* pathBSpline = new ompl::geometric::PathSimplifier(si);
     path_smooth = new ompl::geometric::PathGeometric(dynamic_cast<const ompl::geometric::PathGeometric&>(*pdef->getSolutionPath()));
     pathBSpline->smoothBSpline(*path_smooth,3);
-    ROS_INFO("Smoothed Path:");
-    path_smooth->print(std::cout);
+//    ROS_INFO("Smoothed Path:");
+//    path_smooth->print(std::cout);
 
     smooth_msg.header.stamp = ros::Time::now();
     smooth_msg.header.frame_id = "map";
@@ -452,7 +464,8 @@ bool Navigation::rrtStarPlan(pcl::PointCloud<pcl::PointXYZRGB>* pclCloud, geomet
   octomap::OcTree* treeOctomapPtr = new octomap::OcTree( 0.05 );
   for(auto p:pclCloud->points)
   {
-    treeOctomapPtr->updateNode( octomap::point3d(p.x, p.y, p.z), true );
+    if(p.z > groundHeightMax)
+      treeOctomapPtr->updateNode( octomap::point3d(p.x, p.y, p.z), true );
   }
   treeOctomapPtr->updateInnerOccupancy();
   fcl::OcTree<float>* tree = new fcl::OcTree<float>(std::shared_ptr<const octomap::OcTree>(treeOctomapPtr));
@@ -509,6 +522,10 @@ void Navigation::init()
   n.getParam("Navigation/cmd_vel_l_max",cmd_vel_l_max);
   ROS_INFO("cmd_vel_l_max: %f",cmd_vel_l_max);
   n.getParam("Navigation/cmd_vel_r_max",cmd_vel_r_max);
+  ROS_INFO("cmd_vel_r_min: %f",cmd_vel_r_min);
+  n.getParam("Navigation/cmd_vel_r_min",cmd_vel_r_min);
+  ROS_INFO("cmd_vel_l_min: %f",cmd_vel_l_min);
+  n.getParam("Navigation/cmd_vel_l_min",cmd_vel_l_min);
   ROS_INFO("cmd_vel_r_max: %f",cmd_vel_r_max);
   n.getParam("Navigation/straight_kp",straight_kp);
   ROS_INFO("straight_kp: %f",straight_kp);
@@ -540,6 +557,13 @@ void Navigation::init()
   ROS_INFO("constSpeed: %f",constSpeed);
   n.getParam("Navigation/constOmega",constOmega);
   ROS_INFO("constOmega: %f",constOmega);
+  n.getParam("Navigation/carLength",carLength);
+  ROS_INFO("carLength: %f",carLength);
+  n.getParam("Navigation/groundHeightMax",groundHeightMax);
+  ROS_INFO("groundHeightMax: %f",groundHeightMax);
+  n.getParam("Navigation/l_r_vel_bia",l_r_vel_bia);
+  ROS_INFO("l_r_vel_bia: %f",l_r_vel_bia);
+
 
   // publish planned path
   smoothTraj_pub = n.advertise<nav_msgs::Path>( "Trajectory_marker", 1 );
@@ -626,11 +650,11 @@ Navigation::Navigation(int argc, char** argv)
   speedArray.push_back(0);
 
   // test mode
-  geometry_msgs::PoseStamped poseConst;
-  poseConst.pose.position.x = 2;
-  poseConst.pose.position.y = -0.1;
-  poseConst.pose.position.z = 0;
-  pathQueue.push(poseConst);
+//  geometry_msgs::PoseStamped poseConst;
+//  poseConst.pose.position.x = 2;
+//  poseConst.pose.position.y = -0.1;
+//  poseConst.pose.position.z = 0;
+//  pathQueue.push(poseConst);
 
   init_argc = argc;
   init_argv = argv;

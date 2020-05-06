@@ -153,25 +153,20 @@ void MainWindow::updateMap()
     QVector<double> y(qnode.cloudFused_xyz.width);
     for (int i=0; i<qnode.cloudFused_xyz.width; i++)
     {
-      x[i] = qnode.cloudFused_xyz.at(i).x;
-      y[i] = qnode.cloudFused_xyz.at(i).y;
+      if(qnode.cloudFused_xyz.at(i).z < 0.15)
+      {
+        x[i] = 0;
+        y[i] = 0;
+      }else{
+        x[i] = qnode.cloudFused_xyz.at(i).x;
+        y[i] = qnode.cloudFused_xyz.at(i).y;
+      }
     }
     ui.customPlot->graph(0)->setData(x, y);
     ui.customPlot->graph(0)->setPen(QPen(Qt::yellow));
     ui.customPlot->graph(0)->setLineStyle(QCPGraph::lsNone);
     ui.customPlot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 2));
 
-    QVector<double> x_pose(1), y_pose(1);
-    x_pose[0] = qnode.carTF.pose.position.x;
-    y_pose[0] = qnode.carTF.pose.position.y;
-    ui.customPlot->graph(1)->setData(x_pose,y_pose);
-    ui.customPlot->graph(1)->setPen(QPen(Qt::red));
-    ui.customPlot->graph(1)->setLineStyle(QCPGraph::lsNone);
-    ui.customPlot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCrossCircle, 10));
-
-    // set axes ranges, so we see all data:
-//    ui.customPlot->xAxis->setRange(-1, 1);
-//    ui.customPlot->yAxis->setRange(0, 1);
     ui.customPlot->replot();
 }
 
@@ -189,9 +184,6 @@ void MainWindow::updatePath()
   ui.customPlot->graph(4)->setLineStyle(QCPGraph::lsNone);
   ui.customPlot->graph(4)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 3));
 
-  // set axes ranges, so we see all data:
-//    ui.customPlot->xAxis->setRange(-1, 1);
-//    ui.customPlot->yAxis->setRange(0, 1);
   ui.customPlot->replot();
 }
 
@@ -218,6 +210,14 @@ void MainWindow::updateCloud()
   ui.customPlot->graph(3)->setPen(QPen(Qt::green));
   ui.customPlot->graph(3)->setLineStyle(QCPGraph::lsNone);
   ui.customPlot->graph(3)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssPlus, 2));
+
+  QVector<double> x_pose(1), y_pose(1);
+  x_pose[0] = qnode.carTFzed2.pose.position.x;
+  y_pose[0] = qnode.carTFzed2.pose.position.y;
+  ui.customPlot->graph(1)->setData(x_pose,y_pose);
+  ui.customPlot->graph(1)->setPen(QPen(Qt::red));
+  ui.customPlot->graph(1)->setLineStyle(QCPGraph::lsNone);
+  ui.customPlot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCrossCircle, 10));
 
   ui.customPlot->replot();
 }

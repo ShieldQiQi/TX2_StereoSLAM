@@ -84,28 +84,30 @@
     <node name="Navigation" pkg="tx2_slam" type="Navigation" output="screen">
 
         <!--set the rrt plan parameters-->
-        <param name="rrtRange" type="double" value="1.0" />
-        <param name="rrtSolutionTimeLimit" type="double" value="0.2" />
-        <param name="NavigatonTimerDuration" type="double" value="0.1" />
+        <param name="rrtRange" type="double" value="2.0" />
+        <param name="rrtSolutionTimeLimit" type="double" value="1" />
+        <param name="NavigatonTimerDuration" type="double" value="0.05" />
         <param name="bounds_lmin" type="double" value="-5" />
         <param name="bounds_lmax" type="double" value="5" />
         <param name="bounds_wmin" type="double" value="-5" />
         <param name="bounds_wmax" type="double" value="5" />
-        <param name="bounds_hmin" type="double" value="-0.5" />
-        <param name="bounds_hmax" type="double" value="0.5" />
+        <param name="bounds_hmin" type="double" value="-0.2" />
+        <param name="bounds_hmax" type="double" value="0.2" />
         <param name="SLAMCarShape_l" type="double" value="0.8" />
         <param name="SLAMCarShape_w" type="double" value="0.8" />
         <param name="SLAMCarShape_h" type="double" value="0.3" />
 
         <!--set speed cmd value limit-->
-        <param name="cmd_vel_l_max" type="double" value="0.4" />
-        <param name="cmd_vel_r_max" type="double" value="0.4" />
+        <param name="cmd_vel_l_max" type="double" value="0.6" />
+        <param name="cmd_vel_r_max" type="double" value="0.6" />
+        <param name="cmd_vel_l_min" type="double" value="0.3" />
+        <param name="cmd_vel_r_min" type="double" value="0.3" />
 
         <!--set pid parameters-->
         <param name="straight_kp" type="double" value="0.4" />
         <param name="straight_ki" type="double" value="0.0" />
         <param name="straight_kd" type="double" value="0.0" />
-        <param name="orient_kp" type="double" value="2.0" />
+        <param name="orient_kp" type="double" value="0.6" />
         <param name="orient_ki" type="double" value="0.0" />
         <param name="orient_kd" type="double" value="0.0" />
         <param name="omega_kp" type="double" value="1.0" />
@@ -117,8 +119,17 @@
         <param name="constOmega" type="double" value="0.7" />
 
         <!--set the task finished satisfied threshold value-->
-        <param name="straight_bia" type="double" value="0.05" />
-        <param name="orient_bia" type="double" value="0.09" />
+        <param name="straight_bia" type="double" value="0.1" />
+        <param name="orient_bia" type="double" value="0.04" />
+
+        <!--set the length between back wheels and the zed2-->
+        <param name="carLength" type="double" value="0.3" />
+
+        <!--set the height to discard ground when rrt plan-->
+        <param name="groundHeightMax" type="double" value="0.2" />
+
+        <!--set the speed bia between r&l wheels to manually fix the orient when go straight-->
+        <param name="l_r_vel_bia" type="double" value="0.2" />
 
     </node>
 

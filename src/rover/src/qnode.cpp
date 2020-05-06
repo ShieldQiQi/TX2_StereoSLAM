@@ -62,9 +62,17 @@ void QNode::readPointFusedCloud(const sensor_msgs::PointCloud2::ConstPtr& cloud)
   pcl::PCLPointCloud2ConstPtr cloudPtr(cloud2);
   pcl_conversions::toPCL(*cloud, *cloud2);
 
+  // Perform the actual filtering
+  // VoxelGrid(decrease the memory occupation) & PassThrough(delete some incorrect points)
+  pcl::PCLPointCloud2* cloud_filtered = new pcl::PCLPointCloud2;
+  pcl::VoxelGrid<pcl::PCLPointCloud2> filter;
+  filter.setInputCloud (cloudPtr);
+  filter.setLeafSize (0.1, 0.1, 0.1);
+  filter.filter(*cloud_filtered);
+
   if ((cloudPtr->width * cloudPtr->height) == 0)
     return;
-  pcl::fromPCLPointCloud2 (*cloudPtr, cloudFused_xyz);
+  pcl::fromPCLPointCloud2 (*cloud_filtered, cloudFused_xyz);
 
   if(count++==3){
     Q_EMIT slamMapUpdated();

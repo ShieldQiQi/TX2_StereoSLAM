@@ -124,8 +124,10 @@ public:
   double SLAMCarShape_w = 0.8;
   double SLAMCarShape_h = 0.3;
 
-  double cmd_vel_l_max = 0.4;
-  double cmd_vel_r_max = 0.4;
+  double cmd_vel_l_max = 0.6;
+  double cmd_vel_r_max = 0.6;
+  double cmd_vel_l_min = 0.3;
+  double cmd_vel_r_min = 0.3;
 
   double straight_kp = 2.0;
   double straight_ki = 0.0;
@@ -143,6 +145,11 @@ public:
 
   double straight_bia = 0.1;
   double orient_bia = 0.09;
+
+  double l_r_vel_bia = 0.2;
+
+  double carLength = 0.3;
+  double groundHeightMax = 0.2;
 
 
 private:
