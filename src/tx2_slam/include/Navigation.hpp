@@ -1,3 +1,30 @@
+/////////////////////////////////////////////////////////////////////////
+
+// All copyRights reserved
+// Author: Qi
+// Date: 2020:05:07
+// contract me by: qi.shield95@foxmail.com
+// This module use infoRRT* to plan a path and control the car
+
+/////////////////////////////////////////////////////////////////////////
+
+// Copyright (c) 2020, Qi.
+
+// All rights reserved.
+
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+/////////////////////////////////////////////////////////////////////////
 # pragma once
 
 #include <ros/ros.h>
@@ -64,9 +91,12 @@ public:
   void trackingState_Callback(const std_msgs::Int32::ConstPtr& trackingStateMsg);
   bool posePidController(float target_x, float target_y, float current_x, float current_y);
   float omegaPidController(float omegaTarget, float omegaActual);
+  geometry_msgs::PoseStamped generateGoal(pcl::PointCloud<pcl::PointXYZRGB> *pclCloud);
 
   // create the path-to-act queue
   std::queue<geometry_msgs::PoseStamped> pathQueue;
+  // add a poses queue which the car actually went
+  nav_msgs::Path realPathQueue;
 
 //  ModbusRS485 ser;
   serial::Serial ser;
@@ -96,6 +126,7 @@ public:
 
   ros::Publisher smoothTraj_pub;
   ros::Publisher traj_pub;
+  ros::Publisher realTraj_pub;
   ros::Subscriber carTF_orb_sub;
   ros::Subscriber carTF_zed2_sub;
   ros::Subscriber pointFusedCloud_sub;
@@ -128,6 +159,8 @@ public:
   double cmd_vel_r_max = 0.6;
   double cmd_vel_l_min = 0.3;
   double cmd_vel_r_min = 0.3;
+  double cmd_vel_ro_r_max = 0.4;
+  double cmd_vel_ro_l_max = 0.4;
 
   double straight_kp = 2.0;
   double straight_ki = 0.0;

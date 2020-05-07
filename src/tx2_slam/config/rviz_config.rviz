@@ -4,7 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /RobotModel1/Status1
+        - /Global Options1
         - /DepthCloud1/Auto Size1
       Splitter Ratio: 0.4248366057872772
     Tree Height: 504
@@ -26,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: Image
+    SyncSource: ""
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -323,7 +323,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: map
+    Fixed Frame: tx2zed2_camera_center
     Frame Rate: 30
   Name: root
   Tools:
@@ -347,25 +347,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 6.725378513336182
+      Distance: 4.324814796447754
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 2.544140100479126
-        Y: -0.9808661341667175
-        Z: 0.5357131958007812
+        X: 1.515397310256958
+        Y: -0.20581698417663574
+        Z: -0.1362689882516861
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.44479644298553467
+      Pitch: 0.12979650497436523
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.236758232116699
+      Yaw: 3.121758222579956
     Saved: ~
 Window Geometry:
   Displays:

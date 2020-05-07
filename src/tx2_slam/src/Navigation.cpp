@@ -1,3 +1,31 @@
+/////////////////////////////////////////////////////////////////////////
+
+// All copyRights reserved
+// Author: Qi
+// Date: 2020:05:07
+// contract me by: qi.shield95@foxmail.com
+// This module use infoRRT* to plan a path and control the car
+
+/////////////////////////////////////////////////////////////////////////
+
+// Copyright (c) 2020, Qi.
+
+// All rights reserved.
+
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+/////////////////////////////////////////////////////////////////////////
+
 #include "../include/Navigation.hpp"
 
 using namespace tx2slam;
@@ -81,6 +109,27 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
       ROS_ERROR("Orb_slam2 tracking lost");
     }
     setTargetSpeed(0, 0, 0);
+  }
+
+  // capture the car real trajectory
+  if(pow(realPathQueue.poses.back().pose.position.x - carTF_zed2.pose.position.x, 2)
+     + pow(realPathQueue.poses.back().pose.position.y - carTF_zed2.pose.position.y, 2) > 0.04)
+  {
+    geometry_msgs::PoseStamped pose;
+    pose.pose.position.x = carTF_zed2.pose.position.x;
+    pose.pose.position.y = carTF_zed2.pose.position.y;
+    pose.pose.position.z = carTF_zed2.pose.position.z;
+
+    pose.pose.orientation.x = carTF_zed2.pose.orientation.x;
+    pose.pose.orientation.y = carTF_zed2.pose.orientation.y;
+    pose.pose.orientation.z = carTF_zed2.pose.orientation.z;
+    pose.pose.orientation.w = carTF_zed2.pose.orientation.w;
+
+    realPathQueue.poses.push_back(pose);
+
+    realPathQueue.header.stamp = ros::Time::now();
+    realPathQueue.header.frame_id = "map";
+    realTraj_pub.publish(realPathQueue);
   }
 }
 
@@ -172,7 +221,9 @@ bool Navigation::posePidController(float target_x, float target_y, float current
   Matrix3d rotation_matrix_0;
   rotation_matrix_0=quaternion_0.toRotationMatrix();
   float currentAngle = acos(rotation_matrix_0(0,0)*1 + rotation_matrix_0(1,0)*0);
-  if((currentAngle < M_PI/2 && current_x <= target_x) || (currentAngle > M_PI/2 && current_x >= target_x)){
+  if((currentAngle <= M_PI/4 && current_x <= target_x)
+     || (currentAngle >= M_PI*3/4 && current_x >= target_x)
+     || (currentAngle <= M_PI*3/4 && currentAngle >= M_PI/4 && current_y <= target_y)){
     direction = 0;
   }else{
     direction = 3;
@@ -204,33 +255,37 @@ float Navigation::omegaPidController(float omegaTarget, float omegaActual)
 
 bool Navigation::setTargetSpeed(float vLeft, float vRight, uint8_t direction)
 {
-//  if(vLeft < 0)
-//    vLeft = 0;
-
-//  if(vRight < 0)
-//    vRight = 0;
-
-  if(isFinishRotation == true){
-    if(vLeft > cmd_vel_l_max)
-      vLeft = cmd_vel_l_max;
-    if(vRight > cmd_vel_r_max)
-      vRight = cmd_vel_r_max;
-  }else{
-    if(vLeft > 2)
-      vLeft = 2;
-    if(vRight > 2)
-      vRight = 2;
-  }
-
   if(goalSet == 2 || slamGoalSet == 2){
+    // set the max speed limit
+    if(isFinishRotation == true){
+      if(vLeft > cmd_vel_l_max)
+        vLeft = cmd_vel_l_max;
+      if(vRight > cmd_vel_r_max)
+        vRight = cmd_vel_r_max;
+    }else{
+      if(vLeft > cmd_vel_ro_l_max)
+        vLeft = cmd_vel_ro_l_max;
+      if(vRight > cmd_vel_ro_r_max)
+        vRight = cmd_vel_ro_r_max;
+    }
+    // set the min speed limit
+    if(trackingState.data != 3)
+    {
+      if(isFinishRotation == true){
+        if(vLeft < 1.6*cmd_vel_l_min)
+          vLeft = 1.6*cmd_vel_l_min;
+        if(vRight < 1.6*cmd_vel_r_min)
+          vRight = 1.6*cmd_vel_r_min;
+      }else{
+        if(vLeft < cmd_vel_l_min)
+          vLeft = cmd_vel_l_min;
+        if(vRight < cmd_vel_r_min)
+          vRight = cmd_vel_r_min;
+      }
 
-    if(vLeft < cmd_vel_l_min)
-      vLeft = cmd_vel_l_min;
+      vLeft += l_r_vel_bia;
+    }
 
-    if(vRight < cmd_vel_r_min)
-      vRight = cmd_vel_r_min;
-
-    vLeft += l_r_vel_bia;
     ROS_INFO("V_left:%f    V_right:%f     %d", vLeft, vRight, direction);
   }
 
@@ -457,6 +512,147 @@ ompl::base::OptimizationObjectivePtr Navigation::getPathLengthObjWithCostToGo(co
     return obj;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// * This function try to find a reasonable goal
+// * Which based on the longest point that the car would not crashs on if in it's direction
+// * I plot a simple figure below to make it more eary to understand
+// * of course, there wouldn't just be five ray-lines in real programming
+// *
+//                 ^ Go ahead
+//                 |
+//                 |
+//         X       |       X
+//          \      |      /
+//           *     |     /
+//            \    |  ****** obstacle     if no way, then turn around
+//             \   |   *****
+//     **       \  |  /
+//  X-***------- O---O -----------X
+//            zed2-camera
+//
+// * if there is no point's length longer than the manual set threshold
+// * then set a cmd goal to turn around
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXYZRGB>* pclCloud)
+{
+  // get the current pose of the zed2 camera
+  Quaterniond quaternion(carTF_zed2.pose.orientation.w,
+                         carTF_zed2.pose.orientation.x,
+                         carTF_zed2.pose.orientation.y,
+                         carTF_zed2.pose.orientation.z);
+  Matrix3d rotation_matrix;
+  rotation_matrix=quaternion.toRotationMatrix();
+  Vector3d position_transform
+      (carTF_zed2.pose.position.x,
+       carTF_zed2.pose.position.y,
+       carTF_zed2.pose.position.z);
+
+  // use Octomap and FCL to check if the ray meet end
+  octomap::OcTree* treeOctomapPtr = new octomap::OcTree( 0.05 );
+  for(auto p:pclCloud->points)
+  {
+    if(p.z > groundHeightMax)
+      treeOctomapPtr->updateNode( octomap::point3d(p.x, p.y, p.z), true );
+  }
+  treeOctomapPtr->updateInnerOccupancy();
+  fcl::OcTree<float>* tree = new fcl::OcTree<float>(std::shared_ptr<const octomap::OcTree>(treeOctomapPtr));
+  tree_obj = std::shared_ptr<fcl::CollisionGeometry<float>>(tree);
+  fcl::CollisionObject<float> treeObj((tree_obj));
+  fcl::CollisionObject<float> slamCarObject(slamCar);
+  fcl::CollisionRequest<float> requestType(1,false,1,false);
+  fcl::CollisionResult<float> collisionResult;
+
+  // find the longest point
+  float lengthMax = 0;
+  float thetaFinal = 0;
+  for(float thetaBia = 0; thetaBia < 1.04; thetaBia += 0.1)
+  {
+    // solve the right hand
+    Matrix3d rotation_matrix_of_checkerPoint_in_zed2Frame_r;
+    rotation_matrix_of_checkerPoint_in_zed2Frame_r <<
+          cos(-thetaBia), -sin(-thetaBia),   0,
+          sin(-thetaBia),  cos(-thetaBia),   0,
+                     0.0,             0.0,   1.0;
+    Matrix3d rotation_matrix_of_checkerPoint_r = rotation_matrix * rotation_matrix_of_checkerPoint_in_zed2Frame_r;
+
+    for(float len = 0; len < 5; len += 0.1 )
+    {
+      Vector3d position_(len*cos(thetaBia), len*sin(thetaBia), 0);
+      Vector3d position = rotation_matrix*position_ + position_transform;
+
+      fcl::Vector3f translation(position[0], position[1], position[2]);
+      fcl::Matrix3f rotation;
+      for(int i = 0; i < 3; i++)
+        for(int j = 0; j < 3; j++)
+        {
+          rotation(i, j) = rotation_matrix_of_checkerPoint_r(i, j);
+        }
+      slamCarObject.setTransform(rotation, translation);
+      fcl::collide(&slamCarObject, &treeObj, requestType, collisionResult);
+
+      // update the longest point
+      if(collisionResult.isCollision())
+      {
+        if(len > lengthMax){
+          lengthMax = len;
+          thetaFinal = thetaBia;
+        }
+        break;
+      }
+    }
+
+    // solve left hand
+    Matrix3d rotation_matrix_of_checkerPoint_in_zed2Frame_l;
+    rotation_matrix_of_checkerPoint_in_zed2Frame_l <<
+          cos(thetaBia), -sin(thetaBia),   0,
+          sin(thetaBia),  cos(thetaBia),   0,
+                     0.0,             0.0,   1.0;
+    Matrix3d rotation_matrix_of_checkerPoint_l = rotation_matrix * rotation_matrix_of_checkerPoint_in_zed2Frame_l;
+
+    for(float len = 0; len < 5; len += 0.1 )
+    {
+      Vector3d position_(-len*cos(thetaBia), len*sin(thetaBia), 0);
+      Vector3d position = rotation_matrix*position_ + position_transform;
+
+      fcl::Vector3f translation(position[0], position[1], position[2]);
+      fcl::Matrix3f rotation;
+      for(int i = 0; i < 3; i++)
+        for(int j = 0; j < 3; j++)
+        {
+          rotation(i, j) = rotation_matrix_of_checkerPoint_l(i, j);
+        }
+      slamCarObject.setTransform(rotation, translation);
+      fcl::collide(&slamCarObject, &treeObj, requestType, collisionResult);
+
+      // update the longest point
+      if(collisionResult.isCollision())
+      {
+        if(len > lengthMax){
+          lengthMax = len;
+          thetaFinal = thetaBia;
+        }
+        break;
+      }
+    }
+  }
+
+  // get the target pose
+  geometry_msgs::PoseStamped targetPose;
+  if(lengthMax < 3){
+    // no target point find
+    ROS_INFO("There is no target point find, try go around");
+    targetPose.pose.position.x = 100;
+    targetPose.pose.position.y = 100;
+  }else{
+    Vector3d position_(lengthMax*cos(thetaFinal), lengthMax*sin(thetaFinal), 0);
+    Vector3d position = rotation_matrix*position_ + position_transform;
+    targetPose.pose.position.x = position[0];
+    targetPose.pose.position.y = position[1];
+  }
+  return targetPose;
+
+}
+
 bool Navigation::rrtStarPlan(pcl::PointCloud<pcl::PointXYZRGB>* pclCloud, geometry_msgs::PoseStamped pose_Start, geometry_msgs::PoseStamped pose_Goal)
 {
   // turn the pcl cloud to fcl::CollisionGeometry after octree
@@ -519,14 +715,20 @@ void Navigation::init()
   ROS_INFO("SLAMCarShape_w: %f",SLAMCarShape_w);
   n.getParam("Navigation/SLAMCarShape_h",SLAMCarShape_h);
   ROS_INFO("SLAMCarShape_h: %f",SLAMCarShape_h);
+
   n.getParam("Navigation/cmd_vel_l_max",cmd_vel_l_max);
   ROS_INFO("cmd_vel_l_max: %f",cmd_vel_l_max);
   n.getParam("Navigation/cmd_vel_r_max",cmd_vel_r_max);
-  ROS_INFO("cmd_vel_r_min: %f",cmd_vel_r_min);
-  n.getParam("Navigation/cmd_vel_r_min",cmd_vel_r_min);
+  ROS_INFO("cmd_vel_r_max: %f",cmd_vel_r_max);
   ROS_INFO("cmd_vel_l_min: %f",cmd_vel_l_min);
   n.getParam("Navigation/cmd_vel_l_min",cmd_vel_l_min);
-  ROS_INFO("cmd_vel_r_max: %f",cmd_vel_r_max);
+  ROS_INFO("cmd_vel_r_min: %f",cmd_vel_r_min);
+  n.getParam("Navigation/cmd_vel_r_min",cmd_vel_r_min);
+  ROS_INFO("cmd_vel_ro_l_max: %f",cmd_vel_ro_l_max);
+  n.getParam("Navigation/cmd_vel_ro_l_max",cmd_vel_ro_l_max);
+  ROS_INFO("cmd_vel_ro_r_max: %f",cmd_vel_ro_r_max);
+  n.getParam("Navigation/cmd_vel_ro_r_max",cmd_vel_ro_r_max);
+
   n.getParam("Navigation/straight_kp",straight_kp);
   ROS_INFO("straight_kp: %f",straight_kp);
   n.getParam("Navigation/straight_ki",straight_ki);
@@ -568,6 +770,7 @@ void Navigation::init()
   // publish planned path
   smoothTraj_pub = n.advertise<nav_msgs::Path>( "Trajectory_marker", 1 );
   traj_pub = n.advertise<nav_msgs::Path>("waypoints",1);
+  realTraj_pub = n.advertise<nav_msgs::Path>("realwaypoints",1);
 
   // subscribe poses and fused pointcloud
   carTF_orb_sub = n.subscribe("/orb_slam2_stereo/pose", 1, &Navigation::carTF_orb_Callback,this);

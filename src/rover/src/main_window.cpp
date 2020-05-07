@@ -153,7 +153,7 @@ void MainWindow::updateMap()
     QVector<double> y(qnode.cloudFused_xyz.width);
     for (int i=0; i<qnode.cloudFused_xyz.width; i++)
     {
-      if(qnode.cloudFused_xyz.at(i).z < 0.15)
+      if(qnode.cloudFused_xyz.at(i).z < -0.24)
       {
         x[i] = 0;
         y[i] = 0;
