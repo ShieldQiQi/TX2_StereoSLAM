@@ -75,7 +75,7 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
       traj_pub.publish(msg);
       smooth_msg.poses.clear();
       msg.poses.clear();
-      slamGoalSet = 0;
+      slamGoalSet = 2;
     }else{
       ROS_WARN("could't find a solution, try once again");
       if(rrtStarPlan(cloud_xyzFused,carTF_zed2,goalPoseStamped)){
@@ -84,10 +84,10 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
         traj_pub.publish(msg);
         smooth_msg.poses.clear();
         msg.poses.clear();
-        slamGoalSet = 0;
+        slamGoalSet = 2;
       }else{
         ROS_INFO("give up trying");
-        slamGoalSet = 0;
+        slamGoalSet = 1;
       }
     }
     goalSet = 0;
@@ -577,11 +577,11 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
                      0.0,             0.0,   1.0;
     Matrix3d rotation_matrix_of_checkerPoint_r = rotation_matrix * rotation_matrix_of_checkerPoint_in_zed2Frame_r;
 
-    for(float len = 0; len < lengthRange; len += lengthInc )
+    for(float len = 0; len <= lengthRange; len += lengthInc )
     {
       Vector3d position_(len*cos(thetaBia), -len*sin(thetaBia), 0);
       Vector3d position = rotation_matrix*position_ + position_transform;
-//      ROS_INFO("x: %f y: %f", position[0], position[1]);
+      ROS_INFO("x: %f y: %f", position[0], position[1]);
 
       fcl::Vector3f translation(position[0], position[1], position[2]);
       fcl::Matrix3f rotation;
@@ -594,15 +594,14 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
       fcl::CollisionResult<float> collisionResult;
       fcl::collide(&slamCarObject, &treeObj, requestType, collisionResult);
 
+      if(len > lengthMax){
+        lengthMax = len;
+        thetaFinal = -thetaBia;
+      }
       // update the longest point
       if(collisionResult.isCollision())
       {
-
-//        ROS_INFO("lengthmax: %f theta: %f", lengthMax, -thetaBia);
-        if(len > lengthMax){
-          lengthMax = len;
-          thetaFinal = -thetaBia;
-        }
+        ROS_INFO("lengthmax: %f theta: %f", lengthMax, -thetaBia);
         break;
       }
     }
@@ -615,11 +614,11 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
                      0.0,             0.0,   1.0;
     Matrix3d rotation_matrix_of_checkerPoint_l = rotation_matrix * rotation_matrix_of_checkerPoint_in_zed2Frame_l;
 
-    for(float len = 0; len < lengthRange; len += lengthInc )
+    for(float len = 0; len <= lengthRange; len += lengthInc )
     {
       Vector3d position_(len*cos(thetaBia), len*sin(thetaBia), 0);
       Vector3d position = rotation_matrix*position_ + position_transform;
-//      ROS_INFO("x: %f y: %f", position[0], position[1]);
+      ROS_INFO("x: %f y: %f", position[0], position[1]);
 
       fcl::Vector3f translation(position[0], position[1], position[2]);
       fcl::Matrix3f rotation;
@@ -632,20 +631,19 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
       fcl::CollisionResult<float> collisionResult;
       fcl::collide(&slamCarObject, &treeObj, requestType, collisionResult);
 
+      if(len > lengthMax){
+        lengthMax = len;
+        thetaFinal = thetaBia;
+      }
       // update the longest point
       if(collisionResult.isCollision())
       {
-
-//        ROS_INFO("lengthmax: %f theta: %f", lengthMax, thetaBia);
-        if(len > lengthMax){
-          lengthMax = len;
-          thetaFinal = thetaBia;
-        }
+        ROS_INFO("lengthmax: %f theta: %f", lengthMax, thetaBia);
         break;
       }
     }
 
-    if(lengthMax >= lengthRange)
+    if(lengthMax >= lengthRange - 0.05)
       break;
   }
 
