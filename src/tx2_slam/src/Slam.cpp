@@ -86,7 +86,7 @@ void MapBuild::buildMap_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud
     ROS_ERROR("Orb_slam2 tracking lost");
   }else{
     carTF_zed2 = *pose;
-    if(mappingStatusCmd == 1 && imu_Msg.angular_velocity.x<angular_velocityLimit
+    if(/*mappingStatusCmd == 1 && */imu_Msg.angular_velocity.x<angular_velocityLimit
        && imu_Msg.angular_velocity.y<angular_velocityLimit && imu_Msg.angular_velocity.z<angular_velocityLimit)
     {
       if(abs(carTF_zed2.pose.position.x - carTF_orb.pose.position.x - x_bias) < PoseBiasLimit &&

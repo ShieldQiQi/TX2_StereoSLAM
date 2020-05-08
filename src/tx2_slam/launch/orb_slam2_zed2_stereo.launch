@@ -133,6 +133,14 @@
         <!--set the speed bia between r&l wheels to manually fix the orient when go straight-->
         <param name="l_r_vel_bia" type="double" value="0.065" />
 
+        <!--set the self navigation parameters-->
+        <param name="thetaBiaRange" type="double" value="1.04" />
+        <param name="thetaBiaInc" type="double" value="0.1" />
+        <param name="lengthRange" type="double" value="3.6" />
+        <param name="lengthInc" type="double" value="0.1" />
+        <param name="lengthMax_threshold" type="double" value="2" />
+        <param name="lengthMax_security" type="double" value="1" />
+
     </node>
 
     <node name="rover" pkg="rover" type="rover">

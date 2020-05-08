@@ -103,12 +103,10 @@ public:
   std::vector<uint8_t> speedArray;
 
   uint16_t goalSet = 0;
-  bool slamGoalSet = 0;
+  uint8_t slamGoalSet = 0;
   float cmd_vel = 0;
   geometry_msgs::PoseStamped goalPoseStamped;
   uint16_t mappingStatusCmd = 0;
-
-  bool isGetSolution = 0;
 
   pcl::PointCloud<pcl::PointXYZRGB>* cloud_xyzFused = new pcl::PointCloud<pcl::PointXYZRGB>;
   geometry_msgs::PoseStamped carTF_zed2;
@@ -183,6 +181,13 @@ public:
 
   double carLength = 0.3;
   double groundHeightMax = 0.2;
+
+  double thetaBiaRange = 1.04;
+  double thetaBiaInc = 0.1;
+  double lengthRange = 5;
+  double lengthInc = 0.1;
+  double lengthMax_threshold = 3.0;
+  double lengthMax_security = 2.0;
 
 
 private:

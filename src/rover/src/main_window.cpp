@@ -114,7 +114,7 @@ void MainWindow::on_commandLinkButton_2_clicked()
 }
 void MainWindow::on_commandLinkButton_3_clicked()
 {
-  // start map cmd
+  // stop map cmd
   qnode.cmdArray->data.at(1) = 0;
 }
 void MainWindow::on_commandLinkButton_4_clicked()

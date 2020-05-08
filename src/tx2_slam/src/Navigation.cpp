@@ -4,7 +4,7 @@
 // Author: Qi
 // Date: 2020:05:07
 // contract me by: qi.shield95@foxmail.com
-// This module use infoRRT* to plan a path and control the car
+// This module use infoRRT* to plan a path and use PID to control the car
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -34,6 +34,8 @@ using namespace Eigen;
 void Navigation::QTUI_cmd_Callback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 {
   mappingStatusCmd = msg->data.at(1);
+  if(slamGoalSet == 0)
+    slamGoalSet = mappingStatusCmd;
 
   goalPoseStamped.pose.position.x = msg->data.at(4)/1000.0;
   goalPoseStamped.pose.position.y = msg->data.at(5)/1000.0;
@@ -67,12 +69,13 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
 {
   if(goalSet == 1 || slamGoalSet == 1) // try to find a solution
   {
-    if(rrtStarPlan(cloud_xyzFused,carTF_zed2,goalPoseStamped) == true){
+    if(rrtStarPlan(cloud_xyzFused,carTF_zed2,
+          slamGoalSet == 1? generateGoal(cloud_xyzFused) : goalPoseStamped) == true){
       smoothTraj_pub.publish(smooth_msg);
       traj_pub.publish(msg);
       smooth_msg.poses.clear();
       msg.poses.clear();
-      isGetSolution = 1;
+      slamGoalSet = 0;
     }else{
       ROS_WARN("could't find a solution, try once again");
       if(rrtStarPlan(cloud_xyzFused,carTF_zed2,goalPoseStamped)){
@@ -81,13 +84,12 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
         traj_pub.publish(msg);
         smooth_msg.poses.clear();
         msg.poses.clear();
-        isGetSolution = 1;
+        slamGoalSet = 0;
       }else{
         ROS_INFO("give up trying");
-        isGetSolution = 0;
+        slamGoalSet = 0;
       }
     }
-    slamGoalSet = 0;
     goalSet = 0;
     setTargetSpeed(0, 0, 0);
   }else if((goalSet == 2 || slamGoalSet == 2) && trackingState.data != 3) // move the car base on planned solution step by step
@@ -99,6 +101,7 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
       if(pathQueue.empty()){
         ROS_INFO("Finish the Goal successfully!");
         goalSet = 0;
+        slamGoalSet = 1;
       }
     }else{
 //      ROS_INFO("Going to the goal...");
@@ -560,12 +563,11 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
   fcl::CollisionObject<float> treeObj((tree_obj));
   fcl::CollisionObject<float> slamCarObject(slamCar);
   fcl::CollisionRequest<float> requestType(1,false,1,false);
-  fcl::CollisionResult<float> collisionResult;
 
   // find the longest point
   float lengthMax = 0;
   float thetaFinal = 0;
-  for(float thetaBia = 0; thetaBia < 1.04; thetaBia += 0.1)
+  for(float thetaBia = 0; thetaBia < thetaBiaRange; thetaBia += thetaBiaInc)
   {
     // solve the right hand
     Matrix3d rotation_matrix_of_checkerPoint_in_zed2Frame_r;
@@ -575,10 +577,11 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
                      0.0,             0.0,   1.0;
     Matrix3d rotation_matrix_of_checkerPoint_r = rotation_matrix * rotation_matrix_of_checkerPoint_in_zed2Frame_r;
 
-    for(float len = 0; len < 5; len += 0.1 )
+    for(float len = 0; len < lengthRange; len += lengthInc )
     {
-      Vector3d position_(len*cos(thetaBia), len*sin(thetaBia), 0);
+      Vector3d position_(len*cos(thetaBia), -len*sin(thetaBia), 0);
       Vector3d position = rotation_matrix*position_ + position_transform;
+//      ROS_INFO("x: %f y: %f", position[0], position[1]);
 
       fcl::Vector3f translation(position[0], position[1], position[2]);
       fcl::Matrix3f rotation;
@@ -588,14 +591,17 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
           rotation(i, j) = rotation_matrix_of_checkerPoint_r(i, j);
         }
       slamCarObject.setTransform(rotation, translation);
+      fcl::CollisionResult<float> collisionResult;
       fcl::collide(&slamCarObject, &treeObj, requestType, collisionResult);
 
       // update the longest point
       if(collisionResult.isCollision())
       {
+
+//        ROS_INFO("lengthmax: %f theta: %f", lengthMax, -thetaBia);
         if(len > lengthMax){
           lengthMax = len;
-          thetaFinal = thetaBia;
+          thetaFinal = -thetaBia;
         }
         break;
       }
@@ -609,10 +615,11 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
                      0.0,             0.0,   1.0;
     Matrix3d rotation_matrix_of_checkerPoint_l = rotation_matrix * rotation_matrix_of_checkerPoint_in_zed2Frame_l;
 
-    for(float len = 0; len < 5; len += 0.1 )
+    for(float len = 0; len < lengthRange; len += lengthInc )
     {
-      Vector3d position_(-len*cos(thetaBia), len*sin(thetaBia), 0);
+      Vector3d position_(len*cos(thetaBia), len*sin(thetaBia), 0);
       Vector3d position = rotation_matrix*position_ + position_transform;
+//      ROS_INFO("x: %f y: %f", position[0], position[1]);
 
       fcl::Vector3f translation(position[0], position[1], position[2]);
       fcl::Matrix3f rotation;
@@ -622,11 +629,14 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
           rotation(i, j) = rotation_matrix_of_checkerPoint_l(i, j);
         }
       slamCarObject.setTransform(rotation, translation);
+      fcl::CollisionResult<float> collisionResult;
       fcl::collide(&slamCarObject, &treeObj, requestType, collisionResult);
 
       // update the longest point
       if(collisionResult.isCollision())
       {
+
+//        ROS_INFO("lengthmax: %f theta: %f", lengthMax, thetaBia);
         if(len > lengthMax){
           lengthMax = len;
           thetaFinal = thetaBia;
@@ -634,20 +644,29 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
         break;
       }
     }
+
+    if(lengthMax >= lengthRange)
+      break;
   }
 
   // get the target pose
   geometry_msgs::PoseStamped targetPose;
-  if(lengthMax < 3){
+  if(lengthMax < lengthMax_threshold){
     // no target point find
     ROS_INFO("There is no target point find, try go around");
-    targetPose.pose.position.x = 100;
-    targetPose.pose.position.y = 100;
+    Vector3d position_(-1.0, 0.0, 0.0);
+    Vector3d position = rotation_matrix*position_ + position_transform;
+    targetPose.pose.position.x = position[0];
+    targetPose.pose.position.y = position[1];
   }else{
+    // to avoid crash, cut the lengthmax by 2.0 metres
+    lengthMax -= lengthMax_security;
     Vector3d position_(lengthMax*cos(thetaFinal), lengthMax*sin(thetaFinal), 0);
     Vector3d position = rotation_matrix*position_ + position_transform;
     targetPose.pose.position.x = position[0];
     targetPose.pose.position.y = position[1];
+
+    ROS_INFO("Find a targetGoal: x: %f  y: %f", position[0], position[1]);
   }
   return targetPose;
 
@@ -715,7 +734,6 @@ void Navigation::init()
   ROS_INFO("SLAMCarShape_w: %f",SLAMCarShape_w);
   n.getParam("Navigation/SLAMCarShape_h",SLAMCarShape_h);
   ROS_INFO("SLAMCarShape_h: %f",SLAMCarShape_h);
-
   n.getParam("Navigation/cmd_vel_l_max",cmd_vel_l_max);
   ROS_INFO("cmd_vel_l_max: %f",cmd_vel_l_max);
   n.getParam("Navigation/cmd_vel_r_max",cmd_vel_r_max);
@@ -728,7 +746,6 @@ void Navigation::init()
   n.getParam("Navigation/cmd_vel_ro_l_max",cmd_vel_ro_l_max);
   ROS_INFO("cmd_vel_ro_r_max: %f",cmd_vel_ro_r_max);
   n.getParam("Navigation/cmd_vel_ro_r_max",cmd_vel_ro_r_max);
-
   n.getParam("Navigation/straight_kp",straight_kp);
   ROS_INFO("straight_kp: %f",straight_kp);
   n.getParam("Navigation/straight_ki",straight_ki);
@@ -765,6 +782,18 @@ void Navigation::init()
   ROS_INFO("groundHeightMax: %f",groundHeightMax);
   n.getParam("Navigation/l_r_vel_bia",l_r_vel_bia);
   ROS_INFO("l_r_vel_bia: %f",l_r_vel_bia);
+  n.getParam("Navigation/thetaBiaRange",thetaBiaRange);
+  ROS_INFO("thetaBiaRange: %f",thetaBiaRange);
+  n.getParam("Navigation/thetaBiaInc",thetaBiaInc);
+  ROS_INFO("thetaBiaInc: %f",thetaBiaInc);
+  n.getParam("Navigation/lengthRange",lengthRange);
+  ROS_INFO("lengthRange: %f",lengthRange);
+  n.getParam("Navigation/lengthInc",lengthInc);
+  ROS_INFO("lengthInc: %f",lengthInc);
+  n.getParam("Navigation/lengthMax_threshold",lengthMax_threshold);
+  ROS_INFO("lengthMax_threshold: %f",lengthMax_threshold);
+  n.getParam("Navigation/lengthMax_security",lengthMax_security);
+  ROS_INFO("lengthMax_security: %f",lengthMax_security);
 
 
   // publish planned path
@@ -858,6 +887,16 @@ Navigation::Navigation(int argc, char** argv)
 //  poseConst.pose.position.y = -0.1;
 //  poseConst.pose.position.z = 0;
 //  pathQueue.push(poseConst);
+
+  geometry_msgs::PoseStamped pose;
+  pose.pose.position.x = 0;
+  pose.pose.position.y = 0;
+  pose.pose.position.z = 0;
+  pose.pose.orientation.x = 0;
+  pose.pose.orientation.y = 0;
+  pose.pose.orientation.z = 0;
+  pose.pose.orientation.w = 1;
+  realPathQueue.poses.push_back(pose);
 
   init_argc = argc;
   init_argv = argv;
