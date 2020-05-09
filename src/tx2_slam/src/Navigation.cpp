@@ -31,6 +31,7 @@
 using namespace tx2slam;
 using namespace Eigen;
 
+// get the cmd from UI
 void Navigation::QTUI_cmd_Callback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 {
   mappingStatusCmd = msg->data.at(1);
@@ -48,23 +49,28 @@ void Navigation::QTUI_cmd_Callback(const std_msgs::Int32MultiArray::ConstPtr& ms
 
 }
 
+// read the orb_slam2 pose
 void Navigation::carTF_orb_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose){
   carTF_orb = *pose;
 }
 
+// read Imu msg data
 void Navigation::imuCallback(const sensor_msgs::Imu::ConstPtr& msg) {
   imu_Msg = *msg;
 }
 
+// read the zed2_imu pose
 void Navigation::carTF_zed2_Callback(const geometry_msgs::PoseStamped::ConstPtr& pose){
   carTF_zed2 = *pose;
 }
 
+// read the tracking state of the slam
 void Navigation::trackingState_Callback(const std_msgs::Int32::ConstPtr& trackingStateMsg)
 {
   trackingState = *trackingStateMsg;
 }
 
+// plan a path and control the car
 void Navigation::navigation_Callback(const ros::TimerEvent& event)
 {
   if(goalSet == 1 || slamGoalSet == 1) // try to find a solution
@@ -75,7 +81,8 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
       traj_pub.publish(msg);
       smooth_msg.poses.clear();
       msg.poses.clear();
-      slamGoalSet = 2;
+      if(slamGoalSet == 1)
+        slamGoalSet = 2;
     }else{
       ROS_WARN("could't find a solution, try once again");
       if(rrtStarPlan(cloud_xyzFused,carTF_zed2,goalPoseStamped)){
@@ -84,27 +91,31 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
         traj_pub.publish(msg);
         smooth_msg.poses.clear();
         msg.poses.clear();
-        slamGoalSet = 2;
+        if(slamGoalSet == 1)
+          slamGoalSet = 2;
       }else{
         ROS_INFO("give up trying");
-        slamGoalSet = 1;
       }
     }
     goalSet = 0;
     setTargetSpeed(0, 0, 0);
   }else if((goalSet == 2 || slamGoalSet == 2) && trackingState.data != 3) // move the car base on planned solution step by step
   {
-    if(fromPoseCmdvel(pathQueue.front())){
-      // Go the next goal
-      isFinishRotation = false;
-      pathQueue.pop();
-      if(pathQueue.empty()){
-        ROS_INFO("Finish the Goal successfully!");
-        goalSet = 0;
+    if(pathQueue.empty() && abs(imu_Msg.linear_acceleration.x) < stopThreshold && (imu_Msg.linear_acceleration.y) < stopThreshold){
+      ROS_INFO("Finish the Goal successfully!");
+      goalSet = 0;
+      if(slamGoalSet == 2)
         slamGoalSet = 1;
+    }
+    if(!pathQueue.empty())
+    {
+      if(fromPoseCmdvel(pathQueue.front())){
+        // Go the next goal
+        isFinishRotation = false;
+        pathQueue.pop();
+      }else{
+//        ROS_INFO("Going to the goal...");
       }
-    }else{
-//      ROS_INFO("Going to the goal...");
     }
   }else // do nothing but stand
   {
@@ -136,6 +147,7 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
   }
 }
 
+// decoder the target position to cmd_vels to communication with the car
 bool Navigation::fromPoseCmdvel(geometry_msgs::PoseStamped)
 {
   // transform the pose to the cmd_vel of the moveBaseCar
@@ -144,46 +156,53 @@ bool Navigation::fromPoseCmdvel(geometry_msgs::PoseStamped)
     // done the current goal
     return true;
   }else{
+
+    Quaterniond quaternion_0(carTF_zed2.pose.orientation.w,
+                           carTF_zed2.pose.orientation.x,
+                           carTF_zed2.pose.orientation.y,
+                           carTF_zed2.pose.orientation.z);
+    Matrix3d rotation_matrix_0;
+    rotation_matrix_0=quaternion_0.toRotationMatrix();
+    float currentAngle = rotation_matrix_0(1,0) > 0?
+          acos(rotation_matrix_0(0,0)*1 + rotation_matrix_0(1,0)*0):
+          -acos(rotation_matrix_0(0,0)*1 + rotation_matrix_0(1,0)*0);
+
+    float current_x = carTF_zed2.pose.position.x - carLength*cos(currentAngle);
+    float current_y = carTF_zed2.pose.position.y - carLength*sin(currentAngle);
+
+    float targetAngle = pathQueue.front().pose.position.y - current_y > 0?
+          acos((pathQueue.front().pose.position.x - current_x)
+               /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
+                     pow(pathQueue.front().pose.position.y - current_y,2))*1
+               + (pathQueue.front().pose.position.y - current_y)
+               /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
+                     pow(pathQueue.front().pose.position.y - current_y,2))*0):
+          -acos((pathQueue.front().pose.position.x - current_x)
+                /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
+                      pow(pathQueue.front().pose.position.y - current_y,2))*1
+                + (pathQueue.front().pose.position.y - current_y)
+                /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
+                      pow(pathQueue.front().pose.position.y - current_y,2))*0);
+    ROS_INFO("currentAngle:%f targetAngle :%f", currentAngle, targetAngle);
+
     // Going to the current goal
     if(!isFinishRotation){
       // rotate first
-      Quaterniond quaternion_0(carTF_zed2.pose.orientation.w,
-                             carTF_zed2.pose.orientation.x,
-                             carTF_zed2.pose.orientation.y,
-                             carTF_zed2.pose.orientation.z);
-      Matrix3d rotation_matrix_0;
-      rotation_matrix_0=quaternion_0.toRotationMatrix();
-      float currentAngle = rotation_matrix_0(1,0) > 0?
-            acos(rotation_matrix_0(0,0)*1 + rotation_matrix_0(1,0)*0):
-            -acos(rotation_matrix_0(0,0)*1 + rotation_matrix_0(1,0)*0);
-
-      float current_x = carTF_zed2.pose.position.x - carLength*cos(currentAngle);
-      float current_y = carTF_zed2.pose.position.y - carLength*sin(currentAngle);
-
-      float targetAngle = pathQueue.front().pose.position.y - current_y > 0?
-            acos((pathQueue.front().pose.position.x - current_x)
-                 /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
-                       pow(pathQueue.front().pose.position.y - current_y,2))*1
-                 + (pathQueue.front().pose.position.y - current_y)
-                 /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
-                       pow(pathQueue.front().pose.position.y - current_y,2))*0):
-            -acos((pathQueue.front().pose.position.x - current_x)
-                  /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
-                        pow(pathQueue.front().pose.position.y - current_y,2))*1
-                  + (pathQueue.front().pose.position.y - current_y)
-                  /sqrt(pow(pathQueue.front().pose.position.x - current_x, 2) +
-                        pow(pathQueue.front().pose.position.y - current_y,2))*0);
-       ROS_INFO("currentAngle:%f targetAngle :%f", currentAngle, targetAngle);
       isFinishRotation = posePidController(targetAngle, currentAngle);
     }else{
-      // then perform transform
-      return posePidController(pathQueue.front().pose.position.x, pathQueue.front().pose.position.y
-                        , carTF_zed2.pose.position.x, carTF_zed2.pose.position.y);
+      if(abs(pathQueue.front().pose.position.x) < 60){
+        // then perform transform
+        return posePidController(pathQueue.front().pose.position.x, pathQueue.front().pose.position.y
+                          , carTF_zed2.pose.position.x, carTF_zed2.pose.position.y, targetAngle, currentAngle);
+      }else{
+        return true;
+      }
     }
     return false;
   }
 }
 
+// fix the angle by absolute pid
 bool Navigation::posePidController(float targetAngle, float currentAngle)
 {
   static float Bias,thetaBias,Integral_bias,Last_Bias;
@@ -208,7 +227,8 @@ bool Navigation::posePidController(float targetAngle, float currentAngle)
   }
 }
 
-bool Navigation::posePidController(float target_x, float target_y, float current_x, float current_y)
+// go to the goal by absolute pid
+bool Navigation::posePidController(float target_x, float target_y, float current_x, float current_y, float targetAngle, float currentAngle)
 {
   static float Bias,poseBias,Integral_bias,Last_Bias;
   Bias = sqrt(pow(target_x - current_x,2)+pow(target_y - current_y,2));
@@ -216,24 +236,22 @@ bool Navigation::posePidController(float target_x, float target_y, float current
   poseBias=straight_kp*Bias+straight_ki*Integral_bias+straight_kd*(Bias-Last_Bias);
   Last_Bias=Bias;
 
+  // get the current angle and direction
   uint8_t direction;
-  Quaterniond quaternion_0(carTF_zed2.pose.orientation.w,
-                         carTF_zed2.pose.orientation.x,
-                         carTF_zed2.pose.orientation.y,
-                         carTF_zed2.pose.orientation.z);
-  Matrix3d rotation_matrix_0;
-  rotation_matrix_0=quaternion_0.toRotationMatrix();
-  float currentAngle = acos(rotation_matrix_0(0,0)*1 + rotation_matrix_0(1,0)*0);
-  if((currentAngle <= M_PI/4 && current_x <= target_x)
-     || (currentAngle >= M_PI*3/4 && current_x >= target_x)
-     || (currentAngle <= M_PI*3/4 && currentAngle >= M_PI/4 && current_y <= target_y)){
+  float currentAngleAbs = abs(currentAngle);
+  if((currentAngleAbs <= M_PI/4 && current_x <= target_x)
+     || (currentAngleAbs >= M_PI*3/4 && current_x >= target_x)
+     || (currentAngleAbs <= M_PI*3/4 && currentAngleAbs >= M_PI/4 && current_y <= target_y)){
     direction = 0;
   }else{
     direction = 3;
   }
 
   if(isUsePosePid == true)
-    setTargetSpeed(abs(poseBias), abs(poseBias), direction);
+    setTargetSpeed(
+          abs(poseBias) - (isUseThetaPid == true?thetaPidController(targetAngle, currentAngle):0),
+          abs(poseBias) + (isUseThetaPid == true?thetaPidController(targetAngle, currentAngle):0),
+          direction);
   else
     setTargetSpeed(constSpeed, constSpeed, direction);
   if(Bias < straight_bia){
@@ -245,6 +263,19 @@ bool Navigation::posePidController(float target_x, float target_y, float current
   }
 }
 
+// fix the theta by increment pid
+float Navigation::thetaPidController(float thetaTarget, float thetaActual)
+{
+  static float Bias,thetaBias,Integral_bias,Last_Bias;
+  Bias=thetaTarget-thetaActual;
+  Integral_bias+=Bias;
+  thetaBias=theta_kp*Bias+theta_ki*Integral_bias+theta_kd*(Bias-Last_Bias);
+  Last_Bias=Bias;
+
+  return thetaBias;
+}
+
+// fix the omega by increment pid
 float Navigation::omegaPidController(float omegaTarget, float omegaActual)
 {
   static float Bias,omegaBias,Integral_bias,Last_Bias;
@@ -256,6 +287,7 @@ float Navigation::omegaPidController(float omegaTarget, float omegaActual)
   return omegaBias;
 }
 
+// send cmd_vel to the car use serial
 bool Navigation::setTargetSpeed(float vLeft, float vRight, uint8_t direction)
 {
   if(goalSet == 2 || slamGoalSet == 2){
@@ -330,6 +362,7 @@ bool Navigation::setTargetSpeed(float vLeft, float vRight, uint8_t direction)
 //  }
 }
 
+// convert the omega to the cmd_vels of the left&right
 bool Navigation::setTargetOmega(float omega, float omegaBias)
 {
   if(omega >= 0){
@@ -340,6 +373,7 @@ bool Navigation::setTargetOmega(float omega, float omegaBias)
   return true;
 }
 
+// get the map cloud to prepare for collision and path planning
 void Navigation::readPointFusedCloud(const sensor_msgs::PointCloud2::ConstPtr& cloud)
 {
   pcl::PCLPointCloud2* cloud2 = new pcl::PCLPointCloud2;
@@ -351,6 +385,7 @@ void Navigation::readPointFusedCloud(const sensor_msgs::PointCloud2::ConstPtr& c
   pcl::fromPCLPointCloud2 (*cloudPtr, *cloud_xyzFused);
 }
 
+// use infoRRT* to get a path
 bool Navigation::plan(void)
 {
   // create a planner for the defined space
@@ -476,6 +511,7 @@ bool Navigation::plan(void)
   return true;
 }
 
+// check if there exist a crashs
 bool Navigation::isStateValid(const ompl::base::State *state)
 {
   // cast the abstract state type to the type we expect
@@ -501,6 +537,7 @@ bool Navigation::isStateValid(const ompl::base::State *state)
   return(!collisionResult.isCollision());
 }
 
+// Optimize the planned path
 ompl::base::OptimizationObjectivePtr Navigation::getThresholdPathLengthObj(const ompl::base::SpaceInformationPtr& si)
 {
     ompl::base::OptimizationObjectivePtr obj(new ompl::base::PathLengthOptimizationObjective(si));
@@ -508,6 +545,7 @@ ompl::base::OptimizationObjectivePtr Navigation::getThresholdPathLengthObj(const
     return obj;
 }
 
+// Optimize the planned path
 ompl::base::OptimizationObjectivePtr Navigation::getPathLengthObjWithCostToGo(const ompl::base::SpaceInformationPtr& si)
 {
     ompl::base::OptimizationObjectivePtr obj(new ompl::base::PathLengthOptimizationObjective(si));
@@ -652,7 +690,9 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
   if(lengthMax < lengthMax_threshold){
     // no target point find
     ROS_INFO("There is no target point find, try go around");
-    Vector3d position_(-1.0, 0.0, 0.0);
+    // turn left by 45 degree as default
+    // assume "100" as just rotate but no transform
+    Vector3d position_(100.0, 100.0, 0.0);
     Vector3d position = rotation_matrix*position_ + position_transform;
     targetPose.pose.position.x = position[0];
     targetPose.pose.position.y = position[1];
@@ -670,38 +710,60 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
 
 }
 
+// RRT plan setting
 bool Navigation::rrtStarPlan(pcl::PointCloud<pcl::PointXYZRGB>* pclCloud, geometry_msgs::PoseStamped pose_Start, geometry_msgs::PoseStamped pose_Goal)
 {
-  // turn the pcl cloud to fcl::CollisionGeometry after octree
-  // updtae the octomap
-  octomap::OcTree* treeOctomapPtr = new octomap::OcTree( 0.05 );
-  for(auto p:pclCloud->points)
+  if(abs(pose_Goal.pose.position.x) < 60)
   {
-    if(p.z > groundHeightMax)
-      treeOctomapPtr->updateNode( octomap::point3d(p.x, p.y, p.z), true );
+    // turn the pcl cloud to fcl::CollisionGeometry after octree
+    // updtae the octomap
+    octomap::OcTree* treeOctomapPtr = new octomap::OcTree( 0.05 );
+    for(auto p:pclCloud->points)
+    {
+      if(p.z > groundHeightMax)
+        treeOctomapPtr->updateNode( octomap::point3d(p.x, p.y, p.z), true );
+    }
+    treeOctomapPtr->updateInnerOccupancy();
+    fcl::OcTree<float>* tree = new fcl::OcTree<float>(std::shared_ptr<const octomap::OcTree>(treeOctomapPtr));
+    tree_obj = std::shared_ptr<fcl::CollisionGeometry<float>>(tree);
+
+    // set start and goal
+    ompl::base::ScopedState<ompl::base::SE3StateSpace> start(space);
+    start->setXYZ(pose_Start.pose.position.x, pose_Start.pose.position.y, pose_Start.pose.position.z);
+    start->as<ompl::base::SO3StateSpace::StateType>(1)->setIdentity();
+    pdef->clearStartStates();
+    pdef->addStartState(start);
+    ompl::base::ScopedState<ompl::base::SE3StateSpace> goal(space);
+    goal->setXYZ(pose_Goal.pose.position.x, pose_Goal.pose.position.y, pose_Goal.pose.position.z);
+    goal->as<ompl::base::SO3StateSpace::StateType>(1)->setIdentity();
+    pdef->clearGoal();
+    pdef->setGoalState(goal);
+    // plan the trajectory
+  //  replan();
+    bool isFindSolution = plan();
+
+    return isFindSolution;
+  }else{
+    geometry_msgs::PoseStamped pose;
+
+    pose.pose.position.x = pose_Goal.pose.position.x;
+    pose.pose.position.y = pose_Goal.pose.position.y;
+    pose.pose.position.z = pose_Goal.pose.position.z;
+
+    pose.pose.orientation.x = 0;
+    pose.pose.orientation.y = 0;
+    pose.pose.orientation.z = 0;
+    pose.pose.orientation.w = 1;
+
+//    msg.poses.push_back(pose);
+    pathQueue.push(pose);
+
+    return true;
   }
-  treeOctomapPtr->updateInnerOccupancy();
-  fcl::OcTree<float>* tree = new fcl::OcTree<float>(std::shared_ptr<const octomap::OcTree>(treeOctomapPtr));
-  tree_obj = std::shared_ptr<fcl::CollisionGeometry<float>>(tree);
 
-  // set start and goal
-  ompl::base::ScopedState<ompl::base::SE3StateSpace> start(space);
-  start->setXYZ(pose_Start.pose.position.x, pose_Start.pose.position.y, pose_Start.pose.position.z);
-  start->as<ompl::base::SO3StateSpace::StateType>(1)->setIdentity();
-  pdef->clearStartStates();
-  pdef->addStartState(start);
-  ompl::base::ScopedState<ompl::base::SE3StateSpace> goal(space);
-  goal->setXYZ(pose_Goal.pose.position.x, pose_Goal.pose.position.y, pose_Goal.pose.position.z);
-  goal->as<ompl::base::SO3StateSpace::StateType>(1)->setIdentity();
-  pdef->clearGoal();
-  pdef->setGoalState(goal);
-  // plan the trajectory
-//  replan();
-  bool isFindSolution = plan();
-
-  return isFindSolution;
 }
 
+// init ROS node... and so on...
 void Navigation::init()
 {
   ros::init (init_argc, init_argv, "Navigation");
@@ -792,6 +854,16 @@ void Navigation::init()
   ROS_INFO("lengthMax_threshold: %f",lengthMax_threshold);
   n.getParam("Navigation/lengthMax_security",lengthMax_security);
   ROS_INFO("lengthMax_security: %f",lengthMax_security);
+  n.getParam("Navigation/stopThreshold",stopThreshold);
+  ROS_INFO("stopThreshold: %f",stopThreshold);
+  n.getParam("Navigation/theta_kp",theta_kp);
+  ROS_INFO("theta_kp: %f",theta_kp);
+  n.getParam("Navigation/theta_ki",theta_ki);
+  ROS_INFO("theta_ki: %f",theta_ki);
+  n.getParam("Navigation/theta_kd",theta_kd);
+  ROS_INFO("theta_kd: %f",theta_kd);
+  n.getParam("Navigation/isUseThetaPid",isUseThetaPid);
+  ROS_INFO("isUseThetaPid: %d",isUseThetaPid);
 
 
   // publish planned path
@@ -812,11 +884,16 @@ void Navigation::init()
   // receive the UI cmd
   QTUI_cmd_sub = n.subscribe("/rover/QtUI_cmd_Msg", 1, &Navigation::QTUI_cmd_Callback,this);
 
-  ros::spin();
 }
 
+// structor
 Navigation::Navigation(int argc, char** argv)
 {
+
+  init_argc = argc;
+  init_argv = argv;
+  init();
+
   // slam Car shape define
   slamCar = std::shared_ptr<fcl::CollisionGeometry<float>>(new fcl::Box<float>(SLAMCarShape_l, SLAMCarShape_w, SLAMCarShape_h));
 //  fcl::OcTree<float>* tree = new fcl::OcTree<float>(std::shared_ptr<const octomap::OcTree>(new octomap::OcTree(0.05)));
@@ -872,7 +949,7 @@ Navigation::Navigation(int argc, char** argv)
   }
   catch (serial::IOException& e)
   {
-      ROS_ERROR_STREAM("Unable to open port ");
+    ROS_ERROR_STREAM("Unable to open port ");
   }
 
   speedArray.push_back(0xff);
@@ -896,11 +973,10 @@ Navigation::Navigation(int argc, char** argv)
   pose.pose.orientation.w = 1;
   realPathQueue.poses.push_back(pose);
 
-  init_argc = argc;
-  init_argv = argv;
-  init();
+  ros::spin();
 }
 
+// destructor
 Navigation::~Navigation()
 {
   delete cloud_xyzFused;
@@ -910,3 +986,24 @@ int main(int argc, char** argv)
 {
   Navigation navigator(argc,argv);
 }
+
+
+/////////////////////////////////////////////////////////////////////////
+
+// Copyright (c) 2020, Qi.
+
+// All rights reserved.
+
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+/////////////////////////////////////////////////////////////////////////

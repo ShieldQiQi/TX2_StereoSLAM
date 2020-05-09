@@ -89,8 +89,9 @@ public:
   bool setTargetOmega(float omega, float omegaBias);
   bool posePidController(float targetAngle, float currentAngle);
   void trackingState_Callback(const std_msgs::Int32::ConstPtr& trackingStateMsg);
-  bool posePidController(float target_x, float target_y, float current_x, float current_y);
+  bool posePidController(float target_x, float target_y, float current_x, float current_y, float targetAngle, float currentAngle);
   float omegaPidController(float omegaTarget, float omegaActual);
+  float thetaPidController(float thetaTarget, float thetaActual);
   geometry_msgs::PoseStamped generateGoal(pcl::PointCloud<pcl::PointXYZRGB> *pclCloud);
 
   // create the path-to-act queue
@@ -169,8 +170,12 @@ public:
   double omega_kp = 0.6;
   double omega_ki = 0.0;
   double omega_kd = 0.0;
+  double theta_kp = 0.5;
+  double theta_ki = 0.0;
+  double theta_kd = 0.0;
   bool isUseOmegaPid = false;
   bool isUsePosePid = true;
+  bool isUseThetaPid = true;
   double constSpeed = 0.3;
   double constOmega = 0.7;
 
@@ -188,6 +193,7 @@ public:
   double lengthInc = 0.1;
   double lengthMax_threshold = 3.0;
   double lengthMax_security = 2.0;
+  double stopThreshold = 0.05;
 
 
 private:
