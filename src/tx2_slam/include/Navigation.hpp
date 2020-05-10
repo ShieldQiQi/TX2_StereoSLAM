@@ -46,6 +46,7 @@
 #include <geometry_msgs/PoseStamped.h>
 #include <std_msgs/Int32MultiArray.h>
 #include <std_msgs/Int32.h>
+#include <std_msgs/String.h>
 #include <sensor_msgs/Imu.h>
 
 #include <ompl/base/spaces/SE3StateSpace.h>
@@ -101,6 +102,7 @@ public:
 
 //  ModbusRS485 ser;
   serial::Serial ser;
+  float realSpeed = 0;
   std::vector<uint8_t> speedArray;
 
   uint16_t goalSet = 0;
@@ -193,7 +195,7 @@ public:
   double lengthInc = 0.1;
   double lengthMax_threshold = 3.0;
   double lengthMax_security = 2.0;
-  double stopThreshold = 0.05;
+  double stopThreshold = 0.01;
 
 
 private:

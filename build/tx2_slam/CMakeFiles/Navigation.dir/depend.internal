@@ -120,6 +120,7 @@ tx2_slam/CMakeFiles/Navigation.dir/src/Navigation.cpp.o
  /opt/ros/melodic/include/std_msgs/Int32MultiArray.h
  /opt/ros/melodic/include/std_msgs/MultiArrayDimension.h
  /opt/ros/melodic/include/std_msgs/MultiArrayLayout.h
+ /opt/ros/melodic/include/std_msgs/String.h
  /opt/ros/melodic/include/trajectory_msgs/MultiDOFJointTrajectory.h
  /opt/ros/melodic/include/trajectory_msgs/MultiDOFJointTrajectoryPoint.h
  /opt/ros/melodic/include/visualization_msgs/Marker.h

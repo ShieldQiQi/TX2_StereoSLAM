@@ -101,11 +101,20 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
     setTargetSpeed(0, 0, 0);
   }else if((goalSet == 2 || slamGoalSet == 2) && trackingState.data != 3) // move the car base on planned solution step by step
   {
-    if(pathQueue.empty() && abs(imu_Msg.linear_acceleration.x) < stopThreshold && (imu_Msg.linear_acceleration.y) < stopThreshold){
-      ROS_INFO("Finish the Goal successfully!");
-      goalSet = 0;
-      if(slamGoalSet == 2)
-        slamGoalSet = 1;
+    if(pathQueue.empty()){
+      if(ser.available()){
+          std_msgs::String speedMsg;
+          speedMsg.data = ser.read(ser.available());
+          realSpeed = (speedMsg.data[0]-' '+32)/255.0*2;
+          ROS_INFO("speed: %f",realSpeed);
+      }
+      if(realSpeed < stopThreshold)
+      {
+        ROS_INFO("Finish the Goal successfully!");
+        goalSet = 0;
+        if(slamGoalSet == 2)
+          slamGoalSet = 1;
+      }
     }
     if(!pathQueue.empty())
     {
@@ -241,7 +250,8 @@ bool Navigation::posePidController(float target_x, float target_y, float current
   float currentAngleAbs = abs(currentAngle);
   if((currentAngleAbs <= M_PI/4 && current_x <= target_x)
      || (currentAngleAbs >= M_PI*3/4 && current_x >= target_x)
-     || (currentAngleAbs <= M_PI*3/4 && currentAngleAbs >= M_PI/4 && current_y <= target_y)){
+     || (currentAngle <= M_PI*3/4 && currentAngle >= M_PI/4 && current_y <= target_y)
+     || (currentAngle <= -M_PI/4 && currentAngle >= -M_PI*3/4 && current_y >= target_y)){
     direction = 0;
   }else{
     direction = 3;
@@ -307,10 +317,10 @@ bool Navigation::setTargetSpeed(float vLeft, float vRight, uint8_t direction)
     if(trackingState.data != 3)
     {
       if(isFinishRotation == true){
-        if(vLeft < 1.6*cmd_vel_l_min)
-          vLeft = 1.6*cmd_vel_l_min;
-        if(vRight < 1.6*cmd_vel_r_min)
-          vRight = 1.6*cmd_vel_r_min;
+        if(vLeft < 1.3*cmd_vel_l_min)
+          vLeft = 1.3*cmd_vel_l_min;
+        if(vRight < 1.3*cmd_vel_r_min)
+          vRight = 1.3*cmd_vel_r_min;
       }else{
         if(vLeft < cmd_vel_l_min)
           vLeft = cmd_vel_l_min;
@@ -720,7 +730,7 @@ bool Navigation::rrtStarPlan(pcl::PointCloud<pcl::PointXYZRGB>* pclCloud, geomet
     octomap::OcTree* treeOctomapPtr = new octomap::OcTree( 0.05 );
     for(auto p:pclCloud->points)
     {
-      if(p.z > groundHeightMax)
+      if(p.z > groundHeightMax + carTF_zed2.pose.position.z)
         treeOctomapPtr->updateNode( octomap::point3d(p.x, p.y, p.z), true );
     }
     treeOctomapPtr->updateInnerOccupancy();
@@ -974,6 +984,9 @@ Navigation::Navigation(int argc, char** argv)
   realPathQueue.poses.push_back(pose);
 
   ros::spin();
+
+//  ros::MultiThreadedSpinner spinner(7);
+//  spinner.spin();
 }
 
 // destructor
