@@ -58,7 +58,7 @@
     </group>
 
     <!-- Launch rivz display -->
-<!--    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tx2_slam)/config/rviz_config.rviz" output="screen" />-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tx2_slam)/config/rviz_config.rviz" output="screen" />
 
     <node name="Slam" pkg="tx2_slam" type="Slam" output="screen">
 
@@ -84,15 +84,15 @@
     <node name="Navigation" pkg="tx2_slam" type="Navigation" output="screen">
 
         <!--set the rrt plan parameters-->
-        <param name="rrtRange" type="double" value="1.2" />
+        <param name="rrtRange" type="double" value="1.0" />
         <param name="rrtSolutionTimeLimit" type="double" value="3" />
         <param name="NavigatonTimerDuration" type="double" value="0.04" />
         <param name="bounds_lmin" type="double" value="-20" />
         <param name="bounds_lmax" type="double" value="20" />
         <param name="bounds_wmin" type="double" value="-20" />
         <param name="bounds_wmax" type="double" value="20" />
-        <param name="bounds_hmin" type="double" value="-0.15" />
-        <param name="bounds_hmax" type="double" value="0.15" />
+        <param name="bounds_hmin" type="double" value="-0.3" />
+        <param name="bounds_hmax" type="double" value="0.3" />
         <param name="SLAMCarShape_l" type="double" value="0.9" />
         <param name="SLAMCarShape_w" type="double" value="1.0" />
         <param name="SLAMCarShape_h" type="double" value="0.3" />
@@ -102,14 +102,14 @@
         <param name="cmd_vel_r_max" type="double" value="0.30" />
         <param name="cmd_vel_l_min" type="double" value="0.19" />
         <param name="cmd_vel_r_min" type="double" value="0.19" />
-        <param name="cmd_vel_ro_r_max" type="double" value="0.24" />
-        <param name="cmd_vel_ro_l_max" type="double" value="0.24" />
+        <param name="cmd_vel_ro_r_max" type="double" value="0.28" />
+        <param name="cmd_vel_ro_l_max" type="double" value="0.28" />
 
         <!--set pid parameters-->
         <param name="straight_kp" type="double" value="0.4" />
         <param name="straight_ki" type="double" value="0.0" />
         <param name="straight_kd" type="double" value="0.0" />
-        <param name="orient_kp" type="double" value="0.22"/>
+        <param name="orient_kp" type="double" value="0.24"/>
         <param name="orient_ki" type="double" value="0.0" />
         <param name="orient_kd" type="double" value="0.0" />
         <param name="omega_kp" type="double" value="1.0" />
@@ -144,7 +144,7 @@
         <param name="lengthInc" type="double" value="0.1" />
         <param name="lengthMax_threshold" type="double" value="2" />
         <param name="lengthMax_security" type="double" value="1.5" />
-        <param name="stopThreshold" type="double" value="0.065" />
+        <param name="stopThreshold" type="double" value="0.0005" />
     </node>
 
     <node name="rover" pkg="rover" type="rover">

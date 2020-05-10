@@ -73,6 +73,11 @@ void Navigation::trackingState_Callback(const std_msgs::Int32::ConstPtr& trackin
 // plan a path and control the car
 void Navigation::navigation_Callback(const ros::TimerEvent& event)
 {
+  if(ser.available()){
+      std_msgs::String speedMsg;
+      speedMsg.data = ser.read(ser.available());
+      realSpeed = (speedMsg.data[0]-' '+32)/255.0*2;
+  }
   if(goalSet == 1 || slamGoalSet == 1) // try to find a solution
   {
     if(rrtStarPlan(cloud_xyzFused,carTF_zed2,
@@ -102,12 +107,7 @@ void Navigation::navigation_Callback(const ros::TimerEvent& event)
   }else if((goalSet == 2 || slamGoalSet == 2) && trackingState.data != 3) // move the car base on planned solution step by step
   {
     if(pathQueue.empty()){
-      if(ser.available()){
-          std_msgs::String speedMsg;
-          speedMsg.data = ser.read(ser.available());
-          realSpeed = (speedMsg.data[0]-' '+32)/255.0*2;
-          ROS_INFO("speed: %f",realSpeed);
-      }
+      ROS_INFO("speed: %f",realSpeed);
       if(realSpeed < stopThreshold)
       {
         ROS_INFO("Finish the Goal successfully!");
@@ -199,7 +199,7 @@ bool Navigation::fromPoseCmdvel(geometry_msgs::PoseStamped)
       // rotate first
       isFinishRotation = posePidController(targetAngle, currentAngle);
     }else{
-      if(abs(pathQueue.front().pose.position.x) < 60){
+      if(abs(pathQueue.front().pose.position.x) + abs(pathQueue.front().pose.position.y)  < 60){
         // then perform transform
         return posePidController(pathQueue.front().pose.position.x, pathQueue.front().pose.position.y
                           , carTF_zed2.pose.position.x, carTF_zed2.pose.position.y, targetAngle, currentAngle);
@@ -629,7 +629,7 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
     {
       Vector3d position_(len*cos(thetaBia), -len*sin(thetaBia), 0);
       Vector3d position = rotation_matrix*position_ + position_transform;
-      ROS_INFO("x: %f y: %f", position[0], position[1]);
+//      ROS_INFO("x: %f y: %f", position[0], position[1]);
 
       fcl::Vector3f translation(position[0], position[1], position[2]);
       fcl::Matrix3f rotation;
@@ -649,7 +649,7 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
       // update the longest point
       if(collisionResult.isCollision())
       {
-        ROS_INFO("lengthmax: %f theta: %f", lengthMax, -thetaBia);
+//        ROS_INFO("lengthmax: %f theta: %f", lengthMax, -thetaBia);
         break;
       }
     }
@@ -666,7 +666,7 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
     {
       Vector3d position_(len*cos(thetaBia), len*sin(thetaBia), 0);
       Vector3d position = rotation_matrix*position_ + position_transform;
-      ROS_INFO("x: %f y: %f", position[0], position[1]);
+//      ROS_INFO("x: %f y: %f", position[0], position[1]);
 
       fcl::Vector3f translation(position[0], position[1], position[2]);
       fcl::Matrix3f rotation;
@@ -686,7 +686,7 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
       // update the longest point
       if(collisionResult.isCollision())
       {
-        ROS_INFO("lengthmax: %f theta: %f", lengthMax, thetaBia);
+//        ROS_INFO("lengthmax: %f theta: %f", lengthMax, thetaBia);
         break;
       }
     }
@@ -723,7 +723,7 @@ geometry_msgs::PoseStamped Navigation::generateGoal(pcl::PointCloud<pcl::PointXY
 // RRT plan setting
 bool Navigation::rrtStarPlan(pcl::PointCloud<pcl::PointXYZRGB>* pclCloud, geometry_msgs::PoseStamped pose_Start, geometry_msgs::PoseStamped pose_Goal)
 {
-  if(abs(pose_Goal.pose.position.x) < 60)
+  if(abs(pose_Goal.pose.position.x) + abs(pose_Goal.pose.position.y) < 60)
   {
     // turn the pcl cloud to fcl::CollisionGeometry after octree
     // updtae the octomap
