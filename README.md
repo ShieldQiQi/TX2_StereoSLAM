@@ -1,6 +1,4 @@
 # TX2_StereoSLAM
-大家好，这是一个连校优答辩资格都拿不到的垃圾毕设，我估计原因是这个垃圾项目实现起来太简单，做出来没什么水平，下位机驱动控制源码可在我的另一个repository查看<br>
-下位机驱动控制板pcb文件有人要可以issue我<br><br>
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Platform](https://img.shields.io/badge/ROS-melodic-yellow.svg)](<>)
 [![Status](https://img.shields.io/badge/Staus-Processing-blue.svg)](<>)
